@@ -171,8 +171,6 @@ class Home extends CI_Controller {
 			";
 		}
 		$output .= "</table>";
-		// $output .= "<button onclick='loadDataKelasPrev();'>prev</button>
-		// 						<button onclick='loadDataKelasNext();'>next</button>";
 		echo $output;
 	}
 
@@ -307,8 +305,6 @@ class Home extends CI_Controller {
 			";
 		}
 		$output .= "</table>";
-		// $output .= "<button onclick='loadDataKelasPrev();'>prev</button>
-		// 						<button onclick='loadDataKelasNext();'>next</button>";
 		echo $output;
 	}
 
@@ -445,8 +441,6 @@ class Home extends CI_Controller {
 			";
 		}
 		$output .= "</table>";
-		// $output .= "<button onclick='loadDataKelasPrev();'>prev</button>
-		// 						<button onclick='loadDataKelasNext();'>next</button>";
 		echo $output;
 	}
 
@@ -590,8 +584,6 @@ class Home extends CI_Controller {
 			";
 		}
 		$output .= "</table>";
-		// $output .= "<button onclick='loadDataKelasPrev();'>prev</button>
-		// 						<button onclick='loadDataKelasNext();'>next</button>";
 		echo $output;
 	}
 	public function dataMataPelajaran()
@@ -740,8 +732,6 @@ class Home extends CI_Controller {
 			";
 		}
 		$output .= "</table>";
-		// $output .= "<button onclick='loadDataKelasPrev();'>prev</button>
-		// 						<button onclick='loadDataKelasNext();'>next</button>";
 		echo $output;
 	}
 	public function dataSoalUjian()
@@ -890,8 +880,6 @@ class Home extends CI_Controller {
 			";
 		}
 		$output .= "</table>";
-		// $output .= "<button onclick='loadDataKelasPrev();'>prev</button>
-		// 						<button onclick='loadDataKelasNext();'>next</button>";
 		echo $output;
 	}
 	public function dataJenisSoalUjianDetail()
@@ -1028,8 +1016,159 @@ class Home extends CI_Controller {
 			";
 		}
 		$output .= "</table>";
-		// $output .= "<button onclick='loadDataKelasPrev();'>prev</button>
-		// 						<button onclick='loadDataKelasNext();'>next</button>";
+		echo $output;
+	}
+	public function dataSoalUjianDetail()
+	{
+		// $data = array(
+	  //   "sidebar" => $this->load->view('sidebar', NULL, true),
+		// 	"content" => $this->load->view('data_guru', NULL, true)
+		// );
+		// load db and model
+		$this->load->model('SoalUjianDetail');
+
+		// init params
+		$params = array();
+		$limit_per_page = 10;
+		$start_index = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+		$total_records = $this->JenisSoalUjianDetail->get_total();
+
+		if ($total_records > 0)
+		{
+				// get current page records
+				$params["results"] = $this->SoalUjianDetail->get_current_page_records($limit_per_page, $start_index);
+
+				$config['base_url'] = base_url() . 'index.php/home/dataSoalUjianDetail';
+				$config['total_rows'] = $total_records;
+				$config['per_page'] = $limit_per_page;
+				$config["uri_segment"] = 3;
+
+				$config['full_tag_open'] = '<div class="pagination">';
+				$config['full_tag_close'] = '</div>';
+
+				$config['first_link'] = 'First Page';
+				$config['first_tag_open'] = '<button type="button" class="btn btn-default">';
+				$config['first_tag_close'] = '</button>';
+
+				$config['last_link'] = 'Last Page';
+				$config['last_tag_open'] = '<button type="button" class="btn btn-default">';
+				$config['last_tag_close'] = '</button>';
+
+				$config['next_link'] = 'Next Page';
+				$config['next_tag_open'] = '<button type="button" class="btn btn-default">';
+				$config['next_tag_close'] = '</button>';
+
+				$config['prev_link'] = 'Prev Page';
+				$config['prev_tag_open'] = '<button type="button" class="btn btn-default">';
+				$config['prev_tag_close'] = '</button>';
+
+				$config['cur_tag_open'] = '<button type="button" class="btn btn-default">';
+				$config['cur_tag_close'] = '</button>';
+
+				$config['num_tag_open'] = '<button type="button" class="btn btn-default">';
+				$config['num_tag_close'] = '</button>';
+
+				$this->pagination->initialize($config);
+
+				// build paging links
+				$params["links"] = $this->pagination->create_links();
+		}
+
+		$params["sidebar"] = $this->load->view('sidebar', NULL, true);
+		$params["footer"] = $this->load->view('footer', NULL, true);
+
+		$this->load->view('data_soal_ujian_detail', $params);
+	}
+
+	public function tambahDataSoalUjianDetail() {
+		$data = array(
+	    	"sidebar" => $this->load->view('sidebar', NULL, true),
+			"footer" => $this->load->view('footer', NULL, true)
+		);
+		$this->load->view('tambah_data_soal_ujian_detail', $data);
+	}
+
+	public function tambahDataSoalUjianDetailSimpan() {
+		$soal_ujian_detail["id_soal_ujian"] = $this->input->post("id_soal_ujian");
+		$soal_ujian_detail["id_jenis_soal_ujian_detail"] = $this->input->post("id_jenis_soal_ujian_detail");
+		$soal_ujian_detail["soal_tulisan"] = $this->input->post("soal_tulisan");
+		$soal_ujian_detail["soal_gambar"] = $this->input->post("soal_gambar");
+		$soal_ujian_detail["pilihan_jawaban_tulisan"] = $this->input->post("pilihan_jawaban_tulisan");
+		$soal_ujian_detail["pilihan_jawaban_gambar"] = $this->input->post("pilihan_jawaban_gambar");
+		$soal_ujian_detail["kunci_jawaban"] = $this->input->post("kunci_jawaban");
+    	$this->db->insert("soal_ujian_detail", $soal_ujian_detail);
+	}
+
+	public function updateDataSoalUjianDetail($id) {
+		$soal_ujian_detail = $this->db->query('Select *
+												from soal_ujian_detail
+												where id = ' . $id)->result();
+		$data = array(
+	    	"sidebar" => $this->load->view('sidebar', NULL, true),
+			"footer" => $this->load->view('footer', NULL, true),
+			"soal_ujian_detail" => $soal_ujian_detail
+		);
+		$this->load->view('update_data_soal_ujian_detail', $data);
+	}
+
+	public function updateDataSoalUjianDetailSimpan() {
+		$soal_ujian_detail["id"] = $this->input->post("id");
+		$soal_ujian_detail["id_soal_ujian"] = $this->input->post("id_soal_ujian");
+		$soal_ujian_detail["id_jenis_soal_ujian_detail"] = $this->input->post("id_jenis_soal_ujian_detail");
+		$soal_ujian_detail["soal_tulisan"] = $this->input->post("soal_tulisan");
+		$soal_ujian_detail["soal_gambar"] = $this->input->post("soal_gambar");
+		$soal_ujian_detail["pilihan_jawaban_tulisan"] = $this->input->post("pilihan_jawaban_tulisan");
+		$soal_ujian_detail["pilihan_jawaban_gambar"] = $this->input->post("pilihan_jawaban_gambar");
+		$soal_ujian_detail["kunci_jawaban"] = $this->input->post("kunci_jawaban");
+    	$this->db->where("id", $soal_ujian_detail["id"]);
+		$this->db->update('soal_ujian_detail', $soal_ujian_detail);
+	}
+
+	public function hapusDataSoalUjianDetail($id) {
+		$this->db->where('id', $id);
+		$this->db->delete('soal_ujian_detail');
+		redirect("/home/dataSoalUjianDetail", 'location');
+	}
+
+	public function banyakDataSoalUjianDetail($record_per_page) {
+		$result = $this->db->get('soal_ujian_detail')->num_rows();
+		$result = ceil((float) $result / $record_per_page);
+		echo (int) $result;
+	}
+
+	public function loadDataSoalUjianDetail($page, $record_per_page) {
+		$output = '';
+		$start_from = ($page - 1) * $record_per_page;
+		$this->db->select('soal_ujian_detail.id, soal_ujian.nama as soal_ujian, jenis_soal_ujian_detail.nama as jenis_soal_ujian_detail, soal_ujian_detail.soal_tulisan');
+		$this->db->from('soal_ujian_detail');
+		$this->db->join('soal_ujian', 'soal_ujian_detail.id_soal_ujian = soal_ujian.id');
+		$this->db->join('jenis_soal_ujian_detail', 'soal_ujian_detail.id_jenis_soal_ujian_detail = jenis_soal_ujian_detail.id');
+		$this->db->limit($record_per_page, $start_from);
+		$results = $this->db->get()->result();
+		$output .= "
+			<table class='table table-bordered'>
+				<tr>
+					<th>Id</th>
+					<th>Soal Ujian</th>
+					<th>Jenis Soal Ujian Detail</th>
+					<th>Soal</th>
+				</tr>
+		";
+		foreach($results as $result) {
+			$chooseSoalUjianDetail = "chooseSoalUjianDetail('" . $result->id . "','" . $result->nama . "')";
+			$output .= "
+				<tr>
+					<td>$result->id</td>
+					<td>$result->soal_ujian</td>
+					<td>$result->jenis_soal_ujian_detail</td>
+					<td>$result->soal_tulisan</td>
+					<td>
+						<button class='btn btn-primary' onclick=$chooseSoalUjianDetail>Choose</button>
+					</td>
+				</tr>
+			";
+		}
+		$output .= "</table>";
 		echo $output;
 	}
 }

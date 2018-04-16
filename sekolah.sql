@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 16 Apr 2018 pada 08.11
+-- Waktu pembuatan: 16 Apr 2018 pada 11.04
 -- Versi server: 10.1.31-MariaDB
 -- Versi PHP: 7.2.3
 
@@ -207,8 +207,8 @@ CREATE TABLE `soal_ujian` (
 --
 
 CREATE TABLE `soal_ujian_detail` (
+  `id` int(11) NOT NULL,
   `id_soal_ujian` int(11) NOT NULL,
-  `id_soal_ujian_detail` int(11) NOT NULL,
   `soal_tulisan` varchar(1000) NOT NULL,
   `soal_gambar` varchar(500) NOT NULL,
   `pilihan_jawaban_tulisan` varchar(1000) NOT NULL,
@@ -312,7 +312,7 @@ ALTER TABLE `soal_ujian`
 -- Indeks untuk tabel `soal_ujian_detail`
 --
 ALTER TABLE `soal_ujian_detail`
-  ADD PRIMARY KEY (`id_soal_ujian_detail`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indeks untuk tabel `tahun_ajaran`
@@ -346,7 +346,7 @@ ALTER TABLE `jawaban_soal_ujian_detail`
 -- AUTO_INCREMENT untuk tabel `jenis_soal_ujian_detail`
 --
 ALTER TABLE `jenis_soal_ujian_detail`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT untuk tabel `kelas`
@@ -382,13 +382,13 @@ ALTER TABLE `pr`
 -- AUTO_INCREMENT untuk tabel `soal_ujian`
 --
 ALTER TABLE `soal_ujian`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT untuk tabel `soal_ujian_detail`
 --
 ALTER TABLE `soal_ujian_detail`
-  MODIFY `id_soal_ujian_detail` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT untuk tabel `tahun_ajaran`
