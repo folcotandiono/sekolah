@@ -165,7 +165,7 @@ class Home extends CI_Controller {
 					<td>$result->id</td>
 					<td>$result->nama</td>
 					<td>
-						<button class='btn btn-primary' onclick=$chooseKelas>Choose</button>
+						<button class='btn btn-primary' onclick=\"$chooseKelas\">Choose</button>
 					</td>
 				</tr>
 			";
@@ -299,7 +299,7 @@ class Home extends CI_Controller {
 					<td>$result->id</td>
 					<td>$result->tahun</td>
 					<td>
-						<button class='btn btn-primary' onclick=$chooseTahunAjaran>Choose</button>
+						<button class='btn btn-primary' onclick=\"$chooseTahunAjaran\">Choose</button>
 					</td>
 				</tr>
 			";
@@ -435,7 +435,7 @@ class Home extends CI_Controller {
 					<td>$result->nama</td>
 					<td>$result->nama_kelas</td>
 					<td>
-						<button class='btn btn-primary' onclick=$chooseMurid>Choose</button>
+						<button class='btn btn-primary' onclick=\"$chooseMurid\">Choose</button>
 					</td>
 				</tr>
 			";
@@ -578,7 +578,7 @@ class Home extends CI_Controller {
 					<td>$result->nama</td>
 					<td>$result->tahun</td>
 					<td>
-						<button class='btn btn-primary' onclick=$chooseKelas>Choose</button>
+						<button class='btn btn-primary' onclick=\"$chooseKelas\">Choose</button>
 					</td>
 				</tr>
 			";
@@ -726,7 +726,7 @@ class Home extends CI_Controller {
 					<td>$result->kelas</td>
 					<td>$result->guru</td>
 					<td>
-						<button class='btn btn-primary' onclick=$chooseMataPelajaran>Choose</button>
+						<button class='btn btn-primary' onclick=\"$chooseMataPelajaran\">Choose</button>
 					</td>
 				</tr>
 			";
@@ -866,7 +866,7 @@ class Home extends CI_Controller {
 				</tr>
 		";
 		foreach($results as $result) {
-			$chooseSoalUjian = "chooseSoalUjian('" . $result->id . "','" . $result->nama . "')";
+			$chooseSoalUjian = "chooseSoalUjian('" . $result->id . "' , '" . $result->nama . "')";
 			$output .= "
 				<tr>
 					<td>$result->id</td>
@@ -874,7 +874,7 @@ class Home extends CI_Controller {
 					<td>$result->guru</td>
 					<td>$result->nama</td>
 					<td>
-						<button class='btn btn-primary' onclick=$chooseSoalUjian>Choose</button>
+						<button class='btn btn-primary' onclick=\"$chooseSoalUjian\">Choose</button>
 					</td>
 				</tr>
 			";
@@ -1010,7 +1010,7 @@ class Home extends CI_Controller {
 					<td>$result->id</td>
 					<td>$result->nama</td>
 					<td>
-						<button class='btn btn-primary' onclick=$chooseJenisSoalUjianDetail>Choose</button>
+						<button class='btn btn-primary' onclick=\"$chooseJenisSoalUjianDetail\">Choose</button>
 					</td>
 				</tr>
 			";
@@ -1031,7 +1031,7 @@ class Home extends CI_Controller {
 		$params = array();
 		$limit_per_page = 10;
 		$start_index = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
-		$total_records = $this->JenisSoalUjianDetail->get_total();
+		$total_records = $this->SoalUjianDetail->get_total();
 
 		if ($total_records > 0)
 		{
@@ -1089,13 +1089,15 @@ class Home extends CI_Controller {
 	}
 
 	public function tambahDataSoalUjianDetailSimpan() {
-		$soal_ujian_detail["id_soal_ujian"] = $this->input->post("id_soal_ujian");
-		$soal_ujian_detail["id_jenis_soal_ujian_detail"] = $this->input->post("id_jenis_soal_ujian_detail");
-		$soal_ujian_detail["soal_tulisan"] = $this->input->post("soal_tulisan");
-		$soal_ujian_detail["soal_gambar"] = $this->input->post("soal_gambar");
-		$soal_ujian_detail["pilihan_jawaban_tulisan"] = $this->input->post("pilihan_jawaban_tulisan");
-		$soal_ujian_detail["pilihan_jawaban_gambar"] = $this->input->post("pilihan_jawaban_gambar");
-		$soal_ujian_detail["kunci_jawaban"] = $this->input->post("kunci_jawaban");
+		// $soal_ujian_detail["id_soal_ujian"] = $this->input->post("id_soal_ujian");
+		// $soal_ujian_detail["id_jenis_soal_ujian_detail"] = $this->input->post("id_jenis_soal_ujian_detail");
+		// $soal_ujian_detail["soal_tulisan"] = $this->input->post("soal_tulisan");
+		$soal_ujian_detail["soal_gambar"] = json_decode($this->input->post("soal_gambar"));
+		// $soal_ujian_detail["pilihan_jawaban_tulisan"] = $this->input->post("pilihan_jawaban_tulisan");
+		// $soal_ujian_detail["pilihan_jawaban_gambar"] = $this->input->post("pilihan_jawaban_gambar");
+		// $soal_ujian_detail["kunci_jawaban"] = $this->input->post("kunci_jawaban");
+		print_r($soal_ujian_detail["soal_gambar"]);
+		die();
     	$this->db->insert("soal_ujian_detail", $soal_ujian_detail);
 	}
 
@@ -1163,7 +1165,7 @@ class Home extends CI_Controller {
 					<td>$result->jenis_soal_ujian_detail</td>
 					<td>$result->soal_tulisan</td>
 					<td>
-						<button class='btn btn-primary' onclick=$chooseSoalUjianDetail>Choose</button>
+						<button class='btn btn-primary' onclick=\"$chooseSoalUjianDetail\">Choose</button>
 					</td>
 				</tr>
 			";
