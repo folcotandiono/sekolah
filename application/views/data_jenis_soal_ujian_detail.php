@@ -29,8 +29,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   <link rel="stylesheet" href="<?php echo base_url() . "assets/"; ?>bower_components/bootstrap-daterangepicker/daterangepicker.css">
   <!-- bootstrap wysihtml5 - text editor -->
   <link rel="stylesheet" href="<?php echo base_url() . "assets/"; ?>plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
-  <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
-  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -70,7 +69,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Data Soal Ujian
+        Data Jenis Soal Ujian Detail
       </h1>
     </section>
 
@@ -80,7 +79,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <div class="col-md-12">
           <div class="box">
             <div class="box-header with-border">
-              <h3 class="box-title">Tambah Data Soal Ujian</h3>
+              <h3 class="box-title">Data Jenis Soal Ujian Detail</h3>
 
               <div class="box-tools pull-right">
                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -90,46 +89,39 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <!-- /.box-header -->
             <div class="box-body" style="">
               <div class="row">
+                <div class="col-md-12">
+                  <a href="<?php echo base_url() ?>index.php/home/tambahDataJenisSoalUjianDetail" class="btn btn-primary">add</a>
+                </div>
+              </div>
+              <div class="row">
                 <!-- /.col -->
+                <div class="col-md-12">
+                  <?php if (isset($results)) { ?>
+                    <table class="table table-hover">
+                      <tr>
+                        <th>Id</th>
+                        <th>Nama</th>
+                        <th>Action</th>
+                      </tr>
 
-                  <div class="col-md-12">
-                    <div class="form-group">
-                      <label for="nama">Nama:</label>
-                      <input type="text" class="form-control" name="nama" id="nama">
-                    </div>
-                  </div>
-                  <div class="col-md-12">
-                    <div class="form-group">
-                      <label for="mataPelajaranChoose">Mata Pelajaran:</label>
-                      <button type="button" id="mataPelajaranChoose" data-toggle="modal" data-target="#mataPelajaranModal">Choose</button>
-                    </div>
-                  </div>
-                  <div class="col-md-12">
-                    <div class="form-group">
-                      <label for="mataPelajaranNama">Mata Pelajaran:</label>
-                      <input type="text" class="form-control" id="mataPelajaranId" style="display:none">
-                      <input type="text" class="form-control" id="mataPelajaranNama" readonly>
-                    </div>
-                  </div>
-                  <div class="col-md-12">
-                    <div class="form-group">
-                      <label for="guruChoose">Guru:</label>
-                      <button type="button" id="guruChoose" data-toggle="modal" data-target="#guruModal">Choose</button>
-                    </div>
-                  </div>
-                  <div class="col-md-12">
-                    <div class="form-group">
-                      <label for="guruNama">Guru:</label>
-                      <input type="text" class="form-control" id="guruId" style="display:none">
-                      <input type="text" class="form-control" id="guruNama" readonly>
-                    </div>
-                  </div>
+                      <?php foreach ($results as $data) { ?>
+                        <tr>
+                          <td><?php echo $data->id ?></td>
+                          <td><?php echo $data->nama ?></td>
+                          <td> <a href="<?php echo base_url() . "index.php/home/updateDataJenisSoalUjianDetail/".$data->id ?>" class="btn btn-warning">Update</a>
+                            <a href="<?php echo base_url() . "index.php/home/hapusDataJenisSoalUjianDetail/".$data->id ?>" class="btn btn-danger">Delete</a> </td>
+                        </tr>
+                      <?php } ?>
+                    </table>
+                  <?php } else { ?>
 
-                  <div class="col-md-12">
-                      <input type="submit" class="btn btn-default" name="button" id="simpan">
-                  </div>
+                    <div>No data(s) found.</div>
+                  <?php } ?>
 
-
+                  <?php if (isset($links)) { ?>
+                    <?php echo $links ?>
+                  <?php } ?>
+                </div>
                 <!-- /.col -->
               </div>
               <!-- /.row -->
@@ -145,57 +137,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <!-- /.content -->
   </div>
 
-  <div id="mataPelajaranModal" class="modal fade" role="dialog">
-    <div class="modal-dialog">
 
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Data mata pelajaran</h4>
-        </div>
-        <div class="modal-body">
-          <div id="dataMataPelajaran">
 
-          </div>
-          <div class="row">
-            <button id="dataMataPelajaranPrev" onclick="loadDataMataPelajaranPrev()">prev</button>
-            <button id="dataMataPelajaranNext" onclick="loadDataMataPelajaranNext()">next</button>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-
-    </div>
-  </div>
-
-  <div id="guruModal" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Data guru</h4>
-        </div>
-        <div class="modal-body">
-          <div id="dataGuru">
-
-          </div>
-          <div class="row">
-            <button id="dataGuruPrev" onclick="loadDataGuruPrev()">prev</button>
-            <button id="dataGuruNext" onclick="loadDataGuruNext()">next</button>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-
-    </div>
-  </div>
 
   <!-- /.content-wrapper -->
   <?=$footer ?>
@@ -247,120 +190,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <!-- AdminLTE for demo purposes -->
 <script src="<?php echo base_url() . "assets/"; ?>dist/js/demo.js"></script>
 
-<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js">
-
-</script>
-
 <script type="text/javascript">
-  var pageMataPelajaran = 1;
-  var pageGuru = 1;
-  var pageMataPelajaranTotal;
-  var pageGuruTotal;
-  var recordPerPage = 3;
-  $(document).ready(function() {
 
-  });
-  banyakDataMataPelajaran(recordPerPage);
-  banyakDataGuru(recordPerPage);
-  function banyakDataMataPelajaran(recordPerPage) {
-    $.ajax({
-      url:"<?php echo base_url() ?>index.php/home/banyakDataMataPelajaran/" + recordPerPage,
-      type:"get",
-      success:function(data) {
-        // console.log(data);
-        pageMataPelajaranTotal = data;
-      }
-    });
-  }
-  function banyakDataGuru(recordPerPage) {
-    $.ajax({
-      url:"<?php echo base_url() ?>index.php/home/banyakDataGuru/" + recordPerPage,
-      type:"get",
-      success:function(data) {
-        // console.log(data);
-        pageGuruTotal = data;
-      }
-    });
-  }
-  loadDataMataPelajaran(pageMataPelajaran);
-  loadDataGuru(pageGuru);
-  function loadDataMataPelajaran(page) {
-    $.ajax({
-      url:"<?php echo base_url() ?>index.php/home/loadDataMataPelajaran/" + page + "/" + recordPerPage,
-      type:"get",
-      success:function(data) {
-        // console.log(data);
-        $("#dataMataPelajaran").html(data);
-      }
-    });
-  }
-  function loadDataGuru(page) {
-    $.ajax({
-      url:"<?php echo base_url() ?>index.php/home/loadDataGuru/" + page + "/" + recordPerPage,
-      type:"get",
-      success:function(data) {
-        // console.log(data);
-        $("#dataGuru").html(data);
-      }
-    });
-  }
-  function loadDataMataPelajaranPrev() {
-    if (pageMataPelajaran - 1 >= 1) {
-      pageMataPelajaran--;
-        console.log(pageMataPelajaran);
-      loadDataMataPelajaran(pageMataPelajaran);
-    }
-  }
-  function loadDataGuruPrev() {
-    if (pageGuru - 1 >= 1) {
-      pageGuru--;
-        console.log(pageGuru);
-      loadDataGuru(pageGuru);
-    }
-  }
-  function loadDataMataPelajaranNext() {
-    if (pageMataPelajaran < pageMataPelajaranTotal) {
-      pageMataPelajaran++;
-      console.log(pageMataPelajaran);
-      loadDataMataPelajaran(pageMataPelajaran);
-    }
-  }
-  function loadDataGuruNext() {
-    if (pageGuru < pageGuruTotal) {
-      pageGuru++;
-      console.log(pageGuru);
-      loadDataGuru(pageGuru);
-    }
-  }
-  function chooseMataPelajaran(mataPelajaranId, mataPelajaranNama) {
-    $("#mataPelajaranId").val(mataPelajaranId);
-    $("#mataPelajaranNama").val(mataPelajaranNama);
-  }
-  function chooseGuru(guruId, guruNama) {
-    $("#guruId").val(guruId);
-    $("#guruNama").val(guruNama);
-  }
-  $("#simpan").click(function() {
-    $.ajax({
-      type: "POST",
-      url: "<?php echo base_url() ?>index.php/home/tambahDataSoalUjianSimpan",
-      data: {
-        nama : $("#nama").val(),
-        id_mata_pelajaran : $("#mataPelajaranId").val(),
-        id_guru : $("#guruId").val()
-      },
-      dataType: "json",
-      complete: function(result){
-        console.log("haha");
-        toastr.success('Data soal ujian berhasil ditambah');
-        $("#nama").val("");
-        $("#mataPelajaranId").val("");
-        $("#mataPelajaranNama").val("");
-        $("#guruId").val("");
-        $("#guruNama").val("");
-      }
-  });
-});
 </script>
 </body>
 </html>

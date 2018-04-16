@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 16, 2018 at 01:32 AM
--- Server version: 10.1.31-MariaDB
--- PHP Version: 7.1.15
+-- Waktu pembuatan: 16 Apr 2018 pada 08.11
+-- Versi server: 10.1.31-MariaDB
+-- Versi PHP: 7.2.3
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -25,7 +25,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `guru`
+-- Struktur dari tabel `guru`
 --
 
 CREATE TABLE `guru` (
@@ -35,7 +35,7 @@ CREATE TABLE `guru` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `guru`
+-- Dumping data untuk tabel `guru`
 --
 
 INSERT INTO `guru` (`id`, `nama`, `password`) VALUES
@@ -56,19 +56,20 @@ INSERT INTO `guru` (`id`, `nama`, `password`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `jadwal_ujian`
+-- Struktur dari tabel `jadwal_ujian`
 --
 
 CREATE TABLE `jadwal_ujian` (
   `id` int(11) NOT NULL,
   `id_soal_ujian` int(11) NOT NULL,
-  `tanggal` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `tanggal` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `nama` varchar(500) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `jawaban_soal_ujian_detail`
+-- Struktur dari tabel `jawaban_soal_ujian_detail`
 --
 
 CREATE TABLE `jawaban_soal_ujian_detail` (
@@ -82,7 +83,18 @@ CREATE TABLE `jawaban_soal_ujian_detail` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `kelas`
+-- Struktur dari tabel `jenis_soal_ujian_detail`
+--
+
+CREATE TABLE `jenis_soal_ujian_detail` (
+  `id` int(11) NOT NULL,
+  `nama` varchar(500) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `kelas`
 --
 
 CREATE TABLE `kelas` (
@@ -92,7 +104,7 @@ CREATE TABLE `kelas` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `kelas`
+-- Dumping data untuk tabel `kelas`
 --
 
 INSERT INTO `kelas` (`id`, `nama`, `id_tahun_ajaran`) VALUES
@@ -105,7 +117,7 @@ INSERT INTO `kelas` (`id`, `nama`, `id_tahun_ajaran`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `mata_pelajaran`
+-- Struktur dari tabel `mata_pelajaran`
 --
 
 CREATE TABLE `mata_pelajaran` (
@@ -116,7 +128,7 @@ CREATE TABLE `mata_pelajaran` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `mata_pelajaran`
+-- Dumping data untuk tabel `mata_pelajaran`
 --
 
 INSERT INTO `mata_pelajaran` (`id`, `id_kelas`, `id_guru`, `nama`) VALUES
@@ -128,20 +140,21 @@ INSERT INTO `mata_pelajaran` (`id`, `id_kelas`, `id_guru`, `nama`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `materi_pelajaran`
+-- Struktur dari tabel `materi_pelajaran`
 --
 
 CREATE TABLE `materi_pelajaran` (
   `id` int(11) NOT NULL,
   `id_mata_pelajaran` int(11) NOT NULL,
   `deskripsi` varchar(1000) NOT NULL,
-  `gambar` varchar(500) NOT NULL
+  `gambar` varchar(500) NOT NULL,
+  `nama` varchar(500) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `murid`
+-- Struktur dari tabel `murid`
 --
 
 CREATE TABLE `murid` (
@@ -152,7 +165,7 @@ CREATE TABLE `murid` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `murid`
+-- Dumping data untuk tabel `murid`
 --
 
 INSERT INTO `murid` (`id`, `id_kelas`, `nama`, `password`) VALUES
@@ -163,41 +176,34 @@ INSERT INTO `murid` (`id`, `id_kelas`, `nama`, `password`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `pr`
+-- Struktur dari tabel `pr`
 --
 
 CREATE TABLE `pr` (
   `id` int(11) NOT NULL,
   `id_mata_pelajaran` int(11) NOT NULL,
   `deskripsi` varchar(1000) NOT NULL,
-  `gambar` varchar(500) NOT NULL
+  `gambar` varchar(500) NOT NULL,
+  `nama` varchar(500) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `soal_ujian`
+-- Struktur dari tabel `soal_ujian`
 --
 
 CREATE TABLE `soal_ujian` (
   `id` int(11) NOT NULL,
   `id_mata_pelajaran` int(11) NOT NULL,
+  `id_guru` int(11) NOT NULL,
   `nama` varchar(500) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `soal_ujian`
---
-
-INSERT INTO `soal_ujian` (`id`, `id_mata_pelajaran`, `nama`) VALUES
-(1, 4, 'ulangan harian'),
-(2, 4, 'flad'),
-(4, 2, 'haha');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `soal_ujian_detail`
+-- Struktur dari tabel `soal_ujian_detail`
 --
 
 CREATE TABLE `soal_ujian_detail` (
@@ -213,7 +219,7 @@ CREATE TABLE `soal_ujian_detail` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tahun_ajaran`
+-- Struktur dari tabel `tahun_ajaran`
 --
 
 CREATE TABLE `tahun_ajaran` (
@@ -222,7 +228,7 @@ CREATE TABLE `tahun_ajaran` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `tahun_ajaran`
+-- Dumping data untuk tabel `tahun_ajaran`
 --
 
 INSERT INTO `tahun_ajaran` (`id`, `tahun`) VALUES
@@ -243,137 +249,149 @@ INSERT INTO `tahun_ajaran` (`id`, `tahun`) VALUES
 --
 
 --
--- Indexes for table `guru`
+-- Indeks untuk tabel `guru`
 --
 ALTER TABLE `guru`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `jadwal_ujian`
+-- Indeks untuk tabel `jadwal_ujian`
 --
 ALTER TABLE `jadwal_ujian`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `jawaban_soal_ujian_detail`
+-- Indeks untuk tabel `jawaban_soal_ujian_detail`
 --
 ALTER TABLE `jawaban_soal_ujian_detail`
   ADD PRIMARY KEY (`id_jawaban_soal_ujian_detail`);
 
 --
--- Indexes for table `kelas`
+-- Indeks untuk tabel `jenis_soal_ujian_detail`
+--
+ALTER TABLE `jenis_soal_ujian_detail`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indeks untuk tabel `kelas`
 --
 ALTER TABLE `kelas`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `mata_pelajaran`
+-- Indeks untuk tabel `mata_pelajaran`
 --
 ALTER TABLE `mata_pelajaran`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `materi_pelajaran`
+-- Indeks untuk tabel `materi_pelajaran`
 --
 ALTER TABLE `materi_pelajaran`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `murid`
+-- Indeks untuk tabel `murid`
 --
 ALTER TABLE `murid`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `pr`
+-- Indeks untuk tabel `pr`
 --
 ALTER TABLE `pr`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `soal_ujian`
+-- Indeks untuk tabel `soal_ujian`
 --
 ALTER TABLE `soal_ujian`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `soal_ujian_detail`
+-- Indeks untuk tabel `soal_ujian_detail`
 --
 ALTER TABLE `soal_ujian_detail`
   ADD PRIMARY KEY (`id_soal_ujian_detail`);
 
 --
--- Indexes for table `tahun_ajaran`
+-- Indeks untuk tabel `tahun_ajaran`
 --
 ALTER TABLE `tahun_ajaran`
   ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT untuk tabel yang dibuang
 --
 
 --
--- AUTO_INCREMENT for table `guru`
+-- AUTO_INCREMENT untuk tabel `guru`
 --
 ALTER TABLE `guru`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
--- AUTO_INCREMENT for table `jadwal_ujian`
+-- AUTO_INCREMENT untuk tabel `jadwal_ujian`
 --
 ALTER TABLE `jadwal_ujian`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `jawaban_soal_ujian_detail`
+-- AUTO_INCREMENT untuk tabel `jawaban_soal_ujian_detail`
 --
 ALTER TABLE `jawaban_soal_ujian_detail`
   MODIFY `id_jawaban_soal_ujian_detail` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `kelas`
+-- AUTO_INCREMENT untuk tabel `jenis_soal_ujian_detail`
+--
+ALTER TABLE `jenis_soal_ujian_detail`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT untuk tabel `kelas`
 --
 ALTER TABLE `kelas`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- AUTO_INCREMENT for table `mata_pelajaran`
+-- AUTO_INCREMENT untuk tabel `mata_pelajaran`
 --
 ALTER TABLE `mata_pelajaran`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT for table `materi_pelajaran`
+-- AUTO_INCREMENT untuk tabel `materi_pelajaran`
 --
 ALTER TABLE `materi_pelajaran`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `murid`
+-- AUTO_INCREMENT untuk tabel `murid`
 --
 ALTER TABLE `murid`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT for table `pr`
+-- AUTO_INCREMENT untuk tabel `pr`
 --
 ALTER TABLE `pr`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `soal_ujian`
+-- AUTO_INCREMENT untuk tabel `soal_ujian`
 --
 ALTER TABLE `soal_ujian`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- AUTO_INCREMENT for table `soal_ujian_detail`
+-- AUTO_INCREMENT untuk tabel `soal_ujian_detail`
 --
 ALTER TABLE `soal_ujian_detail`
   MODIFY `id_soal_ujian_detail` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `tahun_ajaran`
+-- AUTO_INCREMENT untuk tabel `tahun_ajaran`
 --
 ALTER TABLE `tahun_ajaran`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;

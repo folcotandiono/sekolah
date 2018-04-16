@@ -32,6 +32,7 @@
           <li><a href="<?php echo base_url() ?>index.php/home/dataTahunAjaran"><i class="fa fa-circle-o"></i> Data tahun ajaran</a></li>
           <li><a href="<?php echo base_url() ?>index.php/home/dataMataPelajaran"><i class="fa fa-circle-o"></i> Data mata pelajaran</a></li>
           <li><a href="<?php echo base_url() ?>index.php/home/dataSoalUjian"><i class="fa fa-circle-o"></i> Data soal ujian</a></li>
+          <li><a href="<?php echo base_url() ?>index.php/home/dataJenisSoalUjianDetail"><i class="fa fa-circle-o"></i> Data jenis soal ujian detail</a></li>
         </ul>
       </li>
     </ul>
