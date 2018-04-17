@@ -113,7 +113,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                   <div class="col-md-12">
                     <div class="form-group">
                       <label for="KelasNama">Nama Kelas:</label>
-                      <input type="text" class="form-control" id="kelasId" style="display:none" value='<?php echo $murid[0]->id_kelas ?>'>
+                      <input type="text" class="form-control" id="kelasId" value="<?php echo $murid[0]->id_kelas ?>" style="display:none" value='<?php echo $murid[0]->id_kelas ?>'>
                       <input type="text" class="form-control" id="kelasNama" value='<?php echo $murid[0]->nama_kelas ?>' readonly>
                     </div>
                   </div>

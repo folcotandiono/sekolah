@@ -108,7 +108,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <div class="form-group">
                       <label for="tahunAjaranTahun">Tahun Ajaran:</label>
                       <input type="text" class="form-control" id="tahunAjaranId" style="display:none" value='<?php echo $kelas[0]->id_tahun_ajaran ?>'>
-                      <input type="text" class="form-control" id="tahunAjaranTahun" value='<?php echo $kelas[0]->tahun ?>' readonly>
+                      <input type="text" class="form-control" id="tahunAjaranTahun" value='<?php echo $kelas[0]->tahun_tahun_ajaran ?>' readonly>
                     </div>
                   </div>
 

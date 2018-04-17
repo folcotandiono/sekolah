@@ -521,10 +521,10 @@ class Home extends CI_Controller {
 	}
 
 	public function updateDataKelas($id) {
-		$kelas = $this->db->query('Select kelas.id as id, kelas.nama as nama,
-		 													kelas.id_tahun_ajaran, tahun_ajaran.tahun as tahun from kelas join
-															tahun_ajaran on kelas.id_tahun_ajaran = tahun_ajaran.id
-															where kelas.id = ' . $id)->result();
+		$kelas = $this->db->query('Select kelas.id as id, kelas.nama as nama, kelas.id_tahun_ajaran, tahun_ajaran.tahun as tahun_tahun_ajaran
+									from kelas 
+									join tahun_ajaran on kelas.id_tahun_ajaran = tahun_ajaran.id
+									where kelas.id = ' . $id)->result();
 		$data = array(
 	    "sidebar" => $this->load->view('sidebar', NULL, true),
 			"footer" => $this->load->view('footer', NULL, true),
@@ -664,7 +664,7 @@ class Home extends CI_Controller {
 	}
 
 	public function updateDataMataPelajaran($id) {
-		$mataPelajaran = $this->db->query('Select mata_pelajaran.id, mata_pelajaran.nama, kelas.nama as kelas, guru.nama as guru
+		$mataPelajaran = $this->db->query('Select mata_pelajaran.id, mata_pelajaran.nama, mata_pelajaran.id_kelas, kelas.nama as nama_kelas, mata_pelajaran.id_guru, guru.nama as nama_guru
 		 													from mata_pelajaran
 															join kelas on kelas.id = mata_pelajaran.id_kelas
 															join guru on guru.id = mata_pelajaran.id_guru
@@ -812,7 +812,7 @@ class Home extends CI_Controller {
 	}
 
 	public function updateDataSoalUjian($id) {
-		$soal_ujian = $this->db->query('Select soal_ujian.id, mata_pelajaran.nama as mata_pelajaran, soal_ujian.nama, guru.nama as guru
+		$soal_ujian = $this->db->query('Select soal_ujian.id, soal_ujian.id_mata_pelajaran, mata_pelajaran.nama as nama_mata_pelajaran, soal_ujian.nama, soal_ujian.id_guru, guru.nama as nama_guru
 		 													from soal_ujian
 															join mata_pelajaran on soal_ujian.id_mata_pelajaran = mata_pelajaran.id
 															join guru on soal_ujian.id_guru = guru.id
@@ -1092,7 +1092,6 @@ class Home extends CI_Controller {
 		$soal_ujian_detail["id_soal_ujian"] = $this->input->post("id_soal_ujian");
 		$soal_ujian_detail["id_jenis_soal_ujian_detail"] = $this->input->post("id_jenis_soal_ujian_detail");
 		$soal_ujian_detail["soal_tulisan"] = $this->input->post("soal_tulisan");
-		// $soal_ujian_detail["soal_gambar"] = $this->input->post("soal_gambar");
 		$soal_ujian_detail["soal_gambar"] = array();
 		$filesCount = count($_FILES['soal_gambar']['name']);
 		for($i = 0; $i < $filesCount; $i++){
@@ -1114,16 +1113,145 @@ class Home extends CI_Controller {
 				array_push($soal_ujian_detail["soal_gambar"], $fileData['file_name']);
 			}
 		}
-		// $soal_ujian_detail["pilihan_jawaban_tulisan"] = $this->input->post("pilihan_jawaban_tulisan");
-		// $soal_ujian_detail["pilihan_jawaban_gambar"] = $this->input->post("pilihan_jawaban_gambar");
-		// $soal_ujian_detail["kunci_jawaban"] = $this->input->post("kunci_jawaban");
-    	// $this->db->insert("soal_ujian_detail", $soal_ujian_detail);
+		$soal_ujian_detail["soal_gambar"] = json_encode($soal_ujian_detail["soal_gambar"]);
+
+		$soal_ujian_detail["pilihan_jawaban_tulisan"] = array();
+		array_push($soal_ujian_detail["pilihan_jawaban_tulisan"], $this->input->post("pilihan_jawaban_tulisan_a"));
+		array_push($soal_ujian_detail["pilihan_jawaban_tulisan"], $this->input->post("pilihan_jawaban_tulisan_b"));
+		array_push($soal_ujian_detail["pilihan_jawaban_tulisan"], $this->input->post("pilihan_jawaban_tulisan_c"));
+		array_push($soal_ujian_detail["pilihan_jawaban_tulisan"], $this->input->post("pilihan_jawaban_tulisan_d"));
+		array_push($soal_ujian_detail["pilihan_jawaban_tulisan"], $this->input->post("pilihan_jawaban_tulisan_e"));
+		$soal_ujian_detail["pilihan_jawaban_tulisan"] = json_encode($soal_ujian_detail["pilihan_jawaban_tulisan"]);
+
+		$soal_ujian_detail["pilihan_jawaban_gambar"] = array();
+		$filesCount = count($_FILES['pilihan_jawaban_gambar_a']['name']);
+		$temp = array();
+		for($i = 0; $i < $filesCount; $i++){
+			$_FILES['userFile']['name'] = $_FILES['pilihan_jawaban_gambar_a']['name'][$i];
+			$_FILES['userFile']['type'] = $_FILES['pilihan_jawaban_gambar_a']['type'][$i];
+			$_FILES['userFile']['tmp_name'] = $_FILES['pilihan_jawaban_gambar_a']['tmp_name'][$i];
+			$_FILES['userFile']['error'] = $_FILES['pilihan_jawaban_gambar_a']['error'][$i];
+			$_FILES['userFile']['size'] = $_FILES['pilihan_jawaban_gambar_a']['size'][$i];
+
+			$uploadPath = './uploads/';
+			$config['upload_path'] = $uploadPath;
+			$config['allowed_types'] = 'gif|jpg|png';
+			$config['encrypt_name'] = TRUE;
+			
+			$this->load->library('upload', $config);
+			$this->upload->initialize($config);
+			if($this->upload->do_upload('userFile')){
+				$fileData = $this->upload->data();
+				array_push($temp, $fileData['file_name']);
+			}
+		}
+		array_push($soal_ujian_detail["pilihan_jawaban_gambar"], $temp);
+
+		$filesCount = count($_FILES['pilihan_jawaban_gambar_b']['name']);
+		$temp = array();
+		for($i = 0; $i < $filesCount; $i++){
+			$_FILES['userFile']['name'] = $_FILES['pilihan_jawaban_gambar_b']['name'][$i];
+			$_FILES['userFile']['type'] = $_FILES['pilihan_jawaban_gambar_b']['type'][$i];
+			$_FILES['userFile']['tmp_name'] = $_FILES['pilihan_jawaban_gambar_b']['tmp_name'][$i];
+			$_FILES['userFile']['error'] = $_FILES['pilihan_jawaban_gambar_b']['error'][$i];
+			$_FILES['userFile']['size'] = $_FILES['pilihan_jawaban_gambar_b']['size'][$i];
+
+			$uploadPath = './uploads/';
+			$config['upload_path'] = $uploadPath;
+			$config['allowed_types'] = 'gif|jpg|png';
+			$config['encrypt_name'] = TRUE;
+			
+			$this->load->library('upload', $config);
+			$this->upload->initialize($config);
+			if($this->upload->do_upload('userFile')){
+				$fileData = $this->upload->data();
+				array_push($temp, $fileData['file_name']);
+			}
+		}
+		array_push($soal_ujian_detail["pilihan_jawaban_gambar"], $temp);
+
+		$filesCount = count($_FILES['pilihan_jawaban_gambar_c']['name']);
+		$temp = array();
+		for($i = 0; $i < $filesCount; $i++){
+			$_FILES['userFile']['name'] = $_FILES['pilihan_jawaban_gambar_c']['name'][$i];
+			$_FILES['userFile']['type'] = $_FILES['pilihan_jawaban_gambar_c']['type'][$i];
+			$_FILES['userFile']['tmp_name'] = $_FILES['pilihan_jawaban_gambar_c']['tmp_name'][$i];
+			$_FILES['userFile']['error'] = $_FILES['pilihan_jawaban_gambar_c']['error'][$i];
+			$_FILES['userFile']['size'] = $_FILES['pilihan_jawaban_gambar_c']['size'][$i];
+
+			$uploadPath = './uploads/';
+			$config['upload_path'] = $uploadPath;
+			$config['allowed_types'] = 'gif|jpg|png';
+			$config['encrypt_name'] = TRUE;
+			
+			$this->load->library('upload', $config);
+			$this->upload->initialize($config);
+			if($this->upload->do_upload('userFile')){
+				$fileData = $this->upload->data();
+				array_push($temp, $fileData['file_name']);
+			}
+		}
+		array_push($soal_ujian_detail["pilihan_jawaban_gambar"], $temp);
+
+		$filesCount = count($_FILES['pilihan_jawaban_gambar_d']['name']);
+		$temp = array();
+		for($i = 0; $i < $filesCount; $i++){
+			$_FILES['userFile']['name'] = $_FILES['pilihan_jawaban_gambar_d']['name'][$i];
+			$_FILES['userFile']['type'] = $_FILES['pilihan_jawaban_gambar_d']['type'][$i];
+			$_FILES['userFile']['tmp_name'] = $_FILES['pilihan_jawaban_gambar_d']['tmp_name'][$i];
+			$_FILES['userFile']['error'] = $_FILES['pilihan_jawaban_gambar_d']['error'][$i];
+			$_FILES['userFile']['size'] = $_FILES['pilihan_jawaban_gambar_d']['size'][$i];
+
+			$uploadPath = './uploads/';
+			$config['upload_path'] = $uploadPath;
+			$config['allowed_types'] = 'gif|jpg|png';
+			$config['encrypt_name'] = TRUE;
+			
+			$this->load->library('upload', $config);
+			$this->upload->initialize($config);
+			if($this->upload->do_upload('userFile')){
+				$fileData = $this->upload->data();
+				array_push($temp, $fileData['file_name']);
+			}
+		}
+		array_push($soal_ujian_detail["pilihan_jawaban_gambar"], $temp);
+
+		$filesCount = count($_FILES['pilihan_jawaban_gambar_e']['name']);
+		$temp = array();
+		for($i = 0; $i < $filesCount; $i++){
+			$_FILES['userFile']['name'] = $_FILES['pilihan_jawaban_gambar_e']['name'][$i];
+			$_FILES['userFile']['type'] = $_FILES['pilihan_jawaban_gambar_e']['type'][$i];
+			$_FILES['userFile']['tmp_name'] = $_FILES['pilihan_jawaban_gambar_e']['tmp_name'][$i];
+			$_FILES['userFile']['error'] = $_FILES['pilihan_jawaban_gambar_e']['error'][$i];
+			$_FILES['userFile']['size'] = $_FILES['pilihan_jawaban_gambar_e']['size'][$i];
+
+			$uploadPath = './uploads/';
+			$config['upload_path'] = $uploadPath;
+			$config['allowed_types'] = 'gif|jpg|png';
+			$config['encrypt_name'] = TRUE;
+			
+			$this->load->library('upload', $config);
+			$this->upload->initialize($config);
+			if($this->upload->do_upload('userFile')){
+				$fileData = $this->upload->data();
+				array_push($temp, $fileData['file_name']);
+			}
+		}
+		array_push($soal_ujian_detail["pilihan_jawaban_gambar"], $temp);
+		$soal_ujian_detail["pilihan_jawaban_gambar"] = json_encode($soal_ujian_detail["pilihan_jawaban_gambar"]);
+
+		$soal_ujian_detail["kunci_jawaban"] = $this->input->post("kunci_jawaban");
+		print_r($soal_ujian_detail);
+		$this->db->insert("soal_ujian_detail", $soal_ujian_detail);
+		redirect("/home/dataSoalUjianDetail", "location");
 	}
 
 	public function updateDataSoalUjianDetail($id) {
-		$soal_ujian_detail = $this->db->query('Select *
+		$soal_ujian_detail = $this->db->query('Select soal_ujian_detail.id, soal_ujian_detail.id_soal_ujian, soal_ujian.nama as nama_soal_ujian, soal_ujian_detail.id_jenis_soal_ujian_detail, jenis_soal_ujian_detail.nama as nama_jenis_soal_ujian_detail, soal_ujian_detail.soal_tulisan, soal_ujian_detail.soal_gambar, soal_ujian_detail.pilihan_jawaban_tulisan, soal_ujian_detail.pilihan_jawaban_gambar, soal_ujian_detail.kunci_jawaban
 												from soal_ujian_detail
-												where id = ' . $id)->result();
+												join soal_ujian on soal_ujian_detail.id_soal_ujian = soal_ujian.id
+												join jenis_soal_ujian_detail on soal_ujian_detail.id_jenis_soal_ujian_detail = jenis_soal_ujian_detail.id
+												where soal_ujian_detail.id = ' . $id)->result();
 		$data = array(
 	    	"sidebar" => $this->load->view('sidebar', NULL, true),
 			"footer" => $this->load->view('footer', NULL, true),
@@ -1137,12 +1265,159 @@ class Home extends CI_Controller {
 		$soal_ujian_detail["id_soal_ujian"] = $this->input->post("id_soal_ujian");
 		$soal_ujian_detail["id_jenis_soal_ujian_detail"] = $this->input->post("id_jenis_soal_ujian_detail");
 		$soal_ujian_detail["soal_tulisan"] = $this->input->post("soal_tulisan");
-		$soal_ujian_detail["soal_gambar"] = $this->input->post("soal_gambar");
-		$soal_ujian_detail["pilihan_jawaban_tulisan"] = $this->input->post("pilihan_jawaban_tulisan");
-		$soal_ujian_detail["pilihan_jawaban_gambar"] = $this->input->post("pilihan_jawaban_gambar");
+		$soal_ujian_detail["soal_gambar"] = array();
+		$filesCount = count($_FILES['soal_gambar']['name']);
+		for($i = 0; $i < $filesCount; $i++){
+			$_FILES['userFile']['name'] = $_FILES['soal_gambar']['name'][$i];
+			$_FILES['userFile']['type'] = $_FILES['soal_gambar']['type'][$i];
+			$_FILES['userFile']['tmp_name'] = $_FILES['soal_gambar']['tmp_name'][$i];
+			$_FILES['userFile']['error'] = $_FILES['soal_gambar']['error'][$i];
+			$_FILES['userFile']['size'] = $_FILES['soal_gambar']['size'][$i];
+
+			$uploadPath = './uploads/';
+			$config['upload_path'] = $uploadPath;
+			$config['allowed_types'] = 'gif|jpg|png';
+			$config['encrypt_name'] = TRUE;
+			
+			$this->load->library('upload', $config);
+			$this->upload->initialize($config);
+			if($this->upload->do_upload('userFile')){
+				$fileData = $this->upload->data();
+				array_push($soal_ujian_detail["soal_gambar"], $fileData['file_name']);
+			}
+		}
+		$soal_ujian_detail["soal_gambar"] = json_encode($soal_ujian_detail["soal_gambar"]);
+
+		$soal_ujian_detail["pilihan_jawaban_tulisan"] = array();
+		array_push($soal_ujian_detail["pilihan_jawaban_tulisan"], $this->input->post("pilihan_jawaban_tulisan_a"));
+		array_push($soal_ujian_detail["pilihan_jawaban_tulisan"], $this->input->post("pilihan_jawaban_tulisan_b"));
+		array_push($soal_ujian_detail["pilihan_jawaban_tulisan"], $this->input->post("pilihan_jawaban_tulisan_c"));
+		array_push($soal_ujian_detail["pilihan_jawaban_tulisan"], $this->input->post("pilihan_jawaban_tulisan_d"));
+		array_push($soal_ujian_detail["pilihan_jawaban_tulisan"], $this->input->post("pilihan_jawaban_tulisan_e"));
+		$soal_ujian_detail["pilihan_jawaban_tulisan"] = json_encode($soal_ujian_detail["pilihan_jawaban_tulisan"]);
+
+		$soal_ujian_detail["pilihan_jawaban_gambar"] = array();
+		$filesCount = count($_FILES['pilihan_jawaban_gambar_a']['name']);
+		$temp = array();
+		for($i = 0; $i < $filesCount; $i++){
+			$_FILES['userFile']['name'] = $_FILES['pilihan_jawaban_gambar_a']['name'][$i];
+			$_FILES['userFile']['type'] = $_FILES['pilihan_jawaban_gambar_a']['type'][$i];
+			$_FILES['userFile']['tmp_name'] = $_FILES['pilihan_jawaban_gambar_a']['tmp_name'][$i];
+			$_FILES['userFile']['error'] = $_FILES['pilihan_jawaban_gambar_a']['error'][$i];
+			$_FILES['userFile']['size'] = $_FILES['pilihan_jawaban_gambar_a']['size'][$i];
+
+			$uploadPath = './uploads/';
+			$config['upload_path'] = $uploadPath;
+			$config['allowed_types'] = 'gif|jpg|png';
+			$config['encrypt_name'] = TRUE;
+			
+			$this->load->library('upload', $config);
+			$this->upload->initialize($config);
+			if($this->upload->do_upload('userFile')){
+				$fileData = $this->upload->data();
+				array_push($temp, $fileData['file_name']);
+			}
+		}
+		array_push($soal_ujian_detail["pilihan_jawaban_gambar"], $temp);
+
+		$filesCount = count($_FILES['pilihan_jawaban_gambar_b']['name']);
+		$temp = array();
+		for($i = 0; $i < $filesCount; $i++){
+			$_FILES['userFile']['name'] = $_FILES['pilihan_jawaban_gambar_b']['name'][$i];
+			$_FILES['userFile']['type'] = $_FILES['pilihan_jawaban_gambar_b']['type'][$i];
+			$_FILES['userFile']['tmp_name'] = $_FILES['pilihan_jawaban_gambar_b']['tmp_name'][$i];
+			$_FILES['userFile']['error'] = $_FILES['pilihan_jawaban_gambar_b']['error'][$i];
+			$_FILES['userFile']['size'] = $_FILES['pilihan_jawaban_gambar_b']['size'][$i];
+
+			$uploadPath = './uploads/';
+			$config['upload_path'] = $uploadPath;
+			$config['allowed_types'] = 'gif|jpg|png';
+			$config['encrypt_name'] = TRUE;
+			
+			$this->load->library('upload', $config);
+			$this->upload->initialize($config);
+			if($this->upload->do_upload('userFile')){
+				$fileData = $this->upload->data();
+				array_push($temp, $fileData['file_name']);
+			}
+		}
+		array_push($soal_ujian_detail["pilihan_jawaban_gambar"], $temp);
+
+		$filesCount = count($_FILES['pilihan_jawaban_gambar_c']['name']);
+		$temp = array();
+		for($i = 0; $i < $filesCount; $i++){
+			$_FILES['userFile']['name'] = $_FILES['pilihan_jawaban_gambar_c']['name'][$i];
+			$_FILES['userFile']['type'] = $_FILES['pilihan_jawaban_gambar_c']['type'][$i];
+			$_FILES['userFile']['tmp_name'] = $_FILES['pilihan_jawaban_gambar_c']['tmp_name'][$i];
+			$_FILES['userFile']['error'] = $_FILES['pilihan_jawaban_gambar_c']['error'][$i];
+			$_FILES['userFile']['size'] = $_FILES['pilihan_jawaban_gambar_c']['size'][$i];
+
+			$uploadPath = './uploads/';
+			$config['upload_path'] = $uploadPath;
+			$config['allowed_types'] = 'gif|jpg|png';
+			$config['encrypt_name'] = TRUE;
+			
+			$this->load->library('upload', $config);
+			$this->upload->initialize($config);
+			if($this->upload->do_upload('userFile')){
+				$fileData = $this->upload->data();
+				array_push($temp, $fileData['file_name']);
+			}
+		}
+		array_push($soal_ujian_detail["pilihan_jawaban_gambar"], $temp);
+
+		$filesCount = count($_FILES['pilihan_jawaban_gambar_d']['name']);
+		$temp = array();
+		for($i = 0; $i < $filesCount; $i++){
+			$_FILES['userFile']['name'] = $_FILES['pilihan_jawaban_gambar_d']['name'][$i];
+			$_FILES['userFile']['type'] = $_FILES['pilihan_jawaban_gambar_d']['type'][$i];
+			$_FILES['userFile']['tmp_name'] = $_FILES['pilihan_jawaban_gambar_d']['tmp_name'][$i];
+			$_FILES['userFile']['error'] = $_FILES['pilihan_jawaban_gambar_d']['error'][$i];
+			$_FILES['userFile']['size'] = $_FILES['pilihan_jawaban_gambar_d']['size'][$i];
+
+			$uploadPath = './uploads/';
+			$config['upload_path'] = $uploadPath;
+			$config['allowed_types'] = 'gif|jpg|png';
+			$config['encrypt_name'] = TRUE;
+			
+			$this->load->library('upload', $config);
+			$this->upload->initialize($config);
+			if($this->upload->do_upload('userFile')){
+				$fileData = $this->upload->data();
+				array_push($temp, $fileData['file_name']);
+			}
+		}
+		array_push($soal_ujian_detail["pilihan_jawaban_gambar"], $temp);
+
+		$filesCount = count($_FILES['pilihan_jawaban_gambar_e']['name']);
+		$temp = array();
+		for($i = 0; $i < $filesCount; $i++){
+			$_FILES['userFile']['name'] = $_FILES['pilihan_jawaban_gambar_e']['name'][$i];
+			$_FILES['userFile']['type'] = $_FILES['pilihan_jawaban_gambar_e']['type'][$i];
+			$_FILES['userFile']['tmp_name'] = $_FILES['pilihan_jawaban_gambar_e']['tmp_name'][$i];
+			$_FILES['userFile']['error'] = $_FILES['pilihan_jawaban_gambar_e']['error'][$i];
+			$_FILES['userFile']['size'] = $_FILES['pilihan_jawaban_gambar_e']['size'][$i];
+
+			$uploadPath = './uploads/';
+			$config['upload_path'] = $uploadPath;
+			$config['allowed_types'] = 'gif|jpg|png';
+			$config['encrypt_name'] = TRUE;
+			
+			$this->load->library('upload', $config);
+			$this->upload->initialize($config);
+			if($this->upload->do_upload('userFile')){
+				$fileData = $this->upload->data();
+				array_push($temp, $fileData['file_name']);
+			}
+		}
+		array_push($soal_ujian_detail["pilihan_jawaban_gambar"], $temp);
+		$soal_ujian_detail["pilihan_jawaban_gambar"] = json_encode($soal_ujian_detail["pilihan_jawaban_gambar"]);
+
 		$soal_ujian_detail["kunci_jawaban"] = $this->input->post("kunci_jawaban");
+		print_r($soal_ujian_detail);
     	$this->db->where("id", $soal_ujian_detail["id"]);
 		$this->db->update('soal_ujian_detail', $soal_ujian_detail);
+		redirect("/home/dataSoalUjianDetail", "location");
 	}
 
 	public function hapusDataSoalUjianDetail($id) {

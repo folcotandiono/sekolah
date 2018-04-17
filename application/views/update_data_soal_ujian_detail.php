@@ -80,7 +80,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <div class="col-md-12">
           <div class="box">
             <div class="box-header with-border">
-              <h3 class="box-title">Tambah Data Soal Ujian Detail</h3>
+              <h3 class="box-title">Update Data Soal Ujian Detail</h3>
 
               <div class="box-tools pull-right">
                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -91,7 +91,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <div class="box-body" style="">
               <div class="row">
                 <!-- /.col -->
-                <form action="<?php echo base_url() ?>index.php/home/tambahDataSoalUjianDetailSimpan" id="form" method="post" enctype='multipart/form-data'>
+                <form action="<?php echo base_url() ?>index.php/home/updateDataSoalUjianDetailSimpan" id="form" method="post" enctype='multipart/form-data'>
+                  <input type="text" id="id" name="id" value="<?php echo $soal_ujian_detail[0]->id ?>" style="display:none">
                   <div class="col-md-12">
                     <div class="form-group">
                       <label for="soalUjianChoose">Soal Ujian:</label>
@@ -101,8 +102,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                   <div class="col-md-12">
                     <div class="form-group">
                       <label for="soalUjianNama">Soal Ujian:</label>
-                      <input type="text" class="form-control" id="soalUjianId" name="id_soal_ujian" style="display:none">
-                      <input type="text" class="form-control" id="soalUjianNama" readonly>
+                      <input type="text" class="form-control" id="soalUjianId" value="<?php echo $soal_ujian_detail[0]->id_soal_ujian ?>" name="id_soal_ujian" style="display:none">
+                      <input type="text" class="form-control" id="soalUjianNama" value="<?php echo $soal_ujian_detail[0]->nama_soal_ujian ?>" readonly>
                     </div>
                   </div>
                   <div class="col-md-12">
@@ -114,15 +115,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                   <div class="col-md-12">
                     <div class="form-group">
                       <label for="jenisSoalUjianDetailNama">Jenis Soal Ujian Detail:</label>
-                      <input type="text" class="form-control" id="jenisSoalUjianDetailId" name="id_jenis_soal_ujian_detail" style="display:none">
-                      <input type="text" class="form-control" id="jenisSoalUjianDetailNama" readonly>
+                      <input type="text" class="form-control" id="jenisSoalUjianDetailId" value="<?php echo $soal_ujian_detail[0]->id_jenis_soal_ujian_detail ?>" name="id_jenis_soal_ujian_detail" style="display:none">
+                      <input type="text" class="form-control" id="jenisSoalUjianDetailNama" value="<?php echo $soal_ujian_detail[0]->nama_jenis_soal_ujian_detail ?>" readonly>
                     </div>
                   </div>
 
                   <div class="col-md-12">
                     <div class="form-group">
                       <label for="soalTulisan">Soal:</label>
-                      <textarea class="form-control" id="soalTulisan" name="soal_tulisan" rows="3"></textarea>
+                      <textarea class="form-control" id="soalTulisan" name="soal_tulisan" rows="3"><?php echo $soal_ujian_detail[0]->soal_tulisan ?></textarea>
                     </div>
                   </div>
 
@@ -250,7 +251,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                   <div class="col-md-12">
                     <div class="form-group">
                       <label for="kunciJawaban">Kunci Jawaban:</label>
-                      <input type="text" class="form-control" id="kunciJawaban" name="kunci_jawaban">
+                      <input type="text" class="form-control" id="kunciJawaban" value="<?php echo $soal_ujian_detail[0]->kunci_jawaban ?>" name="kunci_jawaban">
                     </div>
                   </div>
 
@@ -387,7 +388,61 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   var pageJenisSoalUjianDetailTotal;
   var recordPerPage = 3;
   $(document).ready(function() {
+    var soalGambar = <?php echo $soal_ujian_detail[0]->soal_gambar ?>;
+    for (var i = 0; i < soalGambar.length; i++) {
+      var gambar = "";
+      gambar += "<div class='col-md-3'>";
+      gambar += "<img src = '" +  "<?php echo base_url() ?>" + "./uploads/" + soalGambar[i] + "' class='img-thumbnail'>";
+      gambar += "</div>";
+      $("#soalGambarLihat").append(gambar);
+    }
+    var pilihanJawabanTulisan = <?php echo $soal_ujian_detail[0]->pilihan_jawaban_tulisan ?>;
+    $("#pilihanJawabanTulisanA").val(pilihanJawabanTulisan[0]);
+    $("#pilihanJawabanTulisanB").val(pilihanJawabanTulisan[1]);
+    $("#pilihanJawabanTulisanC").val(pilihanJawabanTulisan[2]);
+    $("#pilihanJawabanTulisanD").val(pilihanJawabanTulisan[3]);
+    $("#pilihanJawabanTulisanE").val(pilihanJawabanTulisan[4]);
+    
+    var pilihanJawabanGambar = <?php echo $soal_ujian_detail[0]->pilihan_jawaban_gambar ?>;
+    for (var i = 0; i < pilihanJawabanGambar[0].length; i++) {
+      var gambar = "";
+      gambar += "<div class='col-md-3'>";
+      gambar += "<img src = '" +  "<?php echo base_url() ?>" + "./uploads/" + pilihanJawabanGambar[0][i] + "' class='img-thumbnail'>";
+      gambar += "</div>";
+      $("#pilihanJawabanGambarALihat").append(gambar);
+    }
 
+    for (var i = 0; i < pilihanJawabanGambar[1].length; i++) {
+      var gambar = "";
+      gambar += "<div class='col-md-3'>";
+      gambar += "<img src = '" +  "<?php echo base_url() ?>" + "./uploads/" + pilihanJawabanGambar[1][i] + "' class='img-thumbnail'>";
+      gambar += "</div>";
+      $("#pilihanJawabanGambarBLihat").append(gambar);
+    }
+
+    for (var i = 0; i < pilihanJawabanGambar[2].length; i++) {
+      var gambar = "";
+      gambar += "<div class='col-md-3'>";
+      gambar += "<img src = '" +  "<?php echo base_url() ?>" + "./uploads/" + pilihanJawabanGambar[2][i] + "' class='img-thumbnail'>";
+      gambar += "</div>";
+      $("#pilihanJawabanGambarCLihat").append(gambar);
+    }
+
+    for (var i = 0; i < pilihanJawabanGambar[3].length; i++) {
+      var gambar = "";
+      gambar += "<div class='col-md-3'>";
+      gambar += "<img src = '" +  "<?php echo base_url() ?>" + "./uploads/" + pilihanJawabanGambar[3][i] + "' class='img-thumbnail'>";
+      gambar += "</div>";
+      $("#pilihanJawabanGambarDLihat").append(gambar);
+    }
+
+    for (var i = 0; i < pilihanJawabanGambar[4].length; i++) {
+      var gambar = "";
+      gambar += "<div class='col-md-3'>";
+      gambar += "<img src = '" +  "<?php echo base_url() ?>" + "./uploads/" + pilihanJawabanGambar[4][i] + "' class='img-thumbnail'>";
+      gambar += "</div>";
+      $("#pilihanJawabanGambarELihat").append(gambar);
+    }
   });
   banyakDataSoalUjian(recordPerPage);
   banyakDataJenisSoalUjianDetail(recordPerPage);

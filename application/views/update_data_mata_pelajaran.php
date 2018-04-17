@@ -107,8 +107,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                   <div class="col-md-12">
                     <div class="form-group">
                       <label for="kelasNama">Kelas:</label>
-                      <input type="text" class="form-control" id="kelasId" style="display:none">
-                      <input type="text" class="form-control" id="kelasNama" value="<?php echo $mata_pelajaran[0]->kelas ?>" readonly>
+                      <input type="text" class="form-control" id="kelasId" value="<?php echo $mata_pelajaran[0]->id_kelas ?>" style="display:none">
+                      <input type="text" class="form-control" id="kelasNama" value="<?php echo $mata_pelajaran[0]->nama_kelas ?>" readonly>
                     </div>
                   </div>
                   <div class="col-md-12">
@@ -120,8 +120,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                   <div class="col-md-12">
                     <div class="form-group">
                       <label for="guruNama">Guru:</label>
-                      <input type="text" class="form-control" id="guruId" style="display:none">
-                      <input type="text" class="form-control" id="guruNama" value="<?php echo $mata_pelajaran[0]->guru ?>" readonly>
+                      <input type="text" class="form-control" id="guruId" value="<?php echo $mata_pelajaran[0]->id_guru ?>" style="display:none">
+                      <input type="text" class="form-control" id="guruNama" value="<?php echo $mata_pelajaran[0]->nama_guru ?>" readonly>
                     </div>
                   </div>
 

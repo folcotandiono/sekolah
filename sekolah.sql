@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 16, 2018 at 05:59 PM
+-- Generation Time: Apr 17, 2018 at 06:00 PM
 -- Server version: 10.1.31-MariaDB
 -- PHP Version: 7.1.15
 
@@ -74,7 +74,7 @@ CREATE TABLE `jadwal_ujian` (
 --
 
 CREATE TABLE `jawaban_soal_ujian_detail` (
-  `id_jawaban_soal_ujian_detail` int(11) NOT NULL,
+  `id` int(11) NOT NULL,
   `id_soal_ujian_detail` int(11) NOT NULL,
   `id_murid` int(11) NOT NULL,
   `jawaban_tulisan` varchar(1000) NOT NULL,
@@ -224,12 +224,20 @@ INSERT INTO `soal_ujian` (`id`, `id_mata_pelajaran`, `id_guru`, `nama`) VALUES
 CREATE TABLE `soal_ujian_detail` (
   `id` int(11) NOT NULL,
   `id_soal_ujian` int(11) NOT NULL,
+  `id_jenis_soal_ujian_detail` int(11) NOT NULL,
   `soal_tulisan` varchar(1000) NOT NULL,
-  `soal_gambar` varchar(500) NOT NULL,
+  `soal_gambar` varchar(5000) NOT NULL,
   `pilihan_jawaban_tulisan` varchar(1000) NOT NULL,
-  `pilihan_jawaban_gambar` varchar(500) NOT NULL,
+  `pilihan_jawaban_gambar` varchar(5000) NOT NULL,
   `kunci_jawaban` varchar(1000) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `soal_ujian_detail`
+--
+
+INSERT INTO `soal_ujian_detail` (`id`, `id_soal_ujian`, `id_jenis_soal_ujian_detail`, `soal_tulisan`, `soal_gambar`, `pilihan_jawaban_tulisan`, `pilihan_jawaban_gambar`, `kunci_jawaban`) VALUES
+(3, 1, 1, 'aaaaaaaa bbbbbbbbbbbbbbb ccccccccccc', '[\"0cf0197eeecb34456c88c2851e304bcf.png\",\"1aab48ebc090c64a3c273650e38ba7e8.png\",\"91f0f574ef6c64d2f4b399bd9b6226ee.png\"]', '[\"aaaaaa aaaaaaaaaaa\",\"bbbbbbb bbbbbbbbb\",\"ccccccc ccccccccccccc\",\"ddddddd dddddddddddd\",\"ee eeeeeeeeeeeeee\"]', '[[\"963719753afe77ce6a1739119c765061.png\",\"cb8bb41b6dc6f0427a7ca77b8eaaa3f4.png\",\"fc6c60ca9d2a58b49a8843f8a7d7a2be.png\"],[\"91823da4e9aa129650259f2a36e6d5fe.png\",\"865ba747f335f852b5dca52521060ce9.png\",\"9ea1174a5a21d9408394053d6e363812.png\"],[\"87c340403ce512275ded6169374fac14.png\",\"9154efaace8aa9374362da209730c929.png\",\"e02e55f4e43083329bf2970455b8dc08.png\"],[\"e7e428aeb96184eee93a6d4c2499e72a.png\",\"3729d5c10069bad0d9e98f79cfeff274.png\",\"d70b1a98d98dcda2ee3a64f78556641a.png\"],[\"4901c544d34619f606c5629c48222c66.png\",\"d4bb7aeac70cd67e0faa056597327bfd.png\",\"fc33e302251856abe3779b31997e1654.png\"]]', 'fka;ksl fjkdasl;kfklads;fjads;kflads;lfjla');
 
 -- --------------------------------------------------------
 
@@ -279,7 +287,7 @@ ALTER TABLE `jadwal_ujian`
 -- Indexes for table `jawaban_soal_ujian_detail`
 --
 ALTER TABLE `jawaban_soal_ujian_detail`
-  ADD PRIMARY KEY (`id_jawaban_soal_ujian_detail`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `jenis_soal_ujian_detail`
@@ -355,7 +363,7 @@ ALTER TABLE `jadwal_ujian`
 -- AUTO_INCREMENT for table `jawaban_soal_ujian_detail`
 --
 ALTER TABLE `jawaban_soal_ujian_detail`
-  MODIFY `id_jawaban_soal_ujian_detail` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `jenis_soal_ujian_detail`
@@ -403,7 +411,7 @@ ALTER TABLE `soal_ujian`
 -- AUTO_INCREMENT for table `soal_ujian_detail`
 --
 ALTER TABLE `soal_ujian_detail`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `tahun_ajaran`
