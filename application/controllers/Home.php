@@ -1089,16 +1089,35 @@ class Home extends CI_Controller {
 	}
 
 	public function tambahDataSoalUjianDetailSimpan() {
-		// $soal_ujian_detail["id_soal_ujian"] = $this->input->post("id_soal_ujian");
-		// $soal_ujian_detail["id_jenis_soal_ujian_detail"] = $this->input->post("id_jenis_soal_ujian_detail");
-		// $soal_ujian_detail["soal_tulisan"] = $this->input->post("soal_tulisan");
-		$soal_ujian_detail["soal_gambar"] = json_decode($this->input->post("soal_gambar"));
+		$soal_ujian_detail["id_soal_ujian"] = $this->input->post("id_soal_ujian");
+		$soal_ujian_detail["id_jenis_soal_ujian_detail"] = $this->input->post("id_jenis_soal_ujian_detail");
+		$soal_ujian_detail["soal_tulisan"] = $this->input->post("soal_tulisan");
+		// $soal_ujian_detail["soal_gambar"] = $this->input->post("soal_gambar");
+		$soal_ujian_detail["soal_gambar"] = array();
+		$filesCount = count($_FILES['soal_gambar']['name']);
+		for($i = 0; $i < $filesCount; $i++){
+			$_FILES['userFile']['name'] = $_FILES['soal_gambar']['name'][$i];
+			$_FILES['userFile']['type'] = $_FILES['soal_gambar']['type'][$i];
+			$_FILES['userFile']['tmp_name'] = $_FILES['soal_gambar']['tmp_name'][$i];
+			$_FILES['userFile']['error'] = $_FILES['soal_gambar']['error'][$i];
+			$_FILES['userFile']['size'] = $_FILES['soal_gambar']['size'][$i];
+
+			$uploadPath = './uploads/';
+			$config['upload_path'] = $uploadPath;
+			$config['allowed_types'] = 'gif|jpg|png';
+			$config['encrypt_name'] = TRUE;
+			
+			$this->load->library('upload', $config);
+			$this->upload->initialize($config);
+			if($this->upload->do_upload('userFile')){
+				$fileData = $this->upload->data();
+				array_push($soal_ujian_detail["soal_gambar"], $fileData['file_name']);
+			}
+		}
 		// $soal_ujian_detail["pilihan_jawaban_tulisan"] = $this->input->post("pilihan_jawaban_tulisan");
 		// $soal_ujian_detail["pilihan_jawaban_gambar"] = $this->input->post("pilihan_jawaban_gambar");
 		// $soal_ujian_detail["kunci_jawaban"] = $this->input->post("kunci_jawaban");
-		print_r($soal_ujian_detail["soal_gambar"]);
-		die();
-    	$this->db->insert("soal_ujian_detail", $soal_ujian_detail);
+    	// $this->db->insert("soal_ujian_detail", $soal_ujian_detail);
 	}
 
 	public function updateDataSoalUjianDetail($id) {

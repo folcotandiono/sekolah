@@ -91,7 +91,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <div class="box-body" style="">
               <div class="row">
                 <!-- /.col -->
-
+                <form action="<?php echo base_url() ?>index.php/home/tambahDataSoalUjianDetailSimpan" id="form" method="post" enctype='multipart/form-data'>
                   <div class="col-md-12">
                     <div class="form-group">
                       <label for="soalUjianChoose">Soal Ujian:</label>
@@ -101,7 +101,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                   <div class="col-md-12">
                     <div class="form-group">
                       <label for="soalUjianNama">Soal Ujian:</label>
-                      <input type="text" class="form-control" id="soalUjianId" style="display:none">
+                      <input type="text" class="form-control" id="soalUjianId" name="id_soal_ujian" style="display:none">
                       <input type="text" class="form-control" id="soalUjianNama" readonly>
                     </div>
                   </div>
@@ -114,7 +114,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                   <div class="col-md-12">
                     <div class="form-group">
                       <label for="jenisSoalUjianDetailNama">Jenis Soal Ujian Detail:</label>
-                      <input type="text" class="form-control" id="jenisSoalUjianDetailId" style="display:none">
+                      <input type="text" class="form-control" id="jenisSoalUjianDetailId" name="id_jenis_soal_ujian_detail" style="display:none">
                       <input type="text" class="form-control" id="jenisSoalUjianDetailNama" readonly>
                     </div>
                   </div>
@@ -122,14 +122,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                   <div class="col-md-12">
                     <div class="form-group">
                       <label for="soalTulisan">Soal:</label>
-                      <textarea class="form-control" id="soalTulisan" rows="3"></textarea>
+                      <textarea class="form-control" id="soalTulisan" name="soal_tulisan" rows="3"></textarea>
                     </div>
                   </div>
 
                   <div class="col-md-12">
                     <div class="form-group">
                       <label for="soalGambar">Soal:</label>
-                      <input type="file" class="form-control-file" id="soalGambar" onchange="updateSoalGambar(this);" multiple>
+                      <input type="file" class="form-control-file" id="soalGambar" name="soal_gambar" onchange="updateSoalGambar(this);" multiple>
                     </div>
                   </div>
 
@@ -146,14 +146,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                   <div class="col-md-12">
                     <div class="form-group">
                       <label for="pilihanJawabanTulisanA">Pilihan Jawaban A:</label>
-                      <input type="text" class="form-control" id="pilihanJawabanTulisanA">
+                      <input type="text" class="form-control" id="pilihanJawabanTulisanA" name="pilihan_jawaban_tulisan_a">
                     </div>
                   </div>
 
                   <div class="col-md-12">
                     <div class="form-group">
                       <label for="pilihanJawabanGambarA">Pilihan Jawaban A:</label>
-                      <input type="file" class="form-control-file" id="pilihanJawabanGambarA" onchange="updatePilihanJawabanGambarA(this);" multiple>
+                      <input type="file" class="form-control-file" id="pilihanJawabanGambarA" name="pilihan_jawaban_gambar_a" onchange="updatePilihanJawabanGambarA(this);" multiple>
                     </div>
                   </div>
 
@@ -166,14 +166,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                   <div class="col-md-12">
                     <div class="form-group">
                       <label for="pilihanJawabanTulisanB">Pilihan Jawaban B:</label>
-                      <input type="text" class="form-control" id="pilihanJawabanTulisanB">
+                      <input type="text" class="form-control" id="pilihanJawabanTulisanB" name="pilihan_jawaban_tulisan_b">
                     </div>
                   </div>
 
                   <div class="col-md-12">
                     <div class="form-group">
                       <label for="pilihanJawabanGambarB">Pilihan Jawaban B:</label>
-                      <input type="file" class="form-control-file" id="pilihanJawabanGambarB" onchange="updatePilihanJawabanGambarB(this);" multiple>
+                      <input type="file" class="form-control-file" id="pilihanJawabanGambarB" name="pilihan_jawaban_gambar_b" onchange="updatePilihanJawabanGambarB(this);" multiple>
                     </div>
                   </div>
 
@@ -186,14 +186,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                   <div class="col-md-12">
                     <div class="form-group">
                       <label for="pilihanJawabanTulisanC">Pilihan Jawaban C:</label>
-                      <input type="text" class="form-control" id="pilihanJawabanTulisanC">
+                      <input type="text" class="form-control" id="pilihanJawabanTulisanC" name="pilihan_jawaban_tulisan_c">
                     </div>
                   </div>
 
                   <div class="col-md-12">
                     <div class="form-group">
                       <label for="pilihanJawabanGambarC">Pilihan Jawaban C:</label>
-                      <input type="file" class="form-control-file" id="pilihanJawabanGambarC" onchange="updatePilihanJawabanGambarC(this);" multiple>
+                      <input type="file" class="form-control-file" id="pilihanJawabanGambarC" name="pilihan_jawaban_gambar_c" onchange="updatePilihanJawabanGambarC(this);" multiple>
                     </div>
                   </div>
 
@@ -206,14 +206,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                   <div class="col-md-12">
                     <div class="form-group">
                       <label for="pilihanJawabanTulisanD">Pilihan Jawaban D:</label>
-                      <input type="text" class="form-control" id="pilihanJawabanTulisanD">
+                      <input type="text" class="form-control" id="pilihanJawabanTulisanD" name="pilihan_jawaban_tulisan_d">
                     </div>
                   </div>
 
                   <div class="col-md-12">
                     <div class="form-group">
                       <label for="pilihanJawabanGambarD">Pilihan Jawaban D:</label>
-                      <input type="file" class="form-control-file" id="pilihanJawabanGambarD" onchange="updatePilihanJawabanGambarD(this);" multiple>
+                      <input type="file" class="form-control-file" id="pilihanJawabanGambarD" name="pilihan_jawaban_gambar_d" onchange="updatePilihanJawabanGambarD(this);" multiple>
                     </div>
                   </div>
 
@@ -226,14 +226,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                   <div class="col-md-12">
                     <div class="form-group">
                       <label for="pilihanJawabanTulisanE">Pilihan Jawaban E:</label>
-                      <input type="text" class="form-control" id="pilihanJawabanTulisanE">
+                      <input type="text" class="form-control" id="pilihanJawabanTulisanE" name="pilihan_jawaban_tulisan_e" >
                     </div>
                   </div>
 
                   <div class="col-md-12">
                     <div class="form-group">
                       <label for="pilihanJawabanGambarE">Pilihan Jawaban E:</label>
-                      <input type="file" class="form-control-file" id="pilihanJawabanGambarE" onchange="updatePilihanJawabanGambarE(this);" multiple>
+                      <input type="file" class="form-control-file" id="pilihanJawabanGambarE" name="pilihan_jawaban_gambar_e" onchange="updatePilihanJawabanGambarE(this);" multiple>
                     </div>
                   </div>
 
@@ -258,7 +258,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                       <input type="submit" class="btn btn-default" name="button" id="simpan">
                   </div>
 
-
+                </form>
                 <!-- /.col -->
               </div>
               <!-- /.row -->
@@ -470,56 +470,57 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     $("#jenisSoalUjianDetailId").val(jenisSoalUjianDetailId);
     $("#jenisSoalUjianDetailNama").val(jenisSoalUjianDetailNama);
   }
-  $("#simpan").click(function() {
-    var pilihan_jawaban_tulisan = [];
-    pilihan_jawaban_tulisan.push($("#pilihanJawabanTulisanA").val());
-    pilihan_jawaban_tulisan.push($("#pilihanJawabanTulisanB").val());
-    pilihan_jawaban_tulisan.push($("#pilihanJawabanTulisanC").val());
-    pilihan_jawaban_tulisan.push($("#pilihanJawabanTulisanD").val());
-    pilihan_jawaban_tulisan.push($("#pilihanJawabanTulisanE").val());
+//   $("#form").submit(function() {
+//     var pilihan_jawaban_tulisan = [];
+//     pilihan_jawaban_tulisan.push($("#pilihanJawabanTulisanA").val());
+//     pilihan_jawaban_tulisan.push($("#pilihanJawabanTulisanB").val());
+//     pilihan_jawaban_tulisan.push($("#pilihanJawabanTulisanC").val());
+//     pilihan_jawaban_tulisan.push($("#pilihanJawabanTulisanD").val());
+//     pilihan_jawaban_tulisan.push($("#pilihanJawabanTulisanE").val());
 
-    var pilihan_jawaban_gambar = [];
-    pilihan_jawaban_gambar.push($("#pilihanJawabanGambarA")[0].files);
-    pilihan_jawaban_gambar.push($("#pilihanJawabanGambarB")[0].files);
-    pilihan_jawaban_gambar.push($("#pilihanJawabanGambarC")[0].files);
-    pilihan_jawaban_gambar.push($("#pilihanJawabanGambarD")[0].files);
-    pilihan_jawaban_gambar.push($("#pilihanJawabanGambarE")[0].files);
+//     var pilihan_jawaban_gambar = [];
+//     pilihan_jawaban_gambar.push($("#pilihanJawabanGambarA")[0].files);
+//     pilihan_jawaban_gambar.push($("#pilihanJawabanGambarB")[0].files);
+//     pilihan_jawaban_gambar.push($("#pilihanJawabanGambarC")[0].files);
+//     pilihan_jawaban_gambar.push($("#pilihanJawabanGambarD")[0].files);
+//     pilihan_jawaban_gambar.push($("#pilihanJawabanGambarE")[0].files);
 
-    console.log(pilihan_jawaban_gambar);
-    $.ajax({
-      type: "POST",
-      url: "<?php echo base_url() ?>index.php/home/tambahDataSoalUjianDetailSimpan",
-      data: {
-        // soal_ujian : $("#soalUjianNama").val(),
-        // jenis_soal_ujian_detail : $("#jenisSoalUjianDetailNama").val(),
-        // soal_tulisan : $("#soalTulisan").val(),
-        soal_gambar : JSON.stringify($("#soalGambar")[0].files)
-        // pilihan_jawaban_tulisan : pilihan_jawaban_tulisan,
-        // pilihan_jawaban_gambar : pilihan_jawaban_gambar,
-        // kunci_jawaban : $("#kunciJawaban").val()
-      },
-      dataType: "json",
-      complete: function(result){
-        console.log("blabla");
-        toastr.success('Data soal ujian berhasil ditambah');
-        $("#soalUjianNama").val("");
-        $("#jenisSoalUjianDetailNama").val("");
-        $("#soalTulisan").val("");
-        $("#soalGambar").val("");
-        $("#pilihanJawabanTulisanA").val("");
-        $("#pilihanJawabanTulisanB").val("");
-        $("#pilihanJawabanTulisanC").val("");
-        $("#pilihanJawabanTulisanD").val("");
-        $("#pilihanJawabanTulisanE").val("");
-        $("#pilihanJawabanGambarA").val("");
-        $("#pilihanJawabanGambarB").val("");
-        $("#pilihanJawabanGambarC").val("");
-        $("#pilihanJawabanGambarD").val("");
-        $("#pilihanJawabanGambarE").val("");
-        $("#kunciJawaban").val("");
-      }
-  });
-});
+//     console.log(pilihan_jawaban_gambar);
+//     $.ajax({
+//       type: "POST",
+//       url: "<?php echo base_url() ?>index.php/home/tambahDataSoalUjianDetailSimpan",
+//       // data: {
+//       //   // soal_ujian : $("#soalUjianNama").val(),
+//       //   // jenis_soal_ujian_detail : $("#jenisSoalUjianDetailNama").val(),
+//       //   // soal_tulisan : $("#soalTulisan").val(),
+//       //   soal_gambar : $("#soalGambar")[0].files[0].name
+//       //   // pilihan_jawaban_tulisan : pilihan_jawaban_tulisan,
+//       //   // pilihan_jawaban_gambar : pilihan_jawaban_gambar,
+//       //   // kunci_jawaban : $("#kunciJawaban").val()
+//       // },
+//       data : new FormData(this),
+//       dataType: "json",
+//       complete: function(result){
+//         console.log("blabla");
+//         toastr.success('Data soal ujian berhasil ditambah');
+//         $("#soalUjianNama").val("");
+//         $("#jenisSoalUjianDetailNama").val("");
+//         $("#soalTulisan").val("");
+//         $("#soalGambar").val("");
+//         $("#pilihanJawabanTulisanA").val("");
+//         $("#pilihanJawabanTulisanB").val("");
+//         $("#pilihanJawabanTulisanC").val("");
+//         $("#pilihanJawabanTulisanD").val("");
+//         $("#pilihanJawabanTulisanE").val("");
+//         $("#pilihanJawabanGambarA").val("");
+//         $("#pilihanJawabanGambarB").val("");
+//         $("#pilihanJawabanGambarC").val("");
+//         $("#pilihanJawabanGambarD").val("");
+//         $("#pilihanJawabanGambarE").val("");
+//         $("#kunciJawaban").val("");
+//       }
+//   });
+// });
 function updateSoalGambar(input) {
   if (input.files) {
     $("#soalGambarLihat").html("");
