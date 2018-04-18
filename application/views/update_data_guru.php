@@ -100,7 +100,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                   <div class="col-md-12">
                     <div class="form-group">
                       <label for="password">Password:</label>
-                      <input type="password" class="form-control" name="password" id="password" value="<?php echo $guru[0]->password ?>">
+                      <input type="text" class="form-control" name="password" id="password" value="<?php echo $guru[0]->password ?>">
                     </div>
                   </div>
                   <div class="col-md-12">

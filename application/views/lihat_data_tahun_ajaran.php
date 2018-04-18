@@ -29,7 +29,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   <link rel="stylesheet" href="<?php echo base_url() . "assets/"; ?>bower_components/bootstrap-daterangepicker/daterangepicker.css">
   <!-- bootstrap wysihtml5 - text editor -->
   <link rel="stylesheet" href="<?php echo base_url() . "assets/"; ?>plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
-
+  <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -89,41 +89,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <!-- /.box-header -->
             <div class="box-body" style="">
               <div class="row">
-                <div class="col-md-12">
-                  <a href="<?php echo base_url() ?>index.php/home/tambahDataTahunAjaran" class="btn btn-primary">add</a>
-                </div>
-              </div>
-              <div class="row">
                 <!-- /.col -->
-                <div class="col-md-12">
-                  <?php if (isset($results)) { ?>
-                    <table class="table table-hover">
-                      <tr>
-                        <th>Id</th>
-                        <th>Tahun</th>
-                        <th>Action</th>
-                      </tr>
+                  <input type="text" class="form-control" name="id" id="id" style="display:none" value="<?php echo $tahunAjaran[0]->id ?>" readonly>
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="tahun">Tahun:</label>
+                      <input type="text" class="form-control" name="tahun" id="tahun" value="<?php echo $tahunAjaran[0]->tahun ?>" readonly>
+                    </div>
+                  </div>
+                  <!-- <div class="col-md-12">
+                      <input type="submit" class="btn btn-default" name="button" id="update">
+                  </div> -->
 
-                      <?php foreach ($results as $data) { ?>
-                        <tr>
-                          <td><?php echo $data->id ?></td>
-                          <td><?php echo $data->tahun ?></td>
-                          <td> 
-                          <a href="<?php echo base_url() . "index.php/home/lihatDataTahunAjaran/".$data->id ?>" class="btn btn-primary">Lihat</a>
-                          <a href="<?php echo base_url() . "index.php/home/updateDataTahunAjaran/".$data->id ?>" class="btn btn-warning">Update</a>
-                            <a href="<?php echo base_url() . "index.php/home/hapusDataTahunAjaran/".$data->id ?>" class="btn btn-danger">Hapus</a> </td>
-                        </tr>
-                      <?php } ?>
-                    </table>
-                  <?php } else { ?>
-
-                    <div>No data(s) found.</div>
-                  <?php } ?>
-
-                  <?php if (isset($links)) { ?>
-                    <?php echo $links ?>
-                  <?php } ?>
-                </div>
                 <!-- /.col -->
               </div>
               <!-- /.row -->
@@ -143,7 +120,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 
   <!-- /.content-wrapper -->
-  <?=$footer ?>
+  <?= $footer ?>
 
   <!-- Control Sidebar -->
 
@@ -192,8 +169,26 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <!-- AdminLTE for demo purposes -->
 <script src="<?php echo base_url() . "assets/"; ?>dist/js/demo.js"></script>
 
-<script type="text/javascript">
+<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js">
 
+</script>
+
+<script type="text/javascript">
+  $("#update").click(function() {
+    $.ajax({
+      type: "POST",
+      url: "<?php echo base_url() ?>index.php/home/updateDataTahunAjaranSimpan",
+      data: {
+        id : $("#id").val(),
+        tahun : $("#tahun").val()
+      },
+      dataType: "json",
+      complete: function(result){
+        console.log("haha");
+        toastr.success('Data tahun ajaran berhasil diupdate');
+      }
+  });
+  });
 </script>
 </body>
 </html>

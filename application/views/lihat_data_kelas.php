@@ -29,7 +29,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   <link rel="stylesheet" href="<?php echo base_url() . "assets/"; ?>bower_components/bootstrap-daterangepicker/daterangepicker.css">
   <!-- bootstrap wysihtml5 - text editor -->
   <link rel="stylesheet" href="<?php echo base_url() . "assets/"; ?>plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
-
+  <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -69,7 +70,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Data Tahun Ajaran
+        Data Kelas
       </h1>
     </section>
 
@@ -79,7 +80,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <div class="col-md-12">
           <div class="box">
             <div class="box-header with-border">
-              <h3 class="box-title">Data Tahun Ajaran</h3>
+              <h3 class="box-title">Data Kelas</h3>
 
               <div class="box-tools pull-right">
                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -89,41 +90,33 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <!-- /.box-header -->
             <div class="box-body" style="">
               <div class="row">
-                <div class="col-md-12">
-                  <a href="<?php echo base_url() ?>index.php/home/tambahDataTahunAjaran" class="btn btn-primary">add</a>
-                </div>
-              </div>
-              <div class="row">
                 <!-- /.col -->
-                <div class="col-md-12">
-                  <?php if (isset($results)) { ?>
-                    <table class="table table-hover">
-                      <tr>
-                        <th>Id</th>
-                        <th>Tahun</th>
-                        <th>Action</th>
-                      </tr>
+                  <input type="text" class="form-control" name="id" id="id" style="display:none" value='<?php echo $kelas[0]->id ?>'>
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="nama">Nama:</label>
+                      <input type="text" class="form-control" name="nama" id="nama" value='<?php echo $kelas[0]->nama ?>' readonly>
+                    </div>
+                  </div>
+                  <!-- <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="tahunAjaranChoose">Tahun Ajaran:</label>
+                      <button type="button" id="tahunAjaranChoose" data-toggle="modal" data-target="#tahunAjaranModal">Choose</button>
+                    </div>
+                  </div> -->
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="tahunAjaranTahun">Tahun Ajaran:</label>
+                      <input type="text" class="form-control" id="tahunAjaranId" style="display:none" value='<?php echo $kelas[0]->id_tahun_ajaran ?>'>
+                      <input type="text" class="form-control" id="tahunAjaranTahun" value='<?php echo $kelas[0]->tahun_tahun_ajaran ?>' readonly>
+                    </div>
+                  </div>
 
-                      <?php foreach ($results as $data) { ?>
-                        <tr>
-                          <td><?php echo $data->id ?></td>
-                          <td><?php echo $data->tahun ?></td>
-                          <td> 
-                          <a href="<?php echo base_url() . "index.php/home/lihatDataTahunAjaran/".$data->id ?>" class="btn btn-primary">Lihat</a>
-                          <a href="<?php echo base_url() . "index.php/home/updateDataTahunAjaran/".$data->id ?>" class="btn btn-warning">Update</a>
-                            <a href="<?php echo base_url() . "index.php/home/hapusDataTahunAjaran/".$data->id ?>" class="btn btn-danger">Hapus</a> </td>
-                        </tr>
-                      <?php } ?>
-                    </table>
-                  <?php } else { ?>
+                  <!-- <div class="col-md-12">
+                      <input type="submit" class="btn btn-default" name="button" id="update">
+                  </div> -->
 
-                    <div>No data(s) found.</div>
-                  <?php } ?>
 
-                  <?php if (isset($links)) { ?>
-                    <?php echo $links ?>
-                  <?php } ?>
-                </div>
                 <!-- /.col -->
               </div>
               <!-- /.row -->
@@ -139,8 +132,31 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <!-- /.content -->
   </div>
 
+  <div id="tahunAjaranModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
 
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Data tahun ajaran</h4>
+        </div>
+        <div class="modal-body">
+          <div id="dataTahunAjaran">
 
+          </div>
+          <div class="row">
+            <button id="dataTahunAjaranPrev" onclick="loadDataTahunAjaranPrev()">prev</button>
+            <button id="dataTahunAjaranNext" onclick="loadDataTahunAjaranNext()">next</button>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
 
   <!-- /.content-wrapper -->
   <?=$footer ?>
@@ -192,8 +208,72 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <!-- AdminLTE for demo purposes -->
 <script src="<?php echo base_url() . "assets/"; ?>dist/js/demo.js"></script>
 
-<script type="text/javascript">
+<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js">
 
+</script>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+
+  });
+  var pageTahunAjaran = 1;
+  var pageTahunAjaranTotal;
+  var recordPerPage = 3;
+  banyakDataTahunAjaran(recordPerPage);
+  function banyakDataTahunAjaran(recordPerPage) {
+    $.ajax({
+      url:"<?php echo base_url() ?>index.php/home/banyakDataTahunAjaran/" + recordPerPage,
+      type:"get",
+      success:function(data) {
+        console.log(data);
+        pageTahunAjaranTotal = data;
+      }
+    });
+  }
+  loadDataTahunAjaran(pageTahunAjaran);
+  function loadDataTahunAjaran(page) {
+    $.ajax({
+      url:"<?php echo base_url() ?>index.php/home/loadDataTahunAjaran/" + page + "/" + recordPerPage,
+      type:"get",
+      success:function(data) {
+        console.log(data);
+        $("#dataTahunAjaran").html(data);
+      }
+    });
+  }
+  function loadDataTahunAjaranPrev() {
+    if (pageTahunAjaran - 1 >= 1) {
+      pageTahunAjaran--;
+      loadDataTahunAjaran(pageTahunAjaran);
+    }
+  }
+  function loadDataTahunAjaranNext() {
+    if (pageTahunAjaran < pageTahunAjaranTotal) {
+      console.log("hahahahahaha");
+      pageTahunAjaran++;
+      loadDataTahunAjaran(pageTahunAjaran);
+    }
+  }
+  function chooseTahunAjaran(tahunAjaranId, tahunAjaranTahun) {
+    $("#tahunAjaranId").val(tahunAjaranId);
+    $("#tahunAjaranTahun").val(tahunAjaranTahun);
+  }
+  $("#update").click(function() {
+    $.ajax({
+      type: "POST",
+      url: "<?php echo base_url() ?>index.php/home/updateDataKelasSimpan",
+      data: {
+        id : $("#id").val(),
+        nama : $("#nama").val(),
+        id_tahun_ajaran : $("#tahunAjaranId").val()
+      },
+      dataType: "json",
+      complete: function(result){
+        console.log("haha");
+        toastr.success('Data kelas berhasil diupdate');
+      }
+  });
+});
 </script>
 </body>
 </html>

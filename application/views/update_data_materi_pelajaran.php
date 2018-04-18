@@ -70,7 +70,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Data Murid
+        Data Materi Pelajaran
       </h1>
     </section>
 
@@ -80,7 +80,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <div class="col-md-12">
           <div class="box">
             <div class="box-header with-border">
-              <h3 class="box-title">Update Data Murid</h3>
+              <h3 class="box-title">Update Data Materi Pelajaran</h3>
 
               <div class="box-tools pull-right">
                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -91,30 +91,46 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <div class="box-body" style="">
               <div class="row">
                 <!-- /.col -->
-                  <input type="text" class="form-control" name="id" id="id" style="display:none" value='<?php echo $murid[0]->id ?>'>
+                <form action="<?php echo base_url() ?>index.php/home/updateDataMateriPelajaranSimpan" id="form" method="post" enctype='multipart/form-data'>
+                  <input type="text" id="id" name="id" value="<?php echo $materi_pelajaran[0]->id ?>" style="display:none">
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="mataPelajaranChoose">Mata Pelajaran:</label>
+                      <button type="button" id="mataPelajaranChoose" data-toggle="modal" data-target="#mataPelajaranModal">Choose</button>
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="mataPelajaranNama">Mata Pelajaran:</label>
+                      <input type="text" class="form-control" id="mataPelajaranId" value="<?php echo $materi_pelajaran[0]->id_mata_pelajaran ?>" name="id_mata_pelajaran" style="display:none">
+                      <input type="text" class="form-control" id="mataPelajaranNama" value="<?php echo $materi_pelajaran[0]->nama_mata_pelajaran ?>" readonly>
+                    </div>
+                  </div>
+
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="deskripsi">Deskripsi:</label>
+                      <textarea class="form-control" id="deskripsi" name="deskripsi" rows="3"><?php echo $materi_pelajaran[0]->deskripsi ?></textarea>
+                    </div>
+                  </div>
+
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="gambar">Gambar:</label>
+                      <input type="file" class="form-control-file" id="gambar" name="gambar[]" onchange="updateGambar(this);" multiple>
+                    </div>
+                  </div>
+
+                  <div class="col-md-12">
+                    <div id="gambarLihat">
+
+                    </div>
+                  </div>
+
                   <div class="col-md-12">
                     <div class="form-group">
                       <label for="nama">Nama:</label>
-                      <input type="text" class="form-control" name="nama" id="nama" value='<?php echo $murid[0]->nama ?>'>
-                    </div>
-                  </div>
-                  <div class="col-md-12">
-                    <div class="form-group">
-                      <label for="password">Password:</label>
-                      <input type="text" class="form-control" name="password" id="password" value='<?php echo $murid[0]->password ?>'>
-                    </div>
-                  </div>
-                  <div class="col-md-12">
-                    <div class="form-group">
-                      <label for="kelasChoose">Kelas:</label>
-                      <button type="button" id="kelasChoose" data-toggle="modal" data-target="#kelasModal">Choose</button>
-                    </div>
-                  </div>
-                  <div class="col-md-12">
-                    <div class="form-group">
-                      <label for="KelasNama">Nama Kelas:</label>
-                      <input type="text" class="form-control" id="kelasId" style="display:none" value='<?php echo $murid[0]->id_kelas ?>'>
-                      <input type="text" class="form-control" id="kelasNama" value='<?php echo $murid[0]->nama_kelas ?>' readonly>
+                      <input type="text" class="form-control" id="nama" name="nama" value="<?php echo $materi_pelajaran[0]->nama ?>">
                     </div>
                   </div>
 
@@ -122,7 +138,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                       <input type="submit" class="btn btn-default" name="button" id="update">
                   </div>
 
-
+                </form>
                 <!-- /.col -->
               </div>
               <!-- /.row -->
@@ -138,22 +154,22 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <!-- /.content -->
   </div>
 
-  <div id="kelasModal" class="modal fade" role="dialog">
+  <div id="mataPelajaranModal" class="modal fade" role="dialog">
     <div class="modal-dialog">
 
       <!-- Modal content-->
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Data kelas</h4>
+          <h4 class="modal-title">Data mata pelajaran</h4>
         </div>
         <div class="modal-body">
-          <div id="dataKelas">
+          <div id="dataMataPelajaran">
 
           </div>
           <div class="row">
-            <button id="dataKelasPrev">prev</button>
-            <button id="dataKelasNext">next</button>
+            <button id="dataMataPelajaranPrev" onclick="loadDataMataPelajaranPrev()">prev</button>
+            <button id="dataMataPelajaranNext" onclick="loadDataMataPelajaranNext()">next</button>
           </div>
         </div>
         <div class="modal-footer">
@@ -219,74 +235,133 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 </script>
 
 <script type="text/javascript">
-  $(document).ready(function() {
-
-  });
-  var pageKelas = 1;
-  var pageKelasTotal;
+  var pageMataPelajaran = 1;
+  var pageMataPelajaranTotal;
   var recordPerPage = 3;
-  banyakDataKelas(recordPerPage);
-  function banyakDataKelas(recordPerPage) {
-    $.ajax({
-      url:"<?php echo base_url() ?>index.php/home/banyakDataKelas/" + recordPerPage,
-      type:"get",
-      success:function(data) {
-        console.log(data);
-        pageKelasTotal = data;
-      }
-    });
-  }
-  loadDataKelas(pageKelas);
-  function loadDataKelas(page) {
-    $.ajax({
-      url:"<?php echo base_url() ?>index.php/home/loadDataKelas/" + page + "/" + recordPerPage,
-      type:"get",
-      success:function(data) {
-        console.log(data);
-        $("#dataKelas").html(data);
-        $( "#dataKelasPrev" ).click(function() {
-          loadDataKelasPrev();
-        });
-        $( "#dataKelasNext" ).click(function() {
-          loadDataKelasNext();
-        });
-      }
-    });
-  }
-  function loadDataKelasPrev() {
-    if (pageKelas - 1 >= 1) {
-      pageKelas--;
-      loadDataKelas(pageKelas);
+  $(document).ready(function() {
+    var gambar = <?php echo $materi_pelajaran[0]->gambar ?>;
+    console.log(gambar);
+    for (var i = 0; i < gambar.length; i++) {
+      var temp = '';
+      temp += "<div class='col-md-3'>";
+      temp += "<img src = '" +  "<?php echo base_url() ?>" + "./uploads/" + gambar[i] + "' class='img-thumbnail'>";
+      temp += "</div>";
+      $("#gambarLihat").append(temp);
     }
-  }
-  function loadDataKelasNext() {
-    if (pageKelas < pageKelasTotal) {
-      console.log("hahahahahaha");
-      pageKelas++;
-      loadDataKelas(pageKelas);
-    }
-  }
-  function chooseTahunAjaran(tahunAjaranId, tahunAjaranTahun) {
-    $("#kelasId").val(kelasId);
-    $("#kelasNama").val(kelasNama);
-  }
-  $("#update").click(function() {
-    $.ajax({
-      type: "POST",
-      url: "<?php echo base_url() ?>index.php/home/updateDataMuridSimpan",
-      data: {
-        id : $("#id").val(),
-        nama : $("#nama").val(),
-        password : $("#password").val(),
-        id_kelas : $("#kelasId").val()
-      },
-      dataType: "json",
-      complete: function(result){
-        console.log("haha");
-        toastr.success('Data murid berhasil diupdate');
-      }
   });
-});
+  banyakDataMataPelajaran(recordPerPage);
+  function banyakDataMataPelajaran(recordPerPage) {
+    $.ajax({
+      url:"<?php echo base_url() ?>index.php/home/banyakDataMataPelajaran/" + recordPerPage,
+      type:"get",
+      success:function(data) {
+        // console.log(data);
+        pageMataPelajaranTotal = data;
+      }
+    });
+  }
+  loadDataMataPelajaran(pageMataPelajaran);
+  function loadDataMataPelajaran(page) {
+    $.ajax({
+      url:"<?php echo base_url() ?>index.php/home/loadDataMataPelajaran/" + page + "/" + recordPerPage,
+      type:"get",
+      success:function(data) {
+        console.log(data);
+        $("#dataMataPelajaran").html(data);
+      }
+    });
+  }
+  function loadDataMataPelajaranPrev() {
+    if (pageMataPelajaran - 1 >= 1) {
+      pageMataPelajaran--;
+        console.log(pageMataPelajaran);
+      loadDataMataPelajaran(pageMataPelajaran);
+    }
+  }
+  function loadDataMataPelajaranNext() {
+    if (pageMataPelajaran < pageMataPelajaranTotal) {
+      pageMataPelajaran++;
+      console.log(pageMataPelajaran);
+      loadDataMataPelajaran(pageMataPelajaran);
+    }
+  }
+  function chooseMataPelajaran(mataPelajaranId, mataPelajaranNama) {
+    console.log("haha");
+    $("#mataPelajaranId").val(mataPelajaranId);
+    $("#mataPelajaranNama").val(mataPelajaranNama);
+  }
+//   $("#form").submit(function() {
+//     var pilihan_jawaban_tulisan = [];
+//     pilihan_jawaban_tulisan.push($("#pilihanJawabanTulisanA").val());
+//     pilihan_jawaban_tulisan.push($("#pilihanJawabanTulisanB").val());
+//     pilihan_jawaban_tulisan.push($("#pilihanJawabanTulisanC").val());
+//     pilihan_jawaban_tulisan.push($("#pilihanJawabanTulisanD").val());
+//     pilihan_jawaban_tulisan.push($("#pilihanJawabanTulisanE").val());
+
+//     var pilihan_jawaban_gambar = [];
+//     pilihan_jawaban_gambar.push($("#pilihanJawabanGambarA")[0].files);
+//     pilihan_jawaban_gambar.push($("#pilihanJawabanGambarB")[0].files);
+//     pilihan_jawaban_gambar.push($("#pilihanJawabanGambarC")[0].files);
+//     pilihan_jawaban_gambar.push($("#pilihanJawabanGambarD")[0].files);
+//     pilihan_jawaban_gambar.push($("#pilihanJawabanGambarE")[0].files);
+
+//     console.log(pilihan_jawaban_gambar);
+//     $.ajax({
+//       type: "POST",
+//       url: "<?php echo base_url() ?>index.php/home/tambahDataSoalUjianDetailSimpan",
+//       // data: {
+//       //   // soal_ujian : $("#soalUjianNama").val(),
+//       //   // jenis_soal_ujian_detail : $("#jenisSoalUjianDetailNama").val(),
+//       //   // soal_tulisan : $("#soalTulisan").val(),
+//       //   soal_gambar : $("#soalGambar")[0].files[0].name
+//       //   // pilihan_jawaban_tulisan : pilihan_jawaban_tulisan,
+//       //   // pilihan_jawaban_gambar : pilihan_jawaban_gambar,
+//       //   // kunci_jawaban : $("#kunciJawaban").val()
+//       // },
+//       data : new FormData(this),
+//       dataType: "json",
+//       complete: function(result){
+//         console.log("blabla");
+//         toastr.success('Data soal ujian berhasil ditambah');
+//         $("#soalUjianNama").val("");
+//         $("#jenisSoalUjianDetailNama").val("");
+//         $("#soalTulisan").val("");
+//         $("#soalGambar").val("");
+//         $("#pilihanJawabanTulisanA").val("");
+//         $("#pilihanJawabanTulisanB").val("");
+//         $("#pilihanJawabanTulisanC").val("");
+//         $("#pilihanJawabanTulisanD").val("");
+//         $("#pilihanJawabanTulisanE").val("");
+//         $("#pilihanJawabanGambarA").val("");
+//         $("#pilihanJawabanGambarB").val("");
+//         $("#pilihanJawabanGambarC").val("");
+//         $("#pilihanJawabanGambarD").val("");
+//         $("#pilihanJawabanGambarE").val("");
+//         $("#kunciJawaban").val("");
+//       }
+//   });
+// });
+function updateGambar(input) {
+  if (input.files) {
+    $("#gambarLihat").html("");
+    var filesAmount = input.files.length;
+
+    for (i = 0; i < filesAmount; i++) {
+        var reader = new FileReader();
+
+        reader.onload = function(event) {
+          var gambar='';
+          gambar += "<div class='col-md-3'>";
+          gambar += "<img src = '" +  event.target.result + "' class='img-thumbnail'>";
+          gambar += "</div>";
+          $("#gambarLihat").append(gambar);
+
+        }
+
+        reader.readAsDataURL(input.files[i]);
+    }
+  }
+}
 </script>
 </body>
 </html>

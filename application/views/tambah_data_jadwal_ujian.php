@@ -29,7 +29,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   <link rel="stylesheet" href="<?php echo base_url() . "assets/"; ?>bower_components/bootstrap-daterangepicker/daterangepicker.css">
   <!-- bootstrap wysihtml5 - text editor -->
   <link rel="stylesheet" href="<?php echo base_url() . "assets/"; ?>plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
-
+  <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -69,7 +70,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Data Tahun Ajaran
+        Data Jadwal Ujian
       </h1>
     </section>
 
@@ -79,7 +80,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <div class="col-md-12">
           <div class="box">
             <div class="box-header with-border">
-              <h3 class="box-title">Data Tahun Ajaran</h3>
+              <h3 class="box-title">Tambah Data Jadwal Ujian</h3>
 
               <div class="box-tools pull-right">
                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -89,41 +90,45 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <!-- /.box-header -->
             <div class="box-body" style="">
               <div class="row">
-                <div class="col-md-12">
-                  <a href="<?php echo base_url() ?>index.php/home/tambahDataTahunAjaran" class="btn btn-primary">add</a>
-                </div>
-              </div>
-              <div class="row">
                 <!-- /.col -->
-                <div class="col-md-12">
-                  <?php if (isset($results)) { ?>
-                    <table class="table table-hover">
-                      <tr>
-                        <th>Id</th>
-                        <th>Tahun</th>
-                        <th>Action</th>
-                      </tr>
 
-                      <?php foreach ($results as $data) { ?>
-                        <tr>
-                          <td><?php echo $data->id ?></td>
-                          <td><?php echo $data->tahun ?></td>
-                          <td> 
-                          <a href="<?php echo base_url() . "index.php/home/lihatDataTahunAjaran/".$data->id ?>" class="btn btn-primary">Lihat</a>
-                          <a href="<?php echo base_url() . "index.php/home/updateDataTahunAjaran/".$data->id ?>" class="btn btn-warning">Update</a>
-                            <a href="<?php echo base_url() . "index.php/home/hapusDataTahunAjaran/".$data->id ?>" class="btn btn-danger">Hapus</a> </td>
-                        </tr>
-                      <?php } ?>
-                    </table>
-                  <?php } else { ?>
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="soalUjianChoose">Soal Ujian:</label>
+                      <button type="button" id="soalUjianChoose" data-toggle="modal" data-target="#soalUjianModal">Choose</button>
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="soalUjianNama">Soal Ujian:</label>
+                      <input type="text" class="form-control" id="soalUjianId" style="display:none">
+                      <input type="text" class="form-control" id="soalUjianNama" readonly>
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="tanggal">Tanggal:</label>
+                      <input type="datetime-local" class="form-control" name="tanggal" id="tanggal">
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="nama">Nama:</label>
+                      <input type="text" class="form-control" name="nama" id="nama">
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="durasi">Durasi:</label>
+                      <input type="number" class="form-control" name="durasi" id="durasi">
+                    </div>
+                  </div>
 
-                    <div>No data(s) found.</div>
-                  <?php } ?>
+                  <div class="col-md-12">
+                      <input type="submit" class="btn btn-default" name="button" id="simpan">
+                  </div>
 
-                  <?php if (isset($links)) { ?>
-                    <?php echo $links ?>
-                  <?php } ?>
-                </div>
+
                 <!-- /.col -->
               </div>
               <!-- /.row -->
@@ -139,8 +144,31 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <!-- /.content -->
   </div>
 
+  <div id="soalUjianModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
 
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Data soal ujian</h4>
+        </div>
+        <div class="modal-body">
+          <div id="dataSoalUjian">
 
+          </div>
+          <div class="row">
+            <button id="dataSoalUjianPrev" onclick="loadDataSoalUjianPrev()">prev</button>
+            <button id="dataSoalUjianNext" onclick="loadDataSoalUjianNext()">next</button>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
 
   <!-- /.content-wrapper -->
   <?=$footer ?>
@@ -192,8 +220,84 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <!-- AdminLTE for demo purposes -->
 <script src="<?php echo base_url() . "assets/"; ?>dist/js/demo.js"></script>
 
-<script type="text/javascript">
+<script src="<?php echo base_url() . "assets/"; ?>dist/js/moment.js"></script>
 
+<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js">
+
+</script>
+
+<script type="text/javascript">
+  var pageSoalUjian = 1;
+  var pageSoalUjianTotal;
+  var recordPerPage = 3;
+  $(document).ready(function() {
+
+  });
+  banyakDataSoalUjian(recordPerPage);
+  function banyakDataSoalUjian(recordPerPage) {
+    $.ajax({
+      url:"<?php echo base_url() ?>index.php/home/banyakDataSoalUjian/" + recordPerPage,
+      type:"get",
+      success:function(data) {
+        console.log(data);
+        pageSoalUjianTotal = data;
+      }
+    });
+  }
+  loadDataSoalUjian(pageSoalUjian);
+  function loadDataSoalUjian(page) {
+    $.ajax({
+      url:"<?php echo base_url() ?>index.php/home/loadDataSoalUjian/" + page + "/" + recordPerPage,
+      type:"get",
+      success:function(data) {
+        console.log(data);
+        $("#dataSoalUjian").html(data);
+      }
+    });
+  }
+  function loadDataSoalUjianPrev() {
+    if (pageSoalUjian - 1 >= 1) {
+      pageSoalUjian--;
+      loadDataSoalUjian(pageSoalUjian);
+    }
+  }
+  function loadDataSoalUjianNext() {
+    if (pageSoalUjian < pageSoalUjianTotal) {
+      console.log("hahahahahaha");
+      pageSoalUjian++;
+      loadDataSoalUjian(pageSoalUjian);
+    }
+  }
+  function chooseSoalUjian(soalUjianId, soalUjianNama) {
+    $("#soalUjianId").val(soalUjianId);
+    $("#soalUjianNama").val(soalUjianNama);
+  }
+  $("#simpan").click(function() {
+    // alert($("#tanggal").val());
+    var tanggal = moment($("#tanggal").val()).format('YYYY-MM-DD HH:mm:ss');
+    $.ajax({
+      type: "POST",
+      url: "<?php echo base_url() ?>index.php/home/tambahDataJadwalUjianSimpan",
+      data: {
+        nama : $("#nama").val(),
+        id_soal_ujian : $("#soalUjianId").val(),
+        tanggal : tanggal,
+        nama : $("#nama").val(),
+        durasi : $("#durasi").val()
+      },
+      dataType: "json",
+      complete: function(result){
+        console.log(result);
+        toastr.success('Data jadwal ujian berhasil ditambah');
+        $("#nama").val('');
+        $("#soalUjianId").val('');
+        $("#soalUjianNama").val('');
+        $("#tanggal").val('');
+        $("#nama").val('');
+        $("#durasi").val('');
+      }
+  });
+});
 </script>
 </body>
 </html>

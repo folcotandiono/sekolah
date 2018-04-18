@@ -112,8 +112,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                           <td><?php echo $data->mata_pelajaran ?></td>
                           <td><?php echo $data->guru ?></td>
                           <td><?php echo $data->nama ?></td>
-                          <td> <a href="<?php echo base_url() . "index.php/home/updateDataSoalUjian/".$data->id ?>" class="btn btn-warning">Update</a>
-                            <a href="<?php echo base_url() . "index.php/home/hapusDataSoalUjian/".$data->id ?>" class="btn btn-danger">Delete</a> </td>
+                          <td> 
+                          <a href="<?php echo base_url() . "index.php/home/lihatDataSoalUjian/".$data->id ?>" class="btn btn-primary">Lihat</a>
+                          <a href="<?php echo base_url() . "index.php/home/updateDataSoalUjian/".$data->id ?>" class="btn btn-warning">Update</a>
+                            <a href="<?php echo base_url() . "index.php/home/hapusDataSoalUjian/".$data->id ?>" class="btn btn-danger">Hapus</a> </td>
                         </tr>
                       <?php } ?>
                     </table>

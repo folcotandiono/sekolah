@@ -69,7 +69,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Data Tahun Ajaran
+        Data PR
       </h1>
     </section>
 
@@ -79,7 +79,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <div class="col-md-12">
           <div class="box">
             <div class="box-header with-border">
-              <h3 class="box-title">Data Tahun Ajaran</h3>
+              <h3 class="box-title">Data PR</h3>
 
               <div class="box-tools pull-right">
                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -90,7 +90,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <div class="box-body" style="">
               <div class="row">
                 <div class="col-md-12">
-                  <a href="<?php echo base_url() ?>index.php/home/tambahDataTahunAjaran" class="btn btn-primary">add</a>
+                  <a href="<?php echo base_url() ?>index.php/home/tambahDataPR" class="btn btn-primary">add</a>
                 </div>
               </div>
               <div class="row">
@@ -100,18 +100,22 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <table class="table table-hover">
                       <tr>
                         <th>Id</th>
-                        <th>Tahun</th>
+                        <th>Mata Pelajaran</th>
+                        <th>Deskripsi</th>
+                        <th>Nama</th>
                         <th>Action</th>
                       </tr>
 
                       <?php foreach ($results as $data) { ?>
                         <tr>
                           <td><?php echo $data->id ?></td>
-                          <td><?php echo $data->tahun ?></td>
-                          <td> 
-                          <a href="<?php echo base_url() . "index.php/home/lihatDataTahunAjaran/".$data->id ?>" class="btn btn-primary">Lihat</a>
-                          <a href="<?php echo base_url() . "index.php/home/updateDataTahunAjaran/".$data->id ?>" class="btn btn-warning">Update</a>
-                            <a href="<?php echo base_url() . "index.php/home/hapusDataTahunAjaran/".$data->id ?>" class="btn btn-danger">Hapus</a> </td>
+                          <td><?php echo $data->nama_mata_pelajaran ?></td>
+                          <td><?php echo $data->deskripsi ?></td>
+                          <td><?php echo $data->nama ?></td>
+                          <td>
+                          <a href="<?php echo base_url() . "index.php/home/lihatDataPR/".$data->id ?>" class="btn btn-primary">Lihat</a> 
+                          <a href="<?php echo base_url() . "index.php/home/updateDataPR/".$data->id ?>" class="btn btn-warning">Update</a>
+                            <a href="<?php echo base_url() . "index.php/home/hapusDataPR/".$data->id ?>" class="btn btn-danger">Hapus</a> </td>
                         </tr>
                       <?php } ?>
                     </table>
