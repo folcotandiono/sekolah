@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 17, 2018 at 06:00 PM
--- Server version: 10.1.31-MariaDB
--- PHP Version: 7.1.15
+-- Waktu pembuatan: 18 Apr 2018 pada 11.17
+-- Versi server: 10.1.31-MariaDB
+-- Versi PHP: 7.2.3
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -25,7 +25,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `guru`
+-- Struktur dari tabel `guru`
 --
 
 CREATE TABLE `guru` (
@@ -35,7 +35,7 @@ CREATE TABLE `guru` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `guru`
+-- Dumping data untuk tabel `guru`
 --
 
 INSERT INTO `guru` (`id`, `nama`, `password`) VALUES
@@ -57,20 +57,48 @@ INSERT INTO `guru` (`id`, `nama`, `password`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `jadwal_ujian`
+-- Struktur dari tabel `jadwal_ujian`
 --
 
 CREATE TABLE `jadwal_ujian` (
   `id` int(11) NOT NULL,
   `id_soal_ujian` int(11) NOT NULL,
   `tanggal` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `nama` varchar(500) NOT NULL
+  `nama` varchar(500) NOT NULL,
+  `durasi` int(11) NOT NULL COMMENT 'menit'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data untuk tabel `jadwal_ujian`
+--
+
+INSERT INTO `jadwal_ujian` (`id`, `id_soal_ujian`, `tanggal`, `nama`, `durasi`) VALUES
+(3, 0, '0000-00-00 00:00:00', '', 0),
+(4, 1, '0000-00-00 00:00:00', 'fdafad fdafads', 12),
+(5, 1, '0000-00-00 00:00:00', 'fdadaf fdafda', 1),
+(6, 1, '0000-00-00 00:00:00', 'fdasfdas fdasfad', 13),
+(7, 1, '2015-12-15 08:15:15', 'fadsfd fdasfadfddsda', 212),
+(8, 1, '0000-00-00 00:00:00', 'fdadfas', 12),
+(9, 1, '1970-01-02 03:40:11', 'fdasf', 223),
+(10, 1, '0000-00-00 00:00:00', 'dafasdads', 121),
+(11, 1, '0000-00-00 00:00:00', 'fdasfdsa', 121),
+(12, 1, '0000-00-00 00:00:00', 'flkdak fdjakfklad', 12),
+(13, 1, '0000-00-00 00:00:00', 'dfdafad', 12),
+(14, 1, '0000-00-00 00:00:00', 'fdasfda fdafa', 12),
+(15, 1, '0000-00-00 00:00:00', 'dasfds fdasfdas', 0),
+(16, 1, '0000-00-00 00:00:00', 'dfadfasd', 21),
+(17, 1, '0000-00-00 00:00:00', 'dsafas', 21),
+(18, 1, '0000-00-00 00:00:00', 'fdasfad', 12),
+(19, 1, '0000-00-00 00:00:00', 'fdsafdas fdasf', 12),
+(20, 1, '0000-00-00 00:00:00', 'fdafda fdasfda', 12),
+(21, 1, '0000-00-00 00:00:00', 'fdasfdas fdafda', 21),
+(22, 1, '2016-12-21 17:12:00', 'dfafda', 12),
+(23, 1, '2016-11-22 04:11:00', 'dsafdas', 12);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `jawaban_soal_ujian_detail`
+-- Struktur dari tabel `jawaban_soal_ujian_detail`
 --
 
 CREATE TABLE `jawaban_soal_ujian_detail` (
@@ -84,7 +112,7 @@ CREATE TABLE `jawaban_soal_ujian_detail` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `jenis_soal_ujian_detail`
+-- Struktur dari tabel `jenis_soal_ujian_detail`
 --
 
 CREATE TABLE `jenis_soal_ujian_detail` (
@@ -93,7 +121,7 @@ CREATE TABLE `jenis_soal_ujian_detail` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `jenis_soal_ujian_detail`
+-- Dumping data untuk tabel `jenis_soal_ujian_detail`
 --
 
 INSERT INTO `jenis_soal_ujian_detail` (`id`, `nama`) VALUES
@@ -102,7 +130,7 @@ INSERT INTO `jenis_soal_ujian_detail` (`id`, `nama`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `kelas`
+-- Struktur dari tabel `kelas`
 --
 
 CREATE TABLE `kelas` (
@@ -112,7 +140,7 @@ CREATE TABLE `kelas` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `kelas`
+-- Dumping data untuk tabel `kelas`
 --
 
 INSERT INTO `kelas` (`id`, `nama`, `id_tahun_ajaran`) VALUES
@@ -125,7 +153,7 @@ INSERT INTO `kelas` (`id`, `nama`, `id_tahun_ajaran`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `mata_pelajaran`
+-- Struktur dari tabel `mata_pelajaran`
 --
 
 CREATE TABLE `mata_pelajaran` (
@@ -136,7 +164,7 @@ CREATE TABLE `mata_pelajaran` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `mata_pelajaran`
+-- Dumping data untuk tabel `mata_pelajaran`
 --
 
 INSERT INTO `mata_pelajaran` (`id`, `id_kelas`, `id_guru`, `nama`) VALUES
@@ -148,7 +176,7 @@ INSERT INTO `mata_pelajaran` (`id`, `id_kelas`, `id_guru`, `nama`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `materi_pelajaran`
+-- Struktur dari tabel `materi_pelajaran`
 --
 
 CREATE TABLE `materi_pelajaran` (
@@ -159,10 +187,17 @@ CREATE TABLE `materi_pelajaran` (
   `nama` varchar(500) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data untuk tabel `materi_pelajaran`
+--
+
+INSERT INTO `materi_pelajaran` (`id`, `id_mata_pelajaran`, `deskripsi`, `gambar`, `nama`) VALUES
+(1, 1, 'aaaaaaaaaaa aaaaaaaaaaaa bbbbbbbbbb cccccc', '[\"97d49d5632e77dc67211ed9407e37989.jpg\"]', 'aaaaaaaaaa aaaaaaaaaaa bbbbbbb  ccccccccc');
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `murid`
+-- Struktur dari tabel `murid`
 --
 
 CREATE TABLE `murid` (
@@ -173,7 +208,7 @@ CREATE TABLE `murid` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `murid`
+-- Dumping data untuk tabel `murid`
 --
 
 INSERT INTO `murid` (`id`, `id_kelas`, `nama`, `password`) VALUES
@@ -184,21 +219,28 @@ INSERT INTO `murid` (`id`, `id_kelas`, `nama`, `password`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `pr`
+-- Struktur dari tabel `pr`
 --
 
 CREATE TABLE `pr` (
   `id` int(11) NOT NULL,
   `id_mata_pelajaran` int(11) NOT NULL,
   `deskripsi` varchar(1000) NOT NULL,
-  `gambar` varchar(500) NOT NULL,
+  `gambar` varchar(5000) NOT NULL,
   `nama` varchar(500) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data untuk tabel `pr`
+--
+
+INSERT INTO `pr` (`id`, `id_mata_pelajaran`, `deskripsi`, `gambar`, `nama`) VALUES
+(1, 2, 'fdasfda fdasfda fdafda fjdafklad aaaaaaaaaaaaaaaaaaaaaaaaaaaaa', '[\"c5862856ccf444c6b47d612bfd3db9f9.jpg\"]', 'fdafad fdasfda bbbbbbbbbbbbbbbbbbbbbbb');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `soal_ujian`
+-- Struktur dari tabel `soal_ujian`
 --
 
 CREATE TABLE `soal_ujian` (
@@ -209,7 +251,7 @@ CREATE TABLE `soal_ujian` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `soal_ujian`
+-- Dumping data untuk tabel `soal_ujian`
 --
 
 INSERT INTO `soal_ujian` (`id`, `id_mata_pelajaran`, `id_guru`, `nama`) VALUES
@@ -218,7 +260,7 @@ INSERT INTO `soal_ujian` (`id`, `id_mata_pelajaran`, `id_guru`, `nama`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `soal_ujian_detail`
+-- Struktur dari tabel `soal_ujian_detail`
 --
 
 CREATE TABLE `soal_ujian_detail` (
@@ -233,7 +275,7 @@ CREATE TABLE `soal_ujian_detail` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `soal_ujian_detail`
+-- Dumping data untuk tabel `soal_ujian_detail`
 --
 
 INSERT INTO `soal_ujian_detail` (`id`, `id_soal_ujian`, `id_jenis_soal_ujian_detail`, `soal_tulisan`, `soal_gambar`, `pilihan_jawaban_tulisan`, `pilihan_jawaban_gambar`, `kunci_jawaban`) VALUES
@@ -242,7 +284,7 @@ INSERT INTO `soal_ujian_detail` (`id`, `id_soal_ujian`, `id_jenis_soal_ujian_det
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tahun_ajaran`
+-- Struktur dari tabel `tahun_ajaran`
 --
 
 CREATE TABLE `tahun_ajaran` (
@@ -251,7 +293,7 @@ CREATE TABLE `tahun_ajaran` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `tahun_ajaran`
+-- Dumping data untuk tabel `tahun_ajaran`
 --
 
 INSERT INTO `tahun_ajaran` (`id`, `tahun`) VALUES
@@ -272,149 +314,149 @@ INSERT INTO `tahun_ajaran` (`id`, `tahun`) VALUES
 --
 
 --
--- Indexes for table `guru`
+-- Indeks untuk tabel `guru`
 --
 ALTER TABLE `guru`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `jadwal_ujian`
+-- Indeks untuk tabel `jadwal_ujian`
 --
 ALTER TABLE `jadwal_ujian`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `jawaban_soal_ujian_detail`
+-- Indeks untuk tabel `jawaban_soal_ujian_detail`
 --
 ALTER TABLE `jawaban_soal_ujian_detail`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `jenis_soal_ujian_detail`
+-- Indeks untuk tabel `jenis_soal_ujian_detail`
 --
 ALTER TABLE `jenis_soal_ujian_detail`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `kelas`
+-- Indeks untuk tabel `kelas`
 --
 ALTER TABLE `kelas`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `mata_pelajaran`
+-- Indeks untuk tabel `mata_pelajaran`
 --
 ALTER TABLE `mata_pelajaran`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `materi_pelajaran`
+-- Indeks untuk tabel `materi_pelajaran`
 --
 ALTER TABLE `materi_pelajaran`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `murid`
+-- Indeks untuk tabel `murid`
 --
 ALTER TABLE `murid`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `pr`
+-- Indeks untuk tabel `pr`
 --
 ALTER TABLE `pr`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `soal_ujian`
+-- Indeks untuk tabel `soal_ujian`
 --
 ALTER TABLE `soal_ujian`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `soal_ujian_detail`
+-- Indeks untuk tabel `soal_ujian_detail`
 --
 ALTER TABLE `soal_ujian_detail`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `tahun_ajaran`
+-- Indeks untuk tabel `tahun_ajaran`
 --
 ALTER TABLE `tahun_ajaran`
   ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT untuk tabel yang dibuang
 --
 
 --
--- AUTO_INCREMENT for table `guru`
+-- AUTO_INCREMENT untuk tabel `guru`
 --
 ALTER TABLE `guru`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
--- AUTO_INCREMENT for table `jadwal_ujian`
+-- AUTO_INCREMENT untuk tabel `jadwal_ujian`
 --
 ALTER TABLE `jadwal_ujian`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
--- AUTO_INCREMENT for table `jawaban_soal_ujian_detail`
+-- AUTO_INCREMENT untuk tabel `jawaban_soal_ujian_detail`
 --
 ALTER TABLE `jawaban_soal_ujian_detail`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `jenis_soal_ujian_detail`
+-- AUTO_INCREMENT untuk tabel `jenis_soal_ujian_detail`
 --
 ALTER TABLE `jenis_soal_ujian_detail`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT for table `kelas`
+-- AUTO_INCREMENT untuk tabel `kelas`
 --
 ALTER TABLE `kelas`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- AUTO_INCREMENT for table `mata_pelajaran`
+-- AUTO_INCREMENT untuk tabel `mata_pelajaran`
 --
 ALTER TABLE `mata_pelajaran`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT for table `materi_pelajaran`
+-- AUTO_INCREMENT untuk tabel `materi_pelajaran`
 --
 ALTER TABLE `materi_pelajaran`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT for table `murid`
+-- AUTO_INCREMENT untuk tabel `murid`
 --
 ALTER TABLE `murid`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT for table `pr`
+-- AUTO_INCREMENT untuk tabel `pr`
 --
 ALTER TABLE `pr`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT for table `soal_ujian`
+-- AUTO_INCREMENT untuk tabel `soal_ujian`
 --
 ALTER TABLE `soal_ujian`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT for table `soal_ujian_detail`
+-- AUTO_INCREMENT untuk tabel `soal_ujian_detail`
 --
 ALTER TABLE `soal_ujian_detail`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT for table `tahun_ajaran`
+-- AUTO_INCREMENT untuk tabel `tahun_ajaran`
 --
 ALTER TABLE `tahun_ajaran`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
