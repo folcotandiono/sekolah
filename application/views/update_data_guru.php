@@ -104,6 +104,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     </div>
                   </div>
                   <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="noTelepon">No Telepon:</label>
+                      <input type="text" class="form-control" name="noTelepon" id="noTelepon" value="<?php echo $guru[0]->no_telepon ?>">
+                    </div>
+                  </div>
+                  <div class="col-md-12">
                       <input type="submit" class="btn btn-default" name="button" id="update">
                   </div>
 
@@ -187,7 +193,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       data: {
         id : $("#id").val(),
         nama : $("#nama").val(),
-        password : $("#password").val()
+        password : $("#password").val(),
+        no_telepon : $("#noTelepon").val()
       },
       dataType: "json",
       complete: function(result){

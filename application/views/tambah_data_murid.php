@@ -119,6 +119,27 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                   </div>
 
                   <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="namaAyah">Nama Ayah:</label>
+                      <input type="text" class="form-control" name="namaAyah" id="namaAyah">
+                    </div>
+                  </div>
+
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="namaIbu">Nama Ibu:</label>
+                      <input type="text" class="form-control" name="namaIbu" id="namaIbu">
+                    </div>
+                  </div>
+
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="noTelepon">No Telepon:</label>
+                      <input type="text" class="form-control" name="noTelepon" id="noTelepon">
+                    </div>
+                  </div>
+
+                  <div class="col-md-12">
                       <input type="submit" class="btn btn-default" name="button" id="simpan">
                   </div>
 
@@ -271,7 +292,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       data: {
         nama : $("#nama").val(),
         password : $("#password").val(),
-        id_kelas : $("#kelasId").val()
+        id_kelas : $("#kelasId").val(),
+        nama_ayah : $("#namaAyah").val(),
+        nama_ibu : $("#namaIbu").val(),
+        no_telepon : $("#noTelepon").val()
       },
       dataType: "json",
       complete: function(result){
@@ -281,6 +305,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         $("#password").val("");
         $("#kelasId").val("");
         $("#kelasNama").val("");
+        $("#namaAyah").val("");
+        $("#namaIbu").val("");
+        $("#noTelepon").val("");
       }
   });
 });

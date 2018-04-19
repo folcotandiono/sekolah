@@ -118,6 +118,27 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     </div>
                   </div>
 
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="namaAyah">Nama Ayah:</label>
+                      <input type="text" class="form-control" name="namaAyah" id="namaAyah" value="<?php echo $murid[0]->nama_ayah ?>" readonly>
+                    </div>
+                  </div>
+
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="namaIbu">Nama Ibu:</label>
+                      <input type="text" class="form-control" name="namaIbu" id="namaIbu" value="<?php echo $murid[0]->nama_ibu ?>" readonly>
+                    </div>
+                  </div>
+
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="noTelepon">No Telepon:</label>
+                      <input type="text" class="form-control" name="noTelepon" id="noTelepon" value="<?php echo $murid[0]->no_telepon ?>" readonly>
+                    </div>
+                  </div>
+
                   <!-- <div class="col-md-12">
                       <input type="submit" class="btn btn-default" name="button" id="update">
                   </div> -->

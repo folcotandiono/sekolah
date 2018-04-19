@@ -112,9 +112,30 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                   </div>
                   <div class="col-md-12">
                     <div class="form-group">
-                      <label for="KelasNama">Nama Kelas:</label>
+                      <label for="KelasNama">Kelas:</label>
                       <input type="text" class="form-control" id="kelasId" style="display:none" value='<?php echo $murid[0]->id_kelas ?>'>
                       <input type="text" class="form-control" id="kelasNama" value='<?php echo $murid[0]->nama_kelas ?>' readonly>
+                    </div>
+                  </div>
+
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="namaAyah">Nama Ayah:</label>
+                      <input type="text" class="form-control" name="namaAyah" id="namaAyah" value="<?php echo $murid[0]->nama_ayah ?>">
+                    </div>
+                  </div>
+
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="namaIbu">Nama Ibu:</label>
+                      <input type="text" class="form-control" name="namaIbu" id="namaIbu" value="<?php echo $murid[0]->nama_ibu ?>">
+                    </div>
+                  </div>
+
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="noTelepon">No Telepon:</label>
+                      <input type="text" class="form-control" name="noTelepon" id="noTelepon" value="<?php echo $murid[0]->no_telepon ?>">
                     </div>
                   </div>
 
@@ -266,7 +287,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       loadDataKelas(pageKelas);
     }
   }
-  function chooseTahunAjaran(tahunAjaranId, tahunAjaranTahun) {
+  function chooseKelas(kelasId, kelasNama) {
     $("#kelasId").val(kelasId);
     $("#kelasNama").val(kelasNama);
   }
@@ -278,7 +299,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         id : $("#id").val(),
         nama : $("#nama").val(),
         password : $("#password").val(),
-        id_kelas : $("#kelasId").val()
+        id_kelas : $("#kelasId").val(),
+        nama_ayah : $("#namaAyah").val(),
+        nama_ibu : $("#namaIbu").val(),
+        no_telepon : $("#noTelepon").val()
       },
       dataType: "json",
       complete: function(result){

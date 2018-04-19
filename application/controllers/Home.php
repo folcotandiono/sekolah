@@ -111,6 +111,7 @@ class Home extends CI_Controller {
 	public function tambahDataGuruSimpan() {
 		$guru["nama"] = $this->input->post("nama");
 		$guru["password"] = $this->input->post("password");
+		$guru["no_telepon"] = $this->input->post("no_telepon");
     $this->db->insert("guru", $guru);
 	}
 
@@ -138,6 +139,7 @@ class Home extends CI_Controller {
 		$guru["id"] = $this->input->post("id");
 		$guru["nama"] = $this->input->post("nama");
 		$guru["password"] = $this->input->post("password");
+		$guru["no_telepon"] = $this->input->post("no_telepon");
 		$this->db->where("id", $guru["id"]);
     $this->db->update("guru", $guru);
 	}
@@ -165,6 +167,7 @@ class Home extends CI_Controller {
 				<tr>
 					<th>Id</th>
 					<th>Nama</th>
+					<th>No Telepon</th>
 					<th>Action</th>
 				</tr>
 		";
@@ -174,6 +177,7 @@ class Home extends CI_Controller {
 				<tr>
 					<td>$result->id</td>
 					<td>$result->nama</td>
+					<td>$result->no_telepon</td>
 					<td>
 						<button class='btn btn-primary' onclick=\"$chooseKelas\">Choose</button>
 					</td>
@@ -403,10 +407,13 @@ class Home extends CI_Controller {
 		$murid["nama"] = $this->input->post("nama");
 		$murid["password"] = $this->input->post("password");
 		$murid["id_kelas"] = $this->input->post("id_kelas");
+		$murid["nama_ayah"] = $this->input->post("nama_ayah");
+		$murid["nama_ibu"] = $this->input->post("nama_ibu");
+		$murid["no_telepon"] = $this->input->post("no_telepon");
     $this->db->insert("murid", $murid);
 	}
 	public function lihatDataMurid($id) {
-		$murid = $this->db->query('SELECT murid.id, murid.nama as nama, kelas.id as id_kelas, kelas.nama as nama_kelas, murid.password FROM murid
+		$murid = $this->db->query('SELECT murid.id, murid.nama as nama, kelas.id as id_kelas, kelas.nama as nama_kelas, murid.password, murid.nama_ayah, murid.nama_ibu, murid.no_telepon FROM murid
 															join kelas on murid.id_kelas = kelas.id
 															where murid.id = ' . $id)->result();
 		$data = array(
@@ -417,7 +424,7 @@ class Home extends CI_Controller {
 		$this->load->view('lihat_data_murid', $data);
 	}
 	public function updateDataMurid($id) {
-		$murid = $this->db->query('SELECT murid.id, murid.nama as nama, kelas.id as id_kelas, kelas.nama as nama_kelas, murid.password FROM murid
+		$murid = $this->db->query('SELECT murid.id, murid.nama as nama, kelas.id as id_kelas, kelas.nama as nama_kelas, murid.password, murid.nama_ayah, murid.nama_ibu, murid.no_telepon FROM murid
 															join kelas on murid.id_kelas = kelas.id
 															where murid.id = ' . $id)->result();
 		$data = array(
@@ -433,6 +440,9 @@ class Home extends CI_Controller {
 		$murid["nama"] = $this->input->post("nama");
 		$murid["password"] = $this->input->post("password");
 		$murid["id_kelas"] = $this->input->post("id_kelas");
+		$murid["nama_ayah"] = $this->input->post("nama_ayah");
+		$murid["nama_ibu"] = $this->input->post("nama_ibu");
+		$murid["no_telepon"] = $this->input->post("no_telepon");
 		$this->db->where("id", $murid["id"]);
 		$this->db->update('murid', $murid);
 	}
@@ -446,7 +456,7 @@ class Home extends CI_Controller {
 	public function loadDataMurid($page, $record_per_page) {
 		$output = '';
 		$start_from = ($page - 1) * $record_per_page;
-		$results = $this->db->query('SELECT murid.id, murid.nama as nama, kelas.id as id_kelas, kelas.nama as nama_kelas, murid.password FROM murid
+		$results = $this->db->query('SELECT murid.id, murid.nama as nama, kelas.id as id_kelas, kelas.nama as nama_kelas, murid.password, murid.nama_ayah, murid.nama_ibu, murid.no_telepon FROM murid
 															join kelas on murid.id_kelas = kelas.id
 															where murid.id = ' . $id . ' LIMIT ' . $start_from . ',' . $record_per_page)->result();
 		$output .= "
@@ -455,6 +465,9 @@ class Home extends CI_Controller {
 					<th>Id</th>
 					<th>Nama</th>
 					<th>Kelas</th>
+					<th>Nama Ayah</th>
+					<th>Nama Ibu</th>
+					<th>No Telepon</th>
 					<th>Action</th>
 				</tr>
 		";
@@ -465,6 +478,9 @@ class Home extends CI_Controller {
 					<td>$result->id</td>
 					<td>$result->nama</td>
 					<td>$result->nama_kelas</td>
+					<td>$result->nama_ayah</td>
+					<td>$result->nama_ibu</td>
+					<td>$result->no_telepon</td>
 					<td>
 						<button class='btn btn-primary' onclick=\"$chooseMurid\">Choose</button>
 					</td>

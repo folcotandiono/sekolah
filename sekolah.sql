@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 18 Apr 2018 pada 11.17
+-- Waktu pembuatan: 19 Apr 2018 pada 04.15
 -- Versi server: 10.1.31-MariaDB
 -- Versi PHP: 7.2.3
 
@@ -31,28 +31,30 @@ SET time_zone = "+00:00";
 CREATE TABLE `guru` (
   `id` int(11) NOT NULL,
   `nama` varchar(100) NOT NULL,
-  `password` varchar(100) NOT NULL
+  `password` varchar(100) NOT NULL,
+  `no_telepon` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data untuk tabel `guru`
 --
 
-INSERT INTO `guru` (`id`, `nama`, `password`) VALUES
-(12, '123', 'Ojaqhdad1'),
-(13, '123', 'Ojaqhdad1'),
-(14, 'hehehe', 'hehehe'),
-(15, '123', 'Ojaqhdad1'),
-(16, '123', 'Ojaqhdad1'),
-(17, 'fadsf', 'fdasfdas'),
-(18, 'fsadfdsa', 'fdasfas'),
-(19, 'fdasfs', 'fdasfs'),
-(20, '123', 'Ojaqhdad1'),
-(21, 'fdasdas', 'fdas'),
-(22, 'kjklk', 'hjlk'),
-(23, 'hljk', 'jll'),
-(24, 'jl;kl', 'l;lj'),
-(25, 'hehe hehe', 'lfadskfajds');
+INSERT INTO `guru` (`id`, `nama`, `password`, `no_telepon`) VALUES
+(12, '123', 'Ojaqhdad1', ''),
+(13, '123', 'Ojaqhdad1', ''),
+(14, 'hehehe', 'hehehe', ''),
+(15, '123', 'Ojaqhdad1', ''),
+(16, '123', 'Ojaqhdad1', ''),
+(17, 'fadsf', 'fdasfdas', ''),
+(18, 'fsadfdsa', 'fdasfas', ''),
+(19, 'fdasfs', 'fdasfs', ''),
+(20, '123', 'Ojaqhdad1', ''),
+(21, 'fdasdas', 'fdas', ''),
+(22, 'kjklk', 'hjlk', ''),
+(23, 'hljk', 'jll', ''),
+(24, 'jl;kl', 'l;lj', ''),
+(25, 'hehe hehe', 'lfadskfajds', ''),
+(26, 'hahahaha', 'hahahaha', 'h132421111111');
 
 -- --------------------------------------------------------
 
@@ -73,8 +75,7 @@ CREATE TABLE `jadwal_ujian` (
 --
 
 INSERT INTO `jadwal_ujian` (`id`, `id_soal_ujian`, `tanggal`, `nama`, `durasi`) VALUES
-(3, 0, '0000-00-00 00:00:00', '', 0),
-(4, 1, '0000-00-00 00:00:00', 'fdafad fdafads', 12),
+(4, 2, '2015-02-22 04:11:00', 'fdafad fdafadsf fad', 121),
 (5, 1, '0000-00-00 00:00:00', 'fdadaf fdafda', 1),
 (6, 1, '0000-00-00 00:00:00', 'fdasfdas fdasfad', 13),
 (7, 1, '2015-12-15 08:15:15', 'fadsfd fdasfadfddsda', 212),
@@ -170,8 +171,9 @@ CREATE TABLE `mata_pelajaran` (
 INSERT INTO `mata_pelajaran` (`id`, `id_kelas`, `id_guru`, `nama`) VALUES
 (1, 3, 12, 'fadsfasdfda'),
 (2, 3, 14, 'lkfkakd'),
-(3, 1, 13, 'aalalla'),
-(4, 5, 19, 'fdasass');
+(3, 2, 14, 'aalallaaaaaa'),
+(4, 5, 19, 'fdasass'),
+(5, 4, 23, '1123412');
 
 -- --------------------------------------------------------
 
@@ -204,17 +206,21 @@ CREATE TABLE `murid` (
   `id` int(11) NOT NULL,
   `id_kelas` int(11) NOT NULL,
   `nama` varchar(100) NOT NULL,
-  `password` varchar(100) NOT NULL
+  `password` varchar(100) NOT NULL,
+  `nama_ayah` varchar(100) NOT NULL,
+  `nama_ibu` varchar(100) NOT NULL,
+  `no_telepon` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data untuk tabel `murid`
 --
 
-INSERT INTO `murid` (`id`, `id_kelas`, `nama`, `password`) VALUES
-(1, 2, 'fadsfdsa', 'fadsfad'),
-(2, 3, '123', 'Ojaqhdad1'),
-(4, 3, '123', 'Ojaqhdad1');
+INSERT INTO `murid` (`id`, `id_kelas`, `nama`, `password`, `nama_ayah`, `nama_ibu`, `no_telepon`) VALUES
+(1, 2, 'fadsfdsa', 'fadsfad', '', '', ''),
+(2, 3, '123', 'Ojaqhdad1', '', '', ''),
+(4, 3, '123', 'Ojaqhdad1', '', '', ''),
+(5, 4, 'hahahaha', 'hahahaha', 'hahahaha', 'hahahaha', 'hahahaha');
 
 -- --------------------------------------------------------
 
@@ -255,7 +261,8 @@ CREATE TABLE `soal_ujian` (
 --
 
 INSERT INTO `soal_ujian` (`id`, `id_mata_pelajaran`, `id_guru`, `nama`) VALUES
-(1, 3, 15, 'ulangan harian');
+(1, 1, 14, 'ulangan harian haha'),
+(2, 5, 18, '134312');
 
 -- --------------------------------------------------------
 
@@ -297,7 +304,7 @@ CREATE TABLE `tahun_ajaran` (
 --
 
 INSERT INTO `tahun_ajaran` (`id`, `tahun`) VALUES
-(2, '2017/2018'),
+(2, '2017/20181'),
 (3, '2000/2001'),
 (4, '2001/2002'),
 (5, '2002/2003'),
@@ -307,7 +314,8 @@ INSERT INTO `tahun_ajaran` (`id`, `tahun`) VALUES
 (9, '2006/2007'),
 (10, '2007/2008'),
 (11, '2008/2009'),
-(12, '2011/2012');
+(12, '2011/2012'),
+(13, 'haha');
 
 --
 -- Indexes for dumped tables
@@ -393,7 +401,7 @@ ALTER TABLE `tahun_ajaran`
 -- AUTO_INCREMENT untuk tabel `guru`
 --
 ALTER TABLE `guru`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT untuk tabel `jadwal_ujian`
@@ -423,7 +431,7 @@ ALTER TABLE `kelas`
 -- AUTO_INCREMENT untuk tabel `mata_pelajaran`
 --
 ALTER TABLE `mata_pelajaran`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT untuk tabel `materi_pelajaran`
@@ -435,7 +443,7 @@ ALTER TABLE `materi_pelajaran`
 -- AUTO_INCREMENT untuk tabel `murid`
 --
 ALTER TABLE `murid`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT untuk tabel `pr`
@@ -447,7 +455,7 @@ ALTER TABLE `pr`
 -- AUTO_INCREMENT untuk tabel `soal_ujian`
 --
 ALTER TABLE `soal_ujian`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT untuk tabel `soal_ujian_detail`
@@ -459,7 +467,7 @@ ALTER TABLE `soal_ujian_detail`
 -- AUTO_INCREMENT untuk tabel `tahun_ajaran`
 --
 ALTER TABLE `tahun_ajaran`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

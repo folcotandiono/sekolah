@@ -101,6 +101,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                       <tr>
                         <th>Id</th>
                         <th>Nama</th>
+                        <th>No Telepon</th>
                         <th>Action</th>
                       </tr>
 
@@ -108,6 +109,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <tr>
                           <td><?php echo $data->id ?></td>
                           <td><?php echo $data->nama ?></td>
+                          <td><?php echo $data->no_telepon ?></td>
                           <td>
                             <a href="<?php echo base_url() . "index.php/home/lihatDataGuru/".$data->id ?>" class="btn btn-primary">Lihat</a> 
                             <a href="<?php echo base_url() . "index.php/home/updateDataGuru/".$data->id ?>" class="btn btn-warning">Update</a>
