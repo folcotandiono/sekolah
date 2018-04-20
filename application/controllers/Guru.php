@@ -55,7 +55,7 @@ class Guru extends Rest_Controller {
     }
     public function data_mata_pelajaran_get()
     {
-        $id = $this->post("id");
+        $id = $this->get("id");
 
         $this->db->select('mata_pelajaran.id, mata_pelajaran.nama, mata_pelajaran.id_kelas, kelas.nama as nama_kelas, mata_pelajaran.id_guru, guru.nama as nama_guru');
         $this->db->from('mata_pelajaran');
