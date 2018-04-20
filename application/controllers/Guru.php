@@ -68,4 +68,46 @@ class Guru extends Rest_Controller {
 
         $this->response($message, 200);
     }
+    public function data_soal_ujian_get()
+    {
+        $id = $this->get("id");
+
+        $this->db->select('soal_ujian.id, soal_ujian.nama, soal_ujian.id_mata_pelajaran, mata_pelajaran.nama as nama_mata_pelajaran, soal_ujian.id_guru, guru.nama as nama_guru');
+        $this->db->from('soal_ujian');
+        $this->db->join('mata_pelajaran', 'soal_ujian.id_mata_pelajaran = mata_pelajaran.id');
+        $this->db->join('guru', 'soal_ujian.id_guru = guru.id');
+        $this->db->where('soal_ujian.id_guru', $id);
+        $result = $this->db->get()->result();
+
+        $message = array("list_soal_ujian"=> $result);
+
+        $this->response($message, 200);
+    }
+    public function data_soal_ujian_detail_get()
+    {
+        $id = $this->get("id");
+
+        $this->db->select('soal_ujian_detail.id, soal_ujian_detail.id_soal_ujian, soal_ujian.nama as nama_soal_ujian, soal_ujian_detail.id_jenis_soal_ujian_detail, jenis_soal_ujian_detail.nama as nama_jenis_soal_ujian_detail, soal_ujian_detail.soal_tulisan, soal_ujian_detail.soal_gambar, soal_ujian_detail.pilihan_jawaban_tulisan, soal_ujian_detail.pilihan_jawaban_gambar, soal_ujian_detail.kunci_jawaban');
+        $this->db->from('soal_ujian_detail');
+        $this->db->join('soal_ujian', 'soal_ujian_detail.id_soal_ujian = soal_ujian.id');
+        $this->db->join('jenis_soal_ujian_detail', 'soal_ujian_detail.id_jenis_soal_ujian_detail = jenis_soal_ujian_detail.id');
+        $this->db->where('soal_ujian.id_guru', $id);
+        $result = $this->db->get()->result();
+
+        $message = array("list_soal_ujian_detail"=> $result);
+
+        $this->response($message, 200);
+    }
+    public function tambah_soal_ujian_post()
+    {
+        $soal_ujian["id_mata_pelajaran"] = $this->post("id_mata_pelajaran");
+        $soal_ujian["id_guru"] = $this->post("id_guru");
+        $soal_ujian["nama"] = $this->post("nama");
+        
+        $this->db->insert('soal_ujian', $soal_ujian);
+
+        $message = array("list_soal_ujian", $soal_ujian);
+
+        $this->response($message, 200);
+    }
 }
