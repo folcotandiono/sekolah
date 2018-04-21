@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 19 Apr 2018 pada 04.15
+-- Waktu pembuatan: 21 Apr 2018 pada 10.05
 -- Versi server: 10.1.31-MariaDB
 -- Versi PHP: 7.2.3
 
@@ -173,7 +173,8 @@ INSERT INTO `mata_pelajaran` (`id`, `id_kelas`, `id_guru`, `nama`) VALUES
 (2, 3, 14, 'lkfkakd'),
 (3, 2, 14, 'aalallaaaaaa'),
 (4, 5, 19, 'fdasass'),
-(5, 4, 23, '1123412');
+(5, 4, 23, '1123412'),
+(6, 2, 12, 'hahaha');
 
 -- --------------------------------------------------------
 
@@ -262,7 +263,8 @@ CREATE TABLE `soal_ujian` (
 
 INSERT INTO `soal_ujian` (`id`, `id_mata_pelajaran`, `id_guru`, `nama`) VALUES
 (1, 1, 14, 'ulangan harian haha'),
-(2, 5, 18, '134312');
+(2, 5, 18, '134312'),
+(3, 6, 12, 'hehehehehehehehehe');
 
 -- --------------------------------------------------------
 
@@ -275,9 +277,9 @@ CREATE TABLE `soal_ujian_detail` (
   `id_soal_ujian` int(11) NOT NULL,
   `id_jenis_soal_ujian_detail` int(11) NOT NULL,
   `soal_tulisan` varchar(1000) NOT NULL,
-  `soal_gambar` varchar(5000) NOT NULL,
+  `soal_gambar` varchar(30000) NOT NULL,
   `pilihan_jawaban_tulisan` varchar(1000) NOT NULL,
-  `pilihan_jawaban_gambar` varchar(5000) NOT NULL,
+  `pilihan_jawaban_gambar` varchar(30000) NOT NULL,
   `kunci_jawaban` varchar(1000) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -431,7 +433,7 @@ ALTER TABLE `kelas`
 -- AUTO_INCREMENT untuk tabel `mata_pelajaran`
 --
 ALTER TABLE `mata_pelajaran`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT untuk tabel `materi_pelajaran`
@@ -455,7 +457,7 @@ ALTER TABLE `pr`
 -- AUTO_INCREMENT untuk tabel `soal_ujian`
 --
 ALTER TABLE `soal_ujian`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT untuk tabel `soal_ujian_detail`

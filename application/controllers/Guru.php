@@ -110,4 +110,26 @@ class Guru extends Rest_Controller {
 
         $this->response($message, 200);
     }
+    public function tambah_soal_ujian_detail_post()
+    {
+        $soal_ujian_detail["id_soal_ujian"] = $this->post("id_soal_ujian");
+        $soal_ujian_detail["id_jenis_soal_ujian_detail"] = $this->post("id_jenis_soal_ujian_detail");
+        $soal_ujian_detail["soal_tulisan"] = $this->post("soal_tulisan");
+
+        $soal_ujian_detail["soal_gambar"] = $this->post("soal_gambar");
+		$filesCount = count($soal_ujian_detail["soal_gambar"]);
+		for($i = 0; $i < $filesCount; $i++){
+            $soal_ujian_detail["soal_gambar"][$i] = base64_decode($soal_ujian_detail["soal_gambar"][$i]);
+            $namaFile = md5(uniqid(rand(), true)) . ".png";
+            file_put_contents('uploads/'.$namaFile, $soal_ujian_detail["soal_gambar"][$i]);
+            $soal_ujian_detail["soal_gambar"][$i] = $namaFile;
+		}
+		$soal_ujian_detail["soal_gambar"] = json_encode($soal_ujian_detail["soal_gambar"]);
+        
+        $this->db->insert('soal_ujian', $soal_ujian);
+
+        $message = array("list_soal_ujian_detail", $soal_ujian_detail);
+
+        $this->response($message, 200);
+    }
 }
