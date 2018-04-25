@@ -98,6 +98,17 @@ class Guru extends Rest_Controller {
 
         $this->response($message, 200);
     }
+    public function data_jenis_soal_ujian_detail_get()
+    {
+
+        $this->db->select('jenis_soal_ujian_detail.id, jenis_soal_ujian_detail.nama');
+        $this->db->from('jenis_soal_ujian_detail');
+        $result = $this->db->get()->result();
+
+        $message = array("list_jenis_soal_ujian_detail"=> $result);
+
+        $this->response($message, 200);
+    }
     public function tambah_soal_ujian_post()
     {
         $soal_ujian["id_mata_pelajaran"] = $this->post("id_mata_pelajaran");
@@ -124,9 +135,52 @@ class Guru extends Rest_Controller {
             file_put_contents('uploads/'.$namaFile, $soal_ujian_detail["soal_gambar"][$i]);
             $soal_ujian_detail["soal_gambar"][$i] = $namaFile;
 		}
-		$soal_ujian_detail["soal_gambar"] = json_encode($soal_ujian_detail["soal_gambar"]);
+        $soal_ujian_detail["soal_gambar"] = json_encode($soal_ujian_detail["soal_gambar"]);
         
-        $this->db->insert('soal_ujian', $soal_ujian);
+        $soal_ujian_detail["pilihan_jawaban_tulisan"] = $this->post("pilihan_jawaban_tulisan");
+        $soal_ujian_detail["pilihan_jawaban_tulisan"] = json_encode($soal_ujian_detail["pilihan_jawaban_tulisan"]);
+        
+        $soal_ujian_detail["pilihan_jawaban_gambar"] = $this->post("pilihan_jawaban_gambar");
+		$filesCount = count($soal_ujian_detail["pilihan_jawaban_gambar"][0]);
+		for($i = 0; $i < $filesCount; $i++){
+            $soal_ujian_detail["pilihan_jawaban_gambar"][0][$i] = base64_decode($soal_ujian_detail["pilihan_jawaban_gambar"][0][$i]);
+            $namaFile = md5(uniqid(rand(), true)) . ".png";
+            file_put_contents('uploads/'.$namaFile, $soal_ujian_detail["pilihan_jawaban_gambar"][0][$i]);
+            $soal_ujian_detail["pilihan_jawaban_gambar"][0][$i] = $namaFile;
+        }
+        $filesCount = count($soal_ujian_detail["pilihan_jawaban_gambar"][1]);
+		for($i = 0; $i < $filesCount; $i++){
+            $soal_ujian_detail["pilihan_jawaban_gambar"][1][$i] = base64_decode($soal_ujian_detail["pilihan_jawaban_gambar"][1][$i]);
+            $namaFile = md5(uniqid(rand(), true)) . ".png";
+            file_put_contents('uploads/'.$namaFile, $soal_ujian_detail["pilihan_jawaban_gambar"][1][$i]);
+            $soal_ujian_detail["pilihan_jawaban_gambar"][1][$i] = $namaFile;
+        }
+        $filesCount = count($soal_ujian_detail["pilihan_jawaban_gambar"][2]);
+		for($i = 0; $i < $filesCount; $i++){
+            $soal_ujian_detail["pilihan_jawaban_gambar"][2][$i] = base64_decode($soal_ujian_detail["pilihan_jawaban_gambar"][2][$i]);
+            $namaFile = md5(uniqid(rand(), true)) . ".png";
+            file_put_contents('uploads/'.$namaFile, $soal_ujian_detail["pilihan_jawaban_gambar"][2][$i]);
+            $soal_ujian_detail["pilihan_jawaban_gambar"][2][$i] = $namaFile;
+        }
+        $filesCount = count($soal_ujian_detail["pilihan_jawaban_gambar"][3]);
+		for($i = 0; $i < $filesCount; $i++){
+            $soal_ujian_detail["pilihan_jawaban_gambar"][3][$i] = base64_decode($soal_ujian_detail["pilihan_jawaban_gambar"][3][$i]);
+            $namaFile = md5(uniqid(rand(), true)) . ".png";
+            file_put_contents('uploads/'.$namaFile, $soal_ujian_detail["pilihan_jawaban_gambar"][3][$i]);
+            $soal_ujian_detail["pilihan_jawaban_gambar"][3][$i] = $namaFile;
+        }
+        $filesCount = count($soal_ujian_detail["pilihan_jawaban_gambar"][4]);
+		for($i = 0; $i < $filesCount; $i++){
+            $soal_ujian_detail["pilihan_jawaban_gambar"][4][$i] = base64_decode($soal_ujian_detail["pilihan_jawaban_gambar"][4][$i]);
+            $namaFile = md5(uniqid(rand(), true)) . ".png";
+            file_put_contents('uploads/'.$namaFile, $soal_ujian_detail["pilihan_jawaban_gambar"][4][$i]);
+            $soal_ujian_detail["pilihan_jawaban_gambar"][4][$i] = $namaFile;
+        }
+        $soal_ujian_detail["pilihan_jawaban_gambar"] = json_encode($soal_ujian_detail["pilihan_jawaban_gambar"]);
+
+        $soal_ujian_detail["kunci_jawaban"] = $this->post("kunci_jawaban");
+        
+        $this->db->insert('soal_ujian_detail', $soal_ujian_detail);
 
         $message = array("list_soal_ujian_detail", $soal_ujian_detail);
 
