@@ -109,6 +109,30 @@ class Guru extends Rest_Controller {
 
         $this->response($message, 200);
     }
+    public function data_jadwal_ujian_get()
+    {
+
+        $this->db->select('jadwal_ujian.id, jadwal_ujian.nama, jadwal_ujian.id_soal_ujian, soal_ujian.nama as nama_soal_ujian, jadwal_ujian.tanggal, jadwal_ujian.durasi');
+        $this->db->from('jadwal_ujian');
+        $this->db->join('soal_ujian', 'jadwal_ujian.id_soal_ujian = soal_ujian.id');
+        $result = $this->db->get()->result();
+
+        $message = array("list_jadwal_ujian"=> $result);
+
+        $this->response($message, 200);
+    }
+    public function data_pr_get()
+    {
+
+        $this->db->select('pr.id, pr.deskripsi, pr.gambar, pr.id_mata_pelajaran, mata_pelajaran.nama as nama_mata_pelajaran, pr.nama');
+        $this->db->from('pr');
+        $this->db->join('mata_pelajaran', 'pr.id_mata_pelajaran = mata_pelajaran.id');
+        $result = $this->db->get()->result();
+
+        $message = array("list_pr"=> $result);
+
+        $this->response($message, 200);
+    }
     public function tambah_soal_ujian_post()
     {
         $soal_ujian["id_mata_pelajaran"] = $this->post("id_mata_pelajaran");
@@ -183,6 +207,41 @@ class Guru extends Rest_Controller {
         $this->db->insert('soal_ujian_detail', $soal_ujian_detail);
 
         $message = array("list_soal_ujian_detail", $soal_ujian_detail);
+
+        $this->response($message, 200);
+    }
+    public function tambah_jadwal_ujian_post()
+    {
+        $jadwal_ujian["id_soal_ujian"] = $this->post("id_soal_ujian");
+        $jadwal_ujian["tanggal"] = $this->post("tanggal");
+        $jadwal_ujian["nama"] = $this->post("nama");
+        $jadwal_ujian["durasi"] = $this->post("durasi");
+        
+        $this->db->insert('jadwal_ujian', $jadwal_ujian);
+
+        $message = array("list_jadwal_ujian", $jadwal_ujian);
+
+        $this->response($message, 200);
+    }
+    public function tambah_pr_post()
+    {
+        $pr["id_mata_pelajaran"] = $this->post("id_mata_pelajaran");
+        $pr["nama"] = $this->post("nama");
+        $pr["deskripsi"] = $this->post("deskripsi");
+        $pr["gambar"] = $this->post("gambar");
+        
+        $filesCount = count($pr["gambar"]);
+		for($i = 0; $i < $filesCount; $i++){
+            $pr["gambar"][$i] = base64_decode($pr["gambar"][$i]);
+            $namaFile = md5(uniqid(rand(), true)) . ".png";
+            file_put_contents('uploads/'.$namaFile, $pr["gambar"][$i]);
+            $pr["gambar"][$i] = $namaFile;
+        }
+        $pr["gambar"] = json_encode($pr["gambar"]);
+        
+        $this->db->insert('pr', $pr);
+
+        $message = array("list_pr", $pr);
 
         $this->response($message, 200);
     }
