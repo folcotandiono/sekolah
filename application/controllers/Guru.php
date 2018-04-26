@@ -133,6 +133,18 @@ class Guru extends Rest_Controller {
 
         $this->response($message, 200);
     }
+    public function data_materi_pelajaran_get()
+    {
+
+        $this->db->select('materi_pelajaran.id, materi_pelajaran.deskripsi, materi_pelajaran.gambar, materi_pelajaran.id_mata_pelajaran, mata_pelajaran.nama as nama_mata_pelajaran, materi_pelajaran.nama');
+        $this->db->from('materi_pelajaran');
+        $this->db->join('mata_pelajaran', 'materi_pelajaran.id_mata_pelajaran = mata_pelajaran.id');
+        $result = $this->db->get()->result();
+
+        $message = array("list_materi_pelajaran"=> $result);
+
+        $this->response($message, 200);
+    }
     public function tambah_soal_ujian_post()
     {
         $soal_ujian["id_mata_pelajaran"] = $this->post("id_mata_pelajaran");
@@ -141,7 +153,7 @@ class Guru extends Rest_Controller {
         
         $this->db->insert('soal_ujian', $soal_ujian);
 
-        $message = array("list_soal_ujian", $soal_ujian);
+        $message = array("message"=> "success");
 
         $this->response($message, 200);
     }
@@ -154,6 +166,7 @@ class Guru extends Rest_Controller {
         $soal_ujian_detail["soal_gambar"] = $this->post("soal_gambar");
 		$filesCount = count($soal_ujian_detail["soal_gambar"]);
 		for($i = 0; $i < $filesCount; $i++){
+            if (strlen($soal_ujian_detail["soal_gambar"][$i]) == 0) continue;
             $soal_ujian_detail["soal_gambar"][$i] = base64_decode($soal_ujian_detail["soal_gambar"][$i]);
             $namaFile = md5(uniqid(rand(), true)) . ".png";
             file_put_contents('uploads/'.$namaFile, $soal_ujian_detail["soal_gambar"][$i]);
@@ -167,6 +180,7 @@ class Guru extends Rest_Controller {
         $soal_ujian_detail["pilihan_jawaban_gambar"] = $this->post("pilihan_jawaban_gambar");
 		$filesCount = count($soal_ujian_detail["pilihan_jawaban_gambar"][0]);
 		for($i = 0; $i < $filesCount; $i++){
+            if (strlen($soal_ujian_detail["pilihan_jawaban_gambar"][0][$i]) == 0) continue;
             $soal_ujian_detail["pilihan_jawaban_gambar"][0][$i] = base64_decode($soal_ujian_detail["pilihan_jawaban_gambar"][0][$i]);
             $namaFile = md5(uniqid(rand(), true)) . ".png";
             file_put_contents('uploads/'.$namaFile, $soal_ujian_detail["pilihan_jawaban_gambar"][0][$i]);
@@ -174,6 +188,7 @@ class Guru extends Rest_Controller {
         }
         $filesCount = count($soal_ujian_detail["pilihan_jawaban_gambar"][1]);
 		for($i = 0; $i < $filesCount; $i++){
+            if (strlen($soal_ujian_detail["pilihan_jawaban_gambar"][1][$i]) == 0) continue;
             $soal_ujian_detail["pilihan_jawaban_gambar"][1][$i] = base64_decode($soal_ujian_detail["pilihan_jawaban_gambar"][1][$i]);
             $namaFile = md5(uniqid(rand(), true)) . ".png";
             file_put_contents('uploads/'.$namaFile, $soal_ujian_detail["pilihan_jawaban_gambar"][1][$i]);
@@ -181,6 +196,7 @@ class Guru extends Rest_Controller {
         }
         $filesCount = count($soal_ujian_detail["pilihan_jawaban_gambar"][2]);
 		for($i = 0; $i < $filesCount; $i++){
+            if (strlen($soal_ujian_detail["pilihan_jawaban_gambar"][2][$i]) == 0) continue;
             $soal_ujian_detail["pilihan_jawaban_gambar"][2][$i] = base64_decode($soal_ujian_detail["pilihan_jawaban_gambar"][2][$i]);
             $namaFile = md5(uniqid(rand(), true)) . ".png";
             file_put_contents('uploads/'.$namaFile, $soal_ujian_detail["pilihan_jawaban_gambar"][2][$i]);
@@ -188,6 +204,7 @@ class Guru extends Rest_Controller {
         }
         $filesCount = count($soal_ujian_detail["pilihan_jawaban_gambar"][3]);
 		for($i = 0; $i < $filesCount; $i++){
+            if (strlen($soal_ujian_detail["pilihan_jawaban_gambar"][3][$i]) == 0) continue;
             $soal_ujian_detail["pilihan_jawaban_gambar"][3][$i] = base64_decode($soal_ujian_detail["pilihan_jawaban_gambar"][3][$i]);
             $namaFile = md5(uniqid(rand(), true)) . ".png";
             file_put_contents('uploads/'.$namaFile, $soal_ujian_detail["pilihan_jawaban_gambar"][3][$i]);
@@ -195,6 +212,7 @@ class Guru extends Rest_Controller {
         }
         $filesCount = count($soal_ujian_detail["pilihan_jawaban_gambar"][4]);
 		for($i = 0; $i < $filesCount; $i++){
+            if (strlen($soal_ujian_detail["pilihan_jawaban_gambar"][4][$i]) == 0) continue;
             $soal_ujian_detail["pilihan_jawaban_gambar"][4][$i] = base64_decode($soal_ujian_detail["pilihan_jawaban_gambar"][4][$i]);
             $namaFile = md5(uniqid(rand(), true)) . ".png";
             file_put_contents('uploads/'.$namaFile, $soal_ujian_detail["pilihan_jawaban_gambar"][4][$i]);
@@ -206,7 +224,7 @@ class Guru extends Rest_Controller {
         
         $this->db->insert('soal_ujian_detail', $soal_ujian_detail);
 
-        $message = array("list_soal_ujian_detail", $soal_ujian_detail);
+        $message = array("message"=> "success");
 
         $this->response($message, 200);
     }
@@ -219,7 +237,7 @@ class Guru extends Rest_Controller {
         
         $this->db->insert('jadwal_ujian', $jadwal_ujian);
 
-        $message = array("list_jadwal_ujian", $jadwal_ujian);
+        $message = array("message"=> "success");
 
         $this->response($message, 200);
     }
@@ -229,9 +247,12 @@ class Guru extends Rest_Controller {
         $pr["nama"] = $this->post("nama");
         $pr["deskripsi"] = $this->post("deskripsi");
         $pr["gambar"] = $this->post("gambar");
+
+        // print_r($pr["gambar"]);
         
         $filesCount = count($pr["gambar"]);
 		for($i = 0; $i < $filesCount; $i++){
+            if (strlen($pr["gambar"][$i]) == 0) continue;
             $pr["gambar"][$i] = base64_decode($pr["gambar"][$i]);
             $namaFile = md5(uniqid(rand(), true)) . ".png";
             file_put_contents('uploads/'.$namaFile, $pr["gambar"][$i]);
@@ -241,7 +262,32 @@ class Guru extends Rest_Controller {
         
         $this->db->insert('pr', $pr);
 
-        $message = array("list_pr", $pr);
+        $message = array("message"=> "success");
+
+        $this->response($message, 200);
+    }
+    public function tambah_materi_pelajaran_post()
+    {
+        $materi_pelajaran["id_mata_pelajaran"] = $this->post("id_mata_pelajaran");
+        $materi_pelajaran["nama"] = $this->post("nama");
+        $materi_pelajaran["deskripsi"] = $this->post("deskripsi");
+        $materi_pelajaran["gambar"] = $this->post("gambar");
+
+        // print_r($materi_pelajaran["gambar"]);
+        
+        $filesCount = count($materi_pelajaran["gambar"]);
+		for($i = 0; $i < $filesCount; $i++){
+            if (strlen($materi_pelajaran["gambar"][$i]) == 0) continue;
+            $materi_pelajaran["gambar"][$i] = base64_decode($materi_pelajaran["gambar"][$i]);
+            $namaFile = md5(uniqid(rand(), true)) . ".png";
+            file_put_contents('uploads/'.$namaFile, $materi_pelajaran["gambar"][$i]);
+            $materi_pelajaran["gambar"][$i] = $namaFile;
+        }
+        $materi_pelajaran["gambar"] = json_encode($materi_pelajaran["gambar"]);
+        
+        $this->db->insert('materi_pelajaran', $materi_pelajaran);
+
+        $message = array("message"=> "success");
 
         $this->response($message, 200);
     }
