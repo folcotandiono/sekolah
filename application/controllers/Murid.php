@@ -52,5 +52,21 @@ class Murid extends Rest_Controller {
         $message = array("list_murid" => $result);
 
         $this->response($message, 200);
+	}
+	public function data_jadwal_ujian_get()
+    {
+		$id = $this->post("id");
+
+        $this->db->select('jadwal_ujian.id, jadwal_ujian.nama, jadwal_ujian.id_soal_ujian, soal_ujian.nama as nama_soal_ujian, jadwal_ujian.tanggal, jadwal_ujian.durasi');
+        $this->db->from('jadwal_ujian');
+		$this->db->join('soal_ujian', 'jadwal_ujian.id_soal_ujian = soal_ujian.id');
+		$this->db->join('mata_pelajaran', 'soal_ujian.id_mata_pelajaran = mata_pelajaran.id');
+		$this->db->join('murid', 'mata_pelajaran.id_kelas = murid.id_kelas');
+		$this->db->where('murid.id', $id);
+        $result = $this->db->get()->result();
+
+        $message = array("list_jadwal_ujian"=> $result);
+
+        $this->response($message, 200);
     }
 }
