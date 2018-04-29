@@ -28,7 +28,8 @@ class Murid extends Rest_Controller {
         $this->load->database();
 
             // load URL helper
-            $this->load->helper('url');
+			$this->load->helper('url');
+			$this->load->helper('date');
     }
 	public function index()
 	{
@@ -37,6 +38,12 @@ class Murid extends Rest_Controller {
 			"footer" => $this->load->view('footer', NULL, true)
 		);
 		$this->load->view('index', $data);
+	}
+	public function waktu_get()
+	{
+		$message = array("waktu" => time());
+
+        $this->response($message, 200);
 	}
     public function login_post()
     {
@@ -55,7 +62,7 @@ class Murid extends Rest_Controller {
 	}
 	public function data_jadwal_ujian_get()
     {
-		$id = $this->post("id");
+		$id = $this->get("id");
 
         $this->db->select('jadwal_ujian.id, jadwal_ujian.nama, jadwal_ujian.id_soal_ujian, soal_ujian.nama as nama_soal_ujian, jadwal_ujian.tanggal, jadwal_ujian.durasi');
         $this->db->from('jadwal_ujian');
