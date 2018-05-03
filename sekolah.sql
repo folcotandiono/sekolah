@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 21 Apr 2018 pada 10.05
+-- Waktu pembuatan: 03 Bulan Mei 2018 pada 11.46
 -- Versi server: 10.1.31-MariaDB
 -- Versi PHP: 7.2.3
 
@@ -40,21 +40,7 @@ CREATE TABLE `guru` (
 --
 
 INSERT INTO `guru` (`id`, `nama`, `password`, `no_telepon`) VALUES
-(12, '123', 'Ojaqhdad1', ''),
-(13, '123', 'Ojaqhdad1', ''),
-(14, 'hehehe', 'hehehe', ''),
-(15, '123', 'Ojaqhdad1', ''),
-(16, '123', 'Ojaqhdad1', ''),
-(17, 'fadsf', 'fdasfdas', ''),
-(18, 'fsadfdsa', 'fdasfas', ''),
-(19, 'fdasfs', 'fdasfs', ''),
-(20, '123', 'Ojaqhdad1', ''),
-(21, 'fdasdas', 'fdas', ''),
-(22, 'kjklk', 'hjlk', ''),
-(23, 'hljk', 'jll', ''),
-(24, 'jl;kl', 'l;lj', ''),
-(25, 'hehe hehe', 'lfadskfajds', ''),
-(26, 'hahahaha', 'hahahaha', 'h132421111111');
+(1, 'meme', 'meme', '13412');
 
 -- --------------------------------------------------------
 
@@ -75,26 +61,7 @@ CREATE TABLE `jadwal_ujian` (
 --
 
 INSERT INTO `jadwal_ujian` (`id`, `id_soal_ujian`, `tanggal`, `nama`, `durasi`) VALUES
-(4, 2, '2015-02-22 04:11:00', 'fdafad fdafadsf fad', 121),
-(5, 1, '0000-00-00 00:00:00', 'fdadaf fdafda', 1),
-(6, 1, '0000-00-00 00:00:00', 'fdasfdas fdasfad', 13),
-(7, 1, '2015-12-15 08:15:15', 'fadsfd fdasfadfddsda', 212),
-(8, 1, '0000-00-00 00:00:00', 'fdadfas', 12),
-(9, 1, '1970-01-02 03:40:11', 'fdasf', 223),
-(10, 1, '0000-00-00 00:00:00', 'dafasdads', 121),
-(11, 1, '0000-00-00 00:00:00', 'fdasfdsa', 121),
-(12, 1, '0000-00-00 00:00:00', 'flkdak fdjakfklad', 12),
-(13, 1, '0000-00-00 00:00:00', 'dfdafad', 12),
-(14, 1, '0000-00-00 00:00:00', 'fdasfda fdafa', 12),
-(15, 1, '0000-00-00 00:00:00', 'dasfds fdasfdas', 0),
-(16, 1, '0000-00-00 00:00:00', 'dfadfasd', 21),
-(17, 1, '0000-00-00 00:00:00', 'dsafas', 21),
-(18, 1, '0000-00-00 00:00:00', 'fdasfad', 12),
-(19, 1, '0000-00-00 00:00:00', 'fdsafdas fdasf', 12),
-(20, 1, '0000-00-00 00:00:00', 'fdafda fdasfda', 12),
-(21, 1, '0000-00-00 00:00:00', 'fdasfdas fdafda', 21),
-(22, 1, '2016-12-21 17:12:00', 'dfafda', 12),
-(23, 1, '2016-11-22 04:11:00', 'dsafdas', 12);
+(1, 1, '2018-05-03 07:40:00', 'asfasfas', 1000000);
 
 -- --------------------------------------------------------
 
@@ -106,6 +73,7 @@ CREATE TABLE `jawaban_soal_ujian_detail` (
   `id` int(11) NOT NULL,
   `id_soal_ujian_detail` int(11) NOT NULL,
   `id_murid` int(11) NOT NULL,
+  `id_jadwal_ujian` int(11) NOT NULL,
   `jawaban_tulisan` varchar(1000) NOT NULL,
   `jawaban_gambar` varchar(500) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -126,7 +94,7 @@ CREATE TABLE `jenis_soal_ujian_detail` (
 --
 
 INSERT INTO `jenis_soal_ujian_detail` (`id`, `nama`) VALUES
-(1, 'pilihan ganda');
+(1, 'pilihan');
 
 -- --------------------------------------------------------
 
@@ -145,11 +113,7 @@ CREATE TABLE `kelas` (
 --
 
 INSERT INTO `kelas` (`id`, `nama`, `id_tahun_ajaran`) VALUES
-(1, 'aaaa', 2),
-(2, 'aa', 3),
-(3, 'b', 4),
-(4, 'c', 2),
-(5, '222', 9);
+(1, 'xii ia 4', 1);
 
 -- --------------------------------------------------------
 
@@ -169,12 +133,7 @@ CREATE TABLE `mata_pelajaran` (
 --
 
 INSERT INTO `mata_pelajaran` (`id`, `id_kelas`, `id_guru`, `nama`) VALUES
-(1, 3, 12, 'fadsfasdfda'),
-(2, 3, 14, 'lkfkakd'),
-(3, 2, 14, 'aalallaaaaaa'),
-(4, 5, 19, 'fdasass'),
-(5, 4, 23, '1123412'),
-(6, 2, 12, 'hahaha');
+(1, 1, 1, 'biologi');
 
 -- --------------------------------------------------------
 
@@ -195,7 +154,7 @@ CREATE TABLE `materi_pelajaran` (
 --
 
 INSERT INTO `materi_pelajaran` (`id`, `id_mata_pelajaran`, `deskripsi`, `gambar`, `nama`) VALUES
-(1, 1, 'aaaaaaaaaaa aaaaaaaaaaaa bbbbbbbbbb cccccc', '[\"97d49d5632e77dc67211ed9407e37989.jpg\"]', 'aaaaaaaaaa aaaaaaaaaaa bbbbbbb  ccccccccc');
+(1, 1, 'asfdadsfa', '[]', 'fadfasd');
 
 -- --------------------------------------------------------
 
@@ -218,10 +177,7 @@ CREATE TABLE `murid` (
 --
 
 INSERT INTO `murid` (`id`, `id_kelas`, `nama`, `password`, `nama_ayah`, `nama_ibu`, `no_telepon`) VALUES
-(1, 2, 'fadsfdsa', 'fadsfad', '', '', ''),
-(2, 3, '123', 'Ojaqhdad1', '', '', ''),
-(4, 3, '123', 'Ojaqhdad1', '', '', ''),
-(5, 4, 'hahahaha', 'hahahaha', 'hahahaha', 'hahahaha', 'hahahaha');
+(1, 1, 'folco', 'folco', 'haha', 'hehe', '13324132');
 
 -- --------------------------------------------------------
 
@@ -242,7 +198,7 @@ CREATE TABLE `pr` (
 --
 
 INSERT INTO `pr` (`id`, `id_mata_pelajaran`, `deskripsi`, `gambar`, `nama`) VALUES
-(1, 2, 'fdasfda fdasfda fdafda fjdafklad aaaaaaaaaaaaaaaaaaaaaaaaaaaaa', '[\"c5862856ccf444c6b47d612bfd3db9f9.jpg\"]', 'fdafad fdasfda bbbbbbbbbbbbbbbbbbbbbbb');
+(1, 1, 'fdsfas', '[]', 'fdasfasd');
 
 -- --------------------------------------------------------
 
@@ -253,7 +209,6 @@ INSERT INTO `pr` (`id`, `id_mata_pelajaran`, `deskripsi`, `gambar`, `nama`) VALU
 CREATE TABLE `soal_ujian` (
   `id` int(11) NOT NULL,
   `id_mata_pelajaran` int(11) NOT NULL,
-  `id_guru` int(11) NOT NULL,
   `nama` varchar(500) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -261,10 +216,8 @@ CREATE TABLE `soal_ujian` (
 -- Dumping data untuk tabel `soal_ujian`
 --
 
-INSERT INTO `soal_ujian` (`id`, `id_mata_pelajaran`, `id_guru`, `nama`) VALUES
-(1, 1, 14, 'ulangan harian haha'),
-(2, 5, 18, '134312'),
-(3, 6, 12, 'hehehehehehehehehe');
+INSERT INTO `soal_ujian` (`id`, `id_mata_pelajaran`, `nama`) VALUES
+(1, 1, 'soal ujian biologi');
 
 -- --------------------------------------------------------
 
@@ -288,7 +241,13 @@ CREATE TABLE `soal_ujian_detail` (
 --
 
 INSERT INTO `soal_ujian_detail` (`id`, `id_soal_ujian`, `id_jenis_soal_ujian_detail`, `soal_tulisan`, `soal_gambar`, `pilihan_jawaban_tulisan`, `pilihan_jawaban_gambar`, `kunci_jawaban`) VALUES
-(3, 1, 1, 'aaaaaaaa bbbbbbbbbbbbbbb ccccccccccc', '[\"0cf0197eeecb34456c88c2851e304bcf.png\",\"1aab48ebc090c64a3c273650e38ba7e8.png\",\"91f0f574ef6c64d2f4b399bd9b6226ee.png\"]', '[\"aaaaaa aaaaaaaaaaa\",\"bbbbbbb bbbbbbbbb\",\"ccccccc ccccccccccccc\",\"ddddddd dddddddddddd\",\"ee eeeeeeeeeeeeee\"]', '[[\"963719753afe77ce6a1739119c765061.png\",\"cb8bb41b6dc6f0427a7ca77b8eaaa3f4.png\",\"fc6c60ca9d2a58b49a8843f8a7d7a2be.png\"],[\"91823da4e9aa129650259f2a36e6d5fe.png\",\"865ba747f335f852b5dca52521060ce9.png\",\"9ea1174a5a21d9408394053d6e363812.png\"],[\"87c340403ce512275ded6169374fac14.png\",\"9154efaace8aa9374362da209730c929.png\",\"e02e55f4e43083329bf2970455b8dc08.png\"],[\"e7e428aeb96184eee93a6d4c2499e72a.png\",\"3729d5c10069bad0d9e98f79cfeff274.png\",\"d70b1a98d98dcda2ee3a64f78556641a.png\"],[\"4901c544d34619f606c5629c48222c66.png\",\"d4bb7aeac70cd67e0faa056597327bfd.png\",\"fc33e302251856abe3779b31997e1654.png\"]]', 'fka;ksl fjkdasl;kfklads;fjads;kflads;lfjla');
+(1, 1, 1, 'dlkjfladlkfk fkljdafjlkadkl jfkldajlfkjadkl fjkldajfal', '[\"bbcc2d8126a8f9cd754ae2b823af8584.png\"]', '[\"fdadfaadfda\",\"fdsfdasfdaf\",\"fdfasdfdasfs\",\"fdfafdaf\",\"fdsafasd\"]', '[[\"c00527ea3838b9f5b5df3fec6e9b9728.png\"],[],[],[],[]]', 'fdsafasfad'),
+(4, 1, 1, 'dfasfadfsdf', '[]', '[\"\",\"\",\"\",\"\",\"\"]', '[[],[],[],[],[]]', ''),
+(5, 1, 1, 'sdafasdfasfa', '[]', '[\"\",\"\",\"\",\"\",\"\"]', '[[],[],[],[],[]]', ''),
+(6, 1, 1, 'dhjddjd', '[\"26399fe3174b549cbe06e24d59c820cf.png\"]', '\"[jddjjs, zhzjz, djdjdjd, xhxjxjs, dhdjdj]\"', '[[\"96b0097c58652abd724ac543bd0d7be7.png\"],[\"db9d3da3c85b5f62b6297a5bf2435514.png\"],[\"adc9d85c91928497e0b6af4ecc73a0af.png\"],[\"967bf03a73165de93733b38a41d2249f.png\"],[\"aef6637a198d683fc3467c1bcb06390c.png\"]]', 'djxjdk'),
+(7, 1, 1, 'dhjddjd', '[\"b0b4cd785c89a51eee4bef1c81f1a4e6.png\"]', '\"[jddjjs, zhzjz, djdjdjd, xhxjxjs, dhdjdj]\"', '[[\"0f98e228b7ba2bd3480aa21198f5dd58.png\"],[\"aaf7c3429788f64e60e0161315c11e77.png\"],[\"7d69fed1c8c62b58c31e5837a0f54313.png\"],[\"ab757c50396977ab2e7f147f974b270d.png\"],[\"7c9b78b72561bda5cf5a8e09d1650632.png\"]]', 'djxjdk'),
+(8, 1, 1, 'dhjddjd', '[\"9273cced3211173bf71f93aacadc1e90.png\"]', '\"[jddjjs, zhzjz, djdjdjd, xhxjxjs, dhdjdj]\"', '[[\"0b148ede283789f7a9e1bc2fb206f445.png\"],[\"ca74f8fe4d8d619f45f197c7634f914d.png\"],[\"4fd0f70c1e025ce0c719c7be1cc8749c.png\"],[\"eaa1681638e2b4d6142fb2ee07a36294.png\"],[\"227c8bd8e8b58c0becb928bf04174996.png\"]]', 'djxjdk'),
+(9, 1, 1, 'dhjddjd', '[\"f08ec822d2f0e6e18fcb5472cce1f6c2.png\"]', '\"[jddjjs, zhzjz, djdjdjd, xhxjxjs, dhdjdj]\"', '[[\"190a7c2c863fcba1311549db818270aa.png\"],[\"21c9ca20c73adece04bd926a08531f36.png\"],[\"a40b5b7ae5f73298a3a7af7ea28ff9f7.png\"],[\"990650df02635d03aa38a0d25d5f45b7.png\"],[\"8224d1840c24c07ca9ee5a61a6f0a62d.png\"]]', 'djxjdk');
 
 -- --------------------------------------------------------
 
@@ -306,18 +265,7 @@ CREATE TABLE `tahun_ajaran` (
 --
 
 INSERT INTO `tahun_ajaran` (`id`, `tahun`) VALUES
-(2, '2017/20181'),
-(3, '2000/2001'),
-(4, '2001/2002'),
-(5, '2002/2003'),
-(6, '2003/2004'),
-(7, '2004/2005'),
-(8, '2005/2006'),
-(9, '2006/2007'),
-(10, '2007/2008'),
-(11, '2008/2009'),
-(12, '2011/2012'),
-(13, 'haha');
+(1, '2017/2018');
 
 --
 -- Indexes for dumped tables
@@ -403,19 +351,19 @@ ALTER TABLE `tahun_ajaran`
 -- AUTO_INCREMENT untuk tabel `guru`
 --
 ALTER TABLE `guru`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT untuk tabel `jadwal_ujian`
 --
 ALTER TABLE `jadwal_ujian`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT untuk tabel `jawaban_soal_ujian_detail`
 --
 ALTER TABLE `jawaban_soal_ujian_detail`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT untuk tabel `jenis_soal_ujian_detail`
@@ -427,13 +375,13 @@ ALTER TABLE `jenis_soal_ujian_detail`
 -- AUTO_INCREMENT untuk tabel `kelas`
 --
 ALTER TABLE `kelas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT untuk tabel `mata_pelajaran`
 --
 ALTER TABLE `mata_pelajaran`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT untuk tabel `materi_pelajaran`
@@ -445,7 +393,7 @@ ALTER TABLE `materi_pelajaran`
 -- AUTO_INCREMENT untuk tabel `murid`
 --
 ALTER TABLE `murid`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT untuk tabel `pr`
@@ -457,19 +405,19 @@ ALTER TABLE `pr`
 -- AUTO_INCREMENT untuk tabel `soal_ujian`
 --
 ALTER TABLE `soal_ujian`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT untuk tabel `soal_ujian_detail`
 --
 ALTER TABLE `soal_ujian_detail`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT untuk tabel `tahun_ajaran`
 --
 ALTER TABLE `tahun_ajaran`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
