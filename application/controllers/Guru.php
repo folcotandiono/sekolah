@@ -72,11 +72,10 @@ class Guru extends Rest_Controller {
     {
         $id = $this->get("id");
 
-        $this->db->select('soal_ujian.id, soal_ujian.nama, soal_ujian.id_mata_pelajaran, mata_pelajaran.nama as nama_mata_pelajaran, soal_ujian.id_guru, guru.nama as nama_guru');
+        $this->db->select('soal_ujian.id, soal_ujian.nama, soal_ujian.id_mata_pelajaran, mata_pelajaran.nama as nama_mata_pelajaran');
         $this->db->from('soal_ujian');
         $this->db->join('mata_pelajaran', 'soal_ujian.id_mata_pelajaran = mata_pelajaran.id');
-        $this->db->join('guru', 'soal_ujian.id_guru = guru.id');
-        $this->db->where('soal_ujian.id_guru', $id);
+        $this->db->where('mata_pelajaran.id_guru', $id);
         $result = $this->db->get()->result();
 
         $message = array("list_soal_ujian"=> $result);
@@ -91,7 +90,8 @@ class Guru extends Rest_Controller {
         $this->db->from('soal_ujian_detail');
         $this->db->join('soal_ujian', 'soal_ujian_detail.id_soal_ujian = soal_ujian.id');
         $this->db->join('jenis_soal_ujian_detail', 'soal_ujian_detail.id_jenis_soal_ujian_detail = jenis_soal_ujian_detail.id');
-        $this->db->where('soal_ujian.id_guru', $id);
+        $this->db->join('mata_pelajaran', 'soal_ujian.id_mata_pelajaran = mata_pelajaran.id');
+        $this->db->where('mata_pelajaran.id_guru', $id);
         $result = $this->db->get()->result();
 
         $message = array("list_soal_ujian_detail"=> $result);
@@ -148,7 +148,6 @@ class Guru extends Rest_Controller {
     public function tambah_soal_ujian_post()
     {
         $soal_ujian["id_mata_pelajaran"] = $this->post("id_mata_pelajaran");
-        $soal_ujian["id_guru"] = $this->post("id_guru");
         $soal_ujian["nama"] = $this->post("nama");
         
         $this->db->insert('soal_ujian', $soal_ujian);

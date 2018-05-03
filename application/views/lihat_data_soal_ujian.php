@@ -117,13 +117,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                       <button type="button" id="guruChoose" data-toggle="modal" data-target="#guruModal">Choose</button>
                     </div>
                   </div> -->
-                  <div class="col-md-12">
-                    <div class="form-group">
-                      <label for="guruNama">Guru:</label>
-                      <input type="text" class="form-control" id="guruId" value="<?php echo $soal_ujian[0]->id_guru ?>" style="display:none">
-                      <input type="text" class="form-control" id="guruNama" value="<?php echo $soal_ujian[0]->nama_guru ?>" readonly>
-                    </div>
-                  </div>
 
                   <!-- <div class="col-md-12">
                       <input type="submit" class="btn btn-default" name="button" id="update">
@@ -161,32 +154,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           <div class="row">
             <button id="dataMataPelajaranPrev" onclick="loadDataMataPelajaranPrev()">prev</button>
             <button id="dataMataPelajaranNext" onclick="loadDataMataPelajaranNext()">next</button>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-
-    </div>
-  </div>
-
-  <div id="guruModal" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Data guru</h4>
-        </div>
-        <div class="modal-body">
-          <div id="dataGuru">
-
-          </div>
-          <div class="row">
-            <button id="dataGuruPrev" onclick="loadDataGuruPrev()">prev</button>
-            <button id="dataGuruNext" onclick="loadDataGuruNext()">next</button>
           </div>
         </div>
         <div class="modal-footer">
@@ -253,15 +220,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 <script type="text/javascript">
   var pageMataPelajaran = 1;
-  var pageGuru = 1;
   var pageMataPelajaranTotal;
-  var pageGuruTotal;
   var recordPerPage = 3;
   $(document).ready(function() {
 
   });
   banyakDataMataPelajaran(recordPerPage);
-  banyakDataGuru(recordPerPage);
   function banyakDataMataPelajaran(recordPerPage) {
     $.ajax({
       url:"<?php echo base_url() ?>index.php/home/banyakDataMataPelajaran/" + recordPerPage,
@@ -272,18 +236,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       }
     });
   }
-  function banyakDataGuru(recordPerPage) {
-    $.ajax({
-      url:"<?php echo base_url() ?>index.php/home/banyakDataGuru/" + recordPerPage,
-      type:"get",
-      success:function(data) {
-        // console.log(data);
-        pageGuruTotal = data;
-      }
-    });
-  }
   loadDataMataPelajaran(pageMataPelajaran);
-  loadDataGuru(pageGuru);
   function loadDataMataPelajaran(page) {
     $.ajax({
       url:"<?php echo base_url() ?>index.php/home/loadDataMataPelajaran/" + page + "/" + recordPerPage,
@@ -294,16 +247,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       }
     });
   }
-  function loadDataGuru(page) {
-    $.ajax({
-      url:"<?php echo base_url() ?>index.php/home/loadDataGuru/" + page + "/" + recordPerPage,
-      type:"get",
-      success:function(data) {
-        // console.log(data);
-        $("#dataGuru").html(data);
-      }
-    });
-  }
   function loadDataMataPelajaranPrev() {
     if (pageMataPelajaran - 1 >= 1) {
       pageMataPelajaran--;
@@ -311,27 +254,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       loadDataMataPelajaran(pageMataPelajaran);
     }
   }
-  function loadDataGuruPrev() {
-    if (pageGuru - 1 >= 1) {
-      pageGuru--;
-        console.log(pageGuru);
-      loadDataGuru(pageGuru);
-    }
-  }
-  function loadDataGuruNext() {
-    if (pageGuru < pageGuruTotal) {
-      pageGuru++;
-      console.log(pageGuru);
-      loadDataGuru(pageGuru);
+  function loadDataMataPelajaranNext() {
+    if (pageMataPelajaran < pageMataPelajaranTotal) {
+      pageMataPelajaran++;
+      console.log(pageMataPelajaran);
+      loadDataMataPelajaran(pageMataPelajaran);
     }
   }
   function chooseMataPelajaran(mataPelajaranId, mataPelajaranNama) {
     $("#mataPelajaranId").val(mataPelajaranId);
     $("#mataPelajaranNama").val(mataPelajaranNama);
-  }
-  function chooseGuru(guruId, guruNama) {
-    $("#guruId").val(guruId);
-    $("#guruNama").val(guruNama);
   }
   $("#update").click(function() {
     $.ajax({
@@ -340,8 +272,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       data: {
         id: $("#id").val(),
         nama : $("#nama").val(),
-        id_mata_pelajaran : $("#mataPelajaranId").val(),
-        id_guru : $("#guruId").val()
+        id_mata_pelajaran : $("#mataPelajaranId").val()
       },
       dataType: "json",
       complete: function(result){
