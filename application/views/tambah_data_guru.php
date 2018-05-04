@@ -110,6 +110,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     </div>
                   </div>
                   <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="nik">NIK:</label>
+                      <input type="text" class="form-control" name="nik" id="nik">
+                    </div>
+                  </div>
+                  <div class="col-md-12">
                       <input type="submit" class="btn btn-default" name="button" id="simpan">
                   </div>
 
@@ -193,7 +199,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       data: {
         nama : $("#nama").val(),
         password : $("#password").val(),
-        no_telepon : $("#noTelepon").val()
+        no_telepon : $("#noTelepon").val(),
+        nik : $("#nik").val()
       },
       dataType: "json",
       complete: function(result){
@@ -202,6 +209,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         $("#nama").val("");
         $("#password").val("");
         $("#noTelepon").val("");
+        $("#nik").val("");
       }
   });
   });

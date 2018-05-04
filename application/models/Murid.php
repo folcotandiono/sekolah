@@ -11,7 +11,7 @@ class Murid extends CI_Model
 
     public function get_current_page_records($limit, $start)
     {
-        $this->db->select('murid.id as id, murid.nama, murid.password, kelas.nama as nama_kelas, murid.nama_ayah, murid.nama_ibu, murid.no_telepon');
+        $this->db->select('murid.id as id, murid.nama, murid.password, kelas.nama as nama_kelas, murid.nama_ayah, murid.nama_ibu, murid.no_telepon, murid.no_induk, murid.nisn');
         $this->db->from('murid');
         $this->db->join('kelas', 'murid.id_kelas = kelas.id');
         $this->db->limit($limit, $start);
