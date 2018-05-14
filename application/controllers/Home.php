@@ -563,7 +563,7 @@ class Home extends CI_Controller {
 
 	public function tambahDataKelasSimpan() {
 		$kelas["nama"] = $this->input->post("nama");
-		$kelas["tahun_ajaran"] = $this->input->post("id_tahun_ajaran");
+		$kelas["id_tahun_ajaran"] = $this->input->post("id_tahun_ajaran");
     $this->db->insert("kelas", $kelas);
 	}
 
@@ -880,16 +880,15 @@ class Home extends CI_Controller {
 
 	public function tambahDataSoalUjianSimpan() {
 		$soal_ujian["id_mata_pelajaran"] = $this->input->post("id_mata_pelajaran");
-		$soal_ujian["id_guru"] = $this->input->post("id_guru");
+		// $soal_ujian["id_guru"] = $this->input->post("id_guru");
 		$soal_ujian["nama"] = $this->input->post("nama");
     $this->db->insert("soal_ujian", $soal_ujian);
 	}
 
 	public function lihatDataSoalUjian($id) {
-		$soal_ujian = $this->db->query('Select soal_ujian.id, soal_ujian.id_mata_pelajaran, mata_pelajaran.nama as nama_mata_pelajaran, soal_ujian.nama, soal_ujian.id_guru, guru.nama as nama_guru
+	$soal_ujian = $this->db->query('Select soal_ujian.id, soal_ujian.id_mata_pelajaran, mata_pelajaran.nama as nama_mata_pelajaran, soal_ujian.nama
 		 													from soal_ujian
 															join mata_pelajaran on soal_ujian.id_mata_pelajaran = mata_pelajaran.id
-															join guru on soal_ujian.id_guru = guru.id
 															where soal_ujian.id = ' . $id)->result();
 		$data = array(
 	    "sidebar" => $this->load->view('sidebar', NULL, true),
@@ -900,10 +899,10 @@ class Home extends CI_Controller {
 	}
 
 	public function updateDataSoalUjian($id) {
-		$soal_ujian = $this->db->query('Select soal_ujian.id, soal_ujian.id_mata_pelajaran, mata_pelajaran.nama as nama_mata_pelajaran, soal_ujian.nama, soal_ujian.id_guru, guru.nama as nama_guru
+		$soal_ujian = $this->db->query('Select soal_ujian.id, soal_ujian.id_mata_pelajaran, mata_pelajaran.nama as nama_mata_pelajaran, soal_ujian.nama
 		 													from soal_ujian
 															join mata_pelajaran on soal_ujian.id_mata_pelajaran = mata_pelajaran.id
-															join guru on soal_ujian.id_guru = guru.id
+															
 															where soal_ujian.id = ' . $id)->result();
 		$data = array(
 	    "sidebar" => $this->load->view('sidebar', NULL, true),
@@ -916,7 +915,7 @@ class Home extends CI_Controller {
 	public function updateDataSoalUjianSimpan() {
 		$soal_ujian["id"] = $this->input->post("id");
 		$soal_ujian["id_mata_pelajaran"] = $this->input->post("id_mata_pelajaran");
-		$soal_ujian["id_guru"] = $this->input->post("id_guru");
+		// $soal_ujian["id_guru"] = $this->input->post("id_guru");
 		$soal_ujian["nama"] = $this->input->post("nama");
     $this->db->where("id", $soal_ujian["id"]);
 		$this->db->update('soal_ujian', $soal_ujian);
@@ -937,10 +936,10 @@ class Home extends CI_Controller {
 	public function loadDataSoalUjian($page, $record_per_page) {
 		$output = '';
 		$start_from = ($page - 1) * $record_per_page;
-		$this->db->select('soal_ujian.id, mata_pelajaran.nama as nama_mata_pelajaran, soal_ujian.nama, guru.nama as nama_guru');
+		$this->db->select('soal_ujian.id, mata_pelajaran.nama as nama_mata_pelajaran, soal_ujian.nama');
 		$this->db->from('soal_ujian');
 		$this->db->join('mata_pelajaran', 'mata_pelajaran.id = soal_ujian.id_mata_pelajaran');
-		$this->db->join('guru', 'guru.id = soal_ujian.id_guru');
+		// $this->db->join('guru', 'guru.id = soal_ujian.id_guru');
 		$this->db->limit($record_per_page, $start_from);
 		$results = $this->db->get()->result();
 		$output .= "
@@ -948,7 +947,6 @@ class Home extends CI_Controller {
 				<tr>
 					<th>Id</th>
 					<th>Mata Pelajaran</th>
-					<th>Guru</th>
 					<th>Nama</th>
 					<th>Action</th>
 				</tr>
@@ -959,7 +957,6 @@ class Home extends CI_Controller {
 				<tr>
 					<td>$result->id</td>
 					<td>$result->nama_mata_pelajaran</td>
-					<td>$result->nama_guru</td>
 					<td>$result->nama</td>
 					<td>
 						<button class='btn btn-primary' onclick=\"$chooseSoalUjian\">Choose</button>

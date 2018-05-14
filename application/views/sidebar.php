@@ -15,7 +15,7 @@
     <ul class="sidebar-menu" data-widget="tree">
       <li class="header">MAIN NAVIGATION</li>
       <li>
-        <a href="<?php echo base_url() ?>">
+        <a href="<?php echo base_url() . 'index.php/home' ?>">
           <i class="fa fa-dashboard"></i>
           <span>Dashboard</span>
         </a>

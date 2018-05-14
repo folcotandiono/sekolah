@@ -11,7 +11,7 @@ class Kelas extends CI_Model
 
     public function get_current_page_records($limit, $start)
     {
-      $this->db->select('*');
+      $this->db->select('kelas.id, kelas.nama, tahun_ajaran.tahun');
       $this->db->from('kelas');
       $this->db->join('tahun_ajaran', 'kelas.id_tahun_ajaran = tahun_ajaran.id');
       $this->db->limit($limit, $start);
