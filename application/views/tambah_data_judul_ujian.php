@@ -438,7 +438,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   $("#simpan").click(function() {
     $.ajax({
       type: "POST",
-      url: "<?php echo base_url() ?>index.php/home/tambahDataSoalUjianSimpan",
+      url: "<?php echo base_url() ?>index.php/home/tambahDataJudulUjianSimpan",
       data: {
         nama : $("#nama").val(),
         id_mata_pelajaran : $("#mataPelajaranId").val(),
@@ -448,7 +448,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       dataType: "json",
       complete: function(result){
         console.log("haha");
-        toastr.success('Data soal ujian berhasil ditambah');
+        toastr.success('Data judul ujian berhasil ditambah');
         $("#nama").val("");
         $("#mataPelajaranId").val("");
         $("#mataPelajaranNama").val("");

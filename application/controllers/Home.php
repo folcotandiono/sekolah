@@ -464,7 +464,9 @@ class Home extends CI_Controller {
 	public function loadDataMurid($page, $record_per_page) {
 		$output = '';
 		$start_from = ($page - 1) * $record_per_page;
-		$results = $this->db->query('SELECT murid.id, murid.nama as nama, kelas.id as id_kelas, kelas.nama as nama_kelas, murid.password, murid.nama_ayah, murid.nama_ibu, murid.no_telepon FROM murid
+		$results = $this->db->query('SELECT murid.id, murid.nama as nama, kelas.id as id_kelas, kelas.nama as nama_kelas, murid.password, murid.nama_ayah, murid.nama_ibu, murid.no_telepon, 
+											murid.no_induk, murid.nisn 
+															FROM murid
 															join kelas on murid.id_kelas = kelas.id
 															where murid.id = ' . $id . ' LIMIT ' . $start_from . ',' . $record_per_page)->result();
 		$output .= "

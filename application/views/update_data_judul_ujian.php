@@ -70,7 +70,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Data PR
+        Data Judul Ujian
       </h1>
     </section>
 
@@ -80,7 +80,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <div class="col-md-12">
           <div class="box">
             <div class="box-header with-border">
-              <h3 class="box-title">Update Data PR</h3>
+              <h3 class="box-title">Update Data Judul Ujian</h3>
 
               <div class="box-tools pull-right">
                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -91,8 +91,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <div class="box-body" style="">
               <div class="row">
                 <!-- /.col -->
-                <form action="<?php echo base_url() ?>index.php/home/updateDataPRSimpan" id="form" method="post" enctype='multipart/form-data'>
-                  <input type="text" id="id" name="id" value="<?php echo $pr[0]->id ?>" style="display:none">
+                <input type="text" id="id" name="id" style="display:none" value="<?php echo $judul_ujian[0]->id ?>">
+                  
                   <div class="col-md-12">
                     <div class="form-group">
                       <label for="mataPelajaranChoose">Mata Pelajaran:</label>
@@ -102,8 +102,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                   <div class="col-md-12">
                     <div class="form-group">
                       <label for="mataPelajaranNama">Mata Pelajaran:</label>
-                      <input type="text" class="form-control" id="mataPelajaranId" value="<?php echo $pr[0]->id_mata_pelajaran ?>" name="id_mata_pelajaran" style="display:none">
-                      <input type="text" class="form-control" id="mataPelajaranNama" value="<?php echo $pr[0]->nama_mata_pelajaran ?>" readonly>
+                      <input type="text" class="form-control" id="mataPelajaranId" value="<?php echo $judul_ujian[0]->id_mata_pelajaran ?>" style="display:none">
+                      <input type="text" class="form-control" id="mataPelajaranNama" value="<?php echo $judul_ujian[0]->nama_mata_pelajaran ?>" readonly>
                     </div>
                   </div>
 
@@ -116,8 +116,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                   <div class="col-md-12">
                     <div class="form-group">
                       <label for="guruNama">Guru:</label>
-                      <input type="text" class="form-control" id="guruId" value="<?php echo $pr[0]->id_guru ?>" name="id_guru" style="display:none">
-                      <input type="text" class="form-control" id="guruNama" value="<?php echo $pr[0]->nama_guru ?>" readonly>
+                      <input type="text" class="form-control" id="guruId" value="<?php echo $judul_ujian[0]->id_guru ?>" style="display:none">
+                      <input type="text" class="form-control" id="guruNama" value="<?php echo $judul_ujian[0]->nama_guru ?>" readonly>
                     </div>
                   </div>
 
@@ -130,43 +130,36 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                   <div class="col-md-12">
                     <div class="form-group">
                       <label for="kelasNama">Kelas:</label>
-                      <input type="text" class="form-control" id="kelasId" value="<?php echo $pr[0]->id_kelas ?>" name="id_kelas" style="display:none">
-                      <input type="text" class="form-control" id="kelasNama" value="<?php echo $pr[0]->nama_kelas ?>" readonly>
-                    </div>
-                  </div>
-
-                  <div class="col-md-12">
-                    <div class="form-group">
-                      <label for="deskripsi">Deskripsi:</label>
-                      <textarea class="form-control" id="deskripsi" name="deskripsi" rows="3"><?php echo $pr[0]->deskripsi ?></textarea>
-                    </div>
-                  </div>
-
-                  <div class="col-md-12">
-                    <div class="form-group">
-                      <label for="gambar">Gambar:</label>
-                      <input type="file" class="form-control-file" id="gambar" name="gambar[]" onchange="updateGambar(this);" multiple>
-                    </div>
-                  </div>
-
-                  <div class="col-md-12">
-                    <div id="gambarLihat">
-
+                      <input type="text" class="form-control" id="kelasId" value="<?php echo $judul_ujian[0]->id_kelas ?>" style="display:none">
+                      <input type="text" class="form-control" id="kelasNama" value="<?php echo $judul_ujian[0]->nama_kelas ?>" readonly>
                     </div>
                   </div>
 
                   <div class="col-md-12">
                     <div class="form-group">
                       <label for="nama">Nama:</label>
-                      <input type="text" class="form-control" id="nama" name="nama" value="<?php echo $pr[0]->nama ?>">
+                      <input type="text" class="form-control" name="nama" id="nama" value="<?php echo $judul_ujian[0]->nama ?>">
                     </div>
                   </div>
+                  <!-- <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="guruChoose">Guru:</label>
+                      <button type="button" id="guruChoose" data-toggle="modal" data-target="#guruModal">Choose</button>
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="guruNama">Guru:</label>
+                      <input type="text" class="form-control" id="guruId" value="<?php echo $judul_ujian[0]->id_guru ?>" style="display:none">
+                      <input type="text" class="form-control" id="guruNama" value="<?php echo $judul_ujian[0]->nama_guru ?>" readonly>
+                    </div>
+                  </div> -->
 
                   <div class="col-md-12">
                       <input type="submit" class="btn btn-default" name="button" id="update">
                   </div>
 
-                </form>
+
                 <!-- /.col -->
               </div>
               <!-- /.row -->
@@ -215,7 +208,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Data mata pelajaran</h4>
+          <h4 class="modal-title">Data guru</h4>
         </div>
         <div class="modal-body">
           <div id="dataGuru">
@@ -241,7 +234,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Data mata pelajaran</h4>
+          <h4 class="modal-title">Data kelas</h4>
         </div>
         <div class="modal-body">
           <div id="dataKelas">
@@ -323,15 +316,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   var pageKelasTotal;
   var recordPerPage = 3;
   $(document).ready(function() {
-    var gambar = <?php echo $pr[0]->gambar ?>;
-    console.log(gambar);
-    for (var i = 0; i < gambar.length; i++) {
-      var temp = '';
-      temp += "<div class='col-md-3'>";
-      temp += "<img src = '" +  "<?php echo base_url() ?>" + "./uploads/" + gambar[i] + "' class='img-thumbnail'>";
-      temp += "</div>";
-      $("#gambarLihat").append(temp);
-    }
+
   });
   banyakDataMataPelajaran(recordPerPage);
   banyakDataGuru(recordPerPage);
@@ -374,7 +359,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       url:"<?php echo base_url() ?>index.php/home/loadDataMataPelajaran/" + page + "/" + recordPerPage,
       type:"get",
       success:function(data) {
-        console.log(data);
+        // console.log(data);
         $("#dataMataPelajaran").html(data);
       }
     });
@@ -384,7 +369,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       url:"<?php echo base_url() ?>index.php/home/loadDataGuru/" + page + "/" + recordPerPage,
       type:"get",
       success:function(data) {
-        console.log(data);
+        // console.log(data);
         $("#dataGuru").html(data);
       }
     });
@@ -394,7 +379,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       url:"<?php echo base_url() ?>index.php/home/loadDataKelas/" + page + "/" + recordPerPage,
       type:"get",
       success:function(data) {
-        console.log(data);
+        // console.log(data);
         $("#dataKelas").html(data);
       }
     });
@@ -442,92 +427,35 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     }
   }
   function chooseMataPelajaran(mataPelajaranId, mataPelajaranNama) {
-    console.log("haha");
     $("#mataPelajaranId").val(mataPelajaranId);
     $("#mataPelajaranNama").val(mataPelajaranNama);
   }
   function chooseGuru(guruId, guruNama) {
-    console.log("haha");
     $("#guruId").val(guruId);
     $("#guruNama").val(guruNama);
   }
   function chooseKelas(kelasId, kelasNama) {
-    console.log("haha");
     $("#kelasId").val(kelasId);
     $("#kelasNama").val(kelasNama);
   }
-//   $("#form").submit(function() {
-//     var pilihan_jawaban_tulisan = [];
-//     pilihan_jawaban_tulisan.push($("#pilihanJawabanTulisanA").val());
-//     pilihan_jawaban_tulisan.push($("#pilihanJawabanTulisanB").val());
-//     pilihan_jawaban_tulisan.push($("#pilihanJawabanTulisanC").val());
-//     pilihan_jawaban_tulisan.push($("#pilihanJawabanTulisanD").val());
-//     pilihan_jawaban_tulisan.push($("#pilihanJawabanTulisanE").val());
-
-//     var pilihan_jawaban_gambar = [];
-//     pilihan_jawaban_gambar.push($("#pilihanJawabanGambarA")[0].files);
-//     pilihan_jawaban_gambar.push($("#pilihanJawabanGambarB")[0].files);
-//     pilihan_jawaban_gambar.push($("#pilihanJawabanGambarC")[0].files);
-//     pilihan_jawaban_gambar.push($("#pilihanJawabanGambarD")[0].files);
-//     pilihan_jawaban_gambar.push($("#pilihanJawabanGambarE")[0].files);
-
-//     console.log(pilihan_jawaban_gambar);
-//     $.ajax({
-//       type: "POST",
-//       url: "<?php echo base_url() ?>index.php/home/tambahDataSoalUjianDetailSimpan",
-//       // data: {
-//       //   // soal_ujian : $("#soalUjianNama").val(),
-//       //   // jenis_soal_ujian_detail : $("#jenisSoalUjianDetailNama").val(),
-//       //   // soal_tulisan : $("#soalTulisan").val(),
-//       //   soal_gambar : $("#soalGambar")[0].files[0].name
-//       //   // pilihan_jawaban_tulisan : pilihan_jawaban_tulisan,
-//       //   // pilihan_jawaban_gambar : pilihan_jawaban_gambar,
-//       //   // kunci_jawaban : $("#kunciJawaban").val()
-//       // },
-//       data : new FormData(this),
-//       dataType: "json",
-//       complete: function(result){
-//         console.log("blabla");
-//         toastr.success('Data soal ujian berhasil ditambah');
-//         $("#soalUjianNama").val("");
-//         $("#jenisSoalUjianDetailNama").val("");
-//         $("#soalTulisan").val("");
-//         $("#soalGambar").val("");
-//         $("#pilihanJawabanTulisanA").val("");
-//         $("#pilihanJawabanTulisanB").val("");
-//         $("#pilihanJawabanTulisanC").val("");
-//         $("#pilihanJawabanTulisanD").val("");
-//         $("#pilihanJawabanTulisanE").val("");
-//         $("#pilihanJawabanGambarA").val("");
-//         $("#pilihanJawabanGambarB").val("");
-//         $("#pilihanJawabanGambarC").val("");
-//         $("#pilihanJawabanGambarD").val("");
-//         $("#pilihanJawabanGambarE").val("");
-//         $("#kunciJawaban").val("");
-//       }
-//   });
-// });
-function updateGambar(input) {
-  if (input.files) {
-    $("#gambarLihat").html("");
-    var filesAmount = input.files.length;
-
-    for (i = 0; i < filesAmount; i++) {
-        var reader = new FileReader();
-
-        reader.onload = function(event) {
-          var gambar='';
-          gambar += "<div class='col-md-3'>";
-          gambar += "<img src = '" +  event.target.result + "' class='img-thumbnail'>";
-          gambar += "</div>";
-          $("#gambarLihat").append(gambar);
-
-        }
-
-        reader.readAsDataURL(input.files[i]);
-    }
-  }
-}
+  $("#update").click(function() {
+    $.ajax({
+      type: "POST",
+      url: "<?php echo base_url() ?>index.php/home/updateDataSoalUjianSimpan",
+      data: {
+        id: $("#id").val(),
+        nama : $("#nama").val(),
+        id_mata_pelajaran : $("#mataPelajaranId").val(),
+        id_guru : $("#guruId").val(),
+        id_kelas : $("#kelasId").val()
+      },
+      dataType: "json",
+      complete: function(result){
+        console.log("haha");
+        toastr.success('Data judul ujian berhasil diupdate');
+      }
+  });
+});
 </script>
 </body>
 </html>
