@@ -29,7 +29,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   <link rel="stylesheet" href="<?php echo base_url() . "assets/"; ?>bower_components/bootstrap-daterangepicker/daterangepicker.css">
   <!-- bootstrap wysihtml5 - text editor -->
   <link rel="stylesheet" href="<?php echo base_url() . "assets/"; ?>plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
-
+  <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -69,7 +70,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Data Soal Ujian Detail
+        Data Jenis Soal Ujian
       </h1>
     </section>
 
@@ -79,7 +80,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <div class="col-md-12">
           <div class="box">
             <div class="box-header with-border">
-              <h3 class="box-title">Data Soal Ujian Detail</h3>
+              <h3 class="box-title">Tambah Data Jenis Soal Ujian</h3>
 
               <div class="box-tools pull-right">
                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -89,45 +90,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <!-- /.box-header -->
             <div class="box-body" style="">
               <div class="row">
-                <div class="col-md-12">
-                  <a href="<?php echo base_url() ?>index.php/home/tambahDataSoalUjianDetail" class="btn btn-primary">add</a>
-                </div>
-              </div>
-              <div class="row">
                 <!-- /.col -->
-                <div class="col-md-12">
-                  <?php if (isset($results)) { ?>
-                    <table class="table table-hover">
-                      <tr>
-                        <th>Id</th>
-                        <th>Soal Ujian</th>
-                        <th>Jenis Soal Ujian Detail</th>
-                        <th>Soal</th>
-                        <th>Action</th>
-                      </tr>
 
-                      <?php foreach ($results as $data) { ?>
-                        <tr>
-                          <td><?php echo $data->id ?></td>
-                          <td><?php echo $data->soal_ujian ?></td>
-                          <td><?php echo $data->jenis_soal_ujian_detail ?></td>
-                          <td><?php echo $data->soal_tulisan ?></td>
-                          <td>
-                          <a href="<?php echo base_url() . "index.php/home/lihatDataSoalUjianDetail/".$data->id ?>" class="btn btn-primary">Lihat</a> 
-                            <a href="<?php echo base_url() . "index.php/home/updateDataSoalUjianDetail/".$data->id ?>" class="btn btn-warning">Update</a>
-                            <a href="<?php echo base_url() . "index.php/home/hapusDataSoalUjianDetail/".$data->id ?>" class="btn btn-danger">Hapus</a> </td>
-                        </tr>
-                      <?php } ?>
-                    </table>
-                  <?php } else { ?>
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="nama">Nama:</label>
+                      <input type="text" class="form-control" name="nama" id="nama">
+                    </div>
+                  </div>
 
-                    <div>No data(s) found.</div>
-                  <?php } ?>
+                  <div class="col-md-12">
+                      <input type="submit" class="btn btn-default" name="button" id="simpan">
+                  </div>
 
-                  <?php if (isset($links)) { ?>
-                    <?php echo $links ?>
-                  <?php } ?>
-                </div>
+
                 <!-- /.col -->
               </div>
               <!-- /.row -->
@@ -142,9 +118,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     </section>
     <!-- /.content -->
   </div>
-
-
-
 
   <!-- /.content-wrapper -->
   <?=$footer ?>
@@ -196,8 +169,29 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <!-- AdminLTE for demo purposes -->
 <script src="<?php echo base_url() . "assets/"; ?>dist/js/demo.js"></script>
 
-<script type="text/javascript">
+<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js">
 
+</script>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+
+  });
+  $("#simpan").click(function() {
+    $.ajax({
+      type: "POST",
+      url: "<?php echo base_url() ?>index.php/home/tambahDataJenisSoalUjianSimpan",
+      data: {
+        nama : $("#nama").val()
+      },
+      dataType: "json",
+      complete: function(result){
+        console.log("haha");
+        toastr.success('Data jenis soal ujian berhasil ditambah');
+        $("#nama").val("");
+      }
+  });
+});
 </script>
 </body>
 </html>

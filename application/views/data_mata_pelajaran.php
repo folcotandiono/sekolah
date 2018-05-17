@@ -101,8 +101,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                       <tr>
                         <th>Id</th>
                         <th>Nama</th>
-                        <th>Kelas</th>
-                        <th>Guru</th>
+                        <th>Tahun Ajaran</th>
                         <th>Action</th>
                       </tr>
 
@@ -110,8 +109,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <tr>
                           <td><?php echo $data->id ?></td>
                           <td><?php echo $data->nama ?></td>
-                          <td><?php echo $data->kelas ?></td>
-                          <td><?php echo $data->guru ?></td>
+                          <td><?php echo $data->tahun ?></td>
                           <td>
                             <a class="btn btn-primary" href="<?php echo base_url() . 'index.php/home/lihatDataMataPelajaran/' . $data->id ?>">Lihat</a> 
                             <a class="btn btn-warning" href="<?php echo base_url() . 'index.php/home/updateDataMataPelajaran/' . $data->id ?>">Update</a>

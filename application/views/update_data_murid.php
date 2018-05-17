@@ -140,6 +140,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                   </div>
 
                   <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="noInduk">No Induk:</label>
+                      <input type="text" class="form-control" name="noInduk" id="noInduk" value="<?php echo $murid[0]->no_induk ?>">
+                    </div>
+                  </div>
+
+                  <div class="col-md-12">
                       <input type="submit" class="btn btn-default" name="button" id="update">
                   </div>
 
@@ -302,7 +309,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         id_kelas : $("#kelasId").val(),
         nama_ayah : $("#namaAyah").val(),
         nama_ibu : $("#namaIbu").val(),
-        no_telepon : $("#noTelepon").val()
+        no_telepon : $("#noTelepon").val(),
+        no_induk : $("#noInduk").val()
       },
       dataType: "json",
       complete: function(result){

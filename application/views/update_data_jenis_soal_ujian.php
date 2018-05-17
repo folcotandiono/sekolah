@@ -70,7 +70,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Data Jenis Soal Ujian Detail
+        Data Jenis Soal Ujian
       </h1>
     </section>
 
@@ -80,7 +80,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <div class="col-md-12">
           <div class="box">
             <div class="box-header with-border">
-              <h3 class="box-title">Tambah Data Jenis Soal Ujian Detail</h3>
+              <h3 class="box-title">Update Data Jenis Soal Ujian</h3>
 
               <div class="box-tools pull-right">
                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -91,16 +91,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <div class="box-body" style="">
               <div class="row">
                 <!-- /.col -->
-
+                  <input type="text" class="form-control" name="id" id="id" style="display:none" value="<?php echo $jenis_soal_ujian[0]->id ?>">
                   <div class="col-md-12">
                     <div class="form-group">
                       <label for="nama">Nama:</label>
-                      <input type="text" class="form-control" name="nama" id="nama">
+                      <input type="text" class="form-control" name="nama" id="nama" value="<?php echo $jenis_soal_ujian[0]->nama ?>">
                     </div>
                   </div>
 
                   <div class="col-md-12">
-                      <input type="submit" class="btn btn-default" name="button" id="simpan">
+                      <input type="submit" class="btn btn-default" name="button" id="update">
                   </div>
 
 
@@ -177,18 +177,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   $(document).ready(function() {
 
   });
-  $("#simpan").click(function() {
+  $("#update").click(function() {
     $.ajax({
       type: "POST",
-      url: "<?php echo base_url() ?>index.php/home/tambahDataJenisSoalUjianDetailSimpan",
+      url: "<?php echo base_url() ?>index.php/home/updateDataJenisSoalUjianSimpan",
       data: {
+        id : $("#id").val(),
         nama : $("#nama").val()
       },
       dataType: "json",
       complete: function(result){
         console.log("haha");
-        toastr.success('Data jenis soal ujian detail berhasil ditambah');
-        $("#nama").val("");
+        toastr.success('Data jenis soal ujian berhasil diupdate');
       }
   });
 });

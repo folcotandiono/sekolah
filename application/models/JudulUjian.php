@@ -2,7 +2,7 @@
 // models/Users.php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class SoalUjianDetail extends CI_Model
+class JudulUjian extends CI_Model
 {
     function __construct()
     {
@@ -11,10 +11,11 @@ class SoalUjianDetail extends CI_Model
 
     public function get_current_page_records($limit, $start)
     {
-        $this->db->select('soal_ujian_detail.id, soal_ujian.nama as soal_ujian, jenis_soal_ujian_detail.nama as jenis_soal_ujian_detail, soal_ujian_detail.soal_tulisan');
-        $this->db->from('soal_ujian_detail');
-        $this->db->join('soal_ujian', 'soal_ujian_detail.id_soal_ujian = soal_ujian.id');
-        $this->db->join('jenis_soal_ujian_detail', 'soal_ujian_detail.id_jenis_soal_ujian_detail = jenis_soal_ujian_detail.id');
+        $this->db->select('judul_ujian.id, mata_pelajaran.nama as mata_pelajaran, guru.nama as nama_guru, kelas.nama as nama_kelas, judul_ujian.nama');
+        $this->db->from('judul_ujian');
+        $this->db->join('mata_pelajaran', 'judul_ujian.id_mata_pelajaran = mata_pelajaran.id');
+        $this->db->join('guru', 'judul_ujian.id_guru = guru.id');
+        $this->db->join('kelas', 'judul_ujian.id_kelas = kelas.id');
         $this->db->limit($limit, $start);
         $query = $this->db->get();
 
@@ -33,6 +34,6 @@ class SoalUjianDetail extends CI_Model
 
     public function get_total()
     {
-        return $this->db->count_all("soal_ujian_detail");
+        return $this->db->count_all("judul_ujian");
     }
 }

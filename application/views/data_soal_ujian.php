@@ -100,19 +100,21 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <table class="table table-hover">
                       <tr>
                         <th>Id</th>
-                        <th>Mata Pelajaran</th>
-                        <th>Nama</th>
+                        <th>Judul Ujian</th>
+                        <th>Jenis Soal Ujian</th>
+                        <th>Soal</th>
                         <th>Action</th>
                       </tr>
 
                       <?php foreach ($results as $data) { ?>
                         <tr>
                           <td><?php echo $data->id ?></td>
-                          <td><?php echo $data->mata_pelajaran ?></td>
-                          <td><?php echo $data->nama ?></td>
-                          <td> 
-                          <a href="<?php echo base_url() . "index.php/home/lihatDataSoalUjian/".$data->id ?>" class="btn btn-primary">Lihat</a>
-                          <a href="<?php echo base_url() . "index.php/home/updateDataSoalUjian/".$data->id ?>" class="btn btn-warning">Update</a>
+                          <td><?php echo $data->judul_ujian ?></td>
+                          <td><?php echo $data->jenis_soal_ujian ?></td>
+                          <td><?php echo $data->soal_tulisan ?></td>
+                          <td>
+                          <a href="<?php echo base_url() . "index.php/home/lihatDataSoalUjian/".$data->id ?>" class="btn btn-primary">Lihat</a> 
+                            <a href="<?php echo base_url() . "index.php/home/updateDataSoalUjian/".$data->id ?>" class="btn btn-warning">Update</a>
                             <a href="<?php echo base_url() . "index.php/home/hapusDataSoalUjian/".$data->id ?>" class="btn btn-danger">Hapus</a> </td>
                         </tr>
                       <?php } ?>

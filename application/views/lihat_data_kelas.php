@@ -132,32 +132,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <!-- /.content -->
   </div>
 
-  <div id="tahunAjaranModal" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Data tahun ajaran</h4>
-        </div>
-        <div class="modal-body">
-          <div id="dataTahunAjaran">
-
-          </div>
-          <div class="row">
-            <button id="dataTahunAjaranPrev" onclick="loadDataTahunAjaranPrev()">prev</button>
-            <button id="dataTahunAjaranNext" onclick="loadDataTahunAjaranNext()">next</button>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-
-    </div>
-  </div>
-
   <!-- /.content-wrapper -->
   <?=$footer ?>
 
@@ -213,67 +187,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 </script>
 
 <script type="text/javascript">
-  $(document).ready(function() {
-
-  });
-  var pageTahunAjaran = 1;
-  var pageTahunAjaranTotal;
-  var recordPerPage = 3;
-  banyakDataTahunAjaran(recordPerPage);
-  function banyakDataTahunAjaran(recordPerPage) {
-    $.ajax({
-      url:"<?php echo base_url() ?>index.php/home/banyakDataTahunAjaran/" + recordPerPage,
-      type:"get",
-      success:function(data) {
-        console.log(data);
-        pageTahunAjaranTotal = data;
-      }
-    });
-  }
-  loadDataTahunAjaran(pageTahunAjaran);
-  function loadDataTahunAjaran(page) {
-    $.ajax({
-      url:"<?php echo base_url() ?>index.php/home/loadDataTahunAjaran/" + page + "/" + recordPerPage,
-      type:"get",
-      success:function(data) {
-        console.log(data);
-        $("#dataTahunAjaran").html(data);
-      }
-    });
-  }
-  function loadDataTahunAjaranPrev() {
-    if (pageTahunAjaran - 1 >= 1) {
-      pageTahunAjaran--;
-      loadDataTahunAjaran(pageTahunAjaran);
-    }
-  }
-  function loadDataTahunAjaranNext() {
-    if (pageTahunAjaran < pageTahunAjaranTotal) {
-      console.log("hahahahahaha");
-      pageTahunAjaran++;
-      loadDataTahunAjaran(pageTahunAjaran);
-    }
-  }
-  function chooseTahunAjaran(tahunAjaranId, tahunAjaranTahun) {
-    $("#tahunAjaranId").val(tahunAjaranId);
-    $("#tahunAjaranTahun").val(tahunAjaranTahun);
-  }
-  $("#update").click(function() {
-    $.ajax({
-      type: "POST",
-      url: "<?php echo base_url() ?>index.php/home/updateDataKelasSimpan",
-      data: {
-        id : $("#id").val(),
-        nama : $("#nama").val(),
-        id_tahun_ajaran : $("#tahunAjaranId").val()
-      },
-      dataType: "json",
-      complete: function(result){
-        console.log("haha");
-        toastr.success('Data kelas berhasil diupdate');
-      }
-  });
-});
+  
 </script>
 </body>
 </html>

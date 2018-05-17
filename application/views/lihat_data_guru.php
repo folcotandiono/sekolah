@@ -109,6 +109,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                       <input type="text" class="form-control" name="noTelepon" id="noTelepon" value="<?php echo $guru[0]->no_telepon ?>" readonly>
                     </div>
                   </div>
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="nik">NIK:</label>
+                      <input type="text" class="form-control" name="nik" id="nik" value="<?php echo $guru[0]->nik ?>" readonly>
+                    </div>
+                  </div>
                   <!-- <div class="col-md-12"> -->
                       <!-- <input type="submit" class="btn btn-default" name="button" id="update"> -->
                   <!-- </div> -->
@@ -186,23 +192,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 </script>
 
 <script type="text/javascript">
-  $("#update").click(function() {
-    $.ajax({
-      type: "POST",
-      url: "<?php echo base_url() ?>index.php/home/updateDataGuruSimpan",
-      data: {
-        id : $("#id").val(),
-        nama : $("#nama").val(),
-        password : $("#password").val(),
-        no_telepon : $("#noTelepon").val()
-      },
-      dataType: "json",
-      complete: function(result){
-        console.log("haha");
-        toastr.success('Data guru berhasil diupdate');
-      }
-  });
-  });
 </script>
 </body>
 </html>

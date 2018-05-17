@@ -174,21 +174,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 </script>
 
 <script type="text/javascript">
-  $("#update").click(function() {
-    $.ajax({
-      type: "POST",
-      url: "<?php echo base_url() ?>index.php/home/updateDataTahunAjaranSimpan",
-      data: {
-        id : $("#id").val(),
-        tahun : $("#tahun").val()
-      },
-      dataType: "json",
-      complete: function(result){
-        console.log("haha");
-        toastr.success('Data tahun ajaran berhasil diupdate');
-      }
-  });
-  });
 </script>
 </body>
 </html>

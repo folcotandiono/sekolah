@@ -112,6 +112,7 @@ class Home extends CI_Controller {
 		$guru["nama"] = $this->input->post("nama");
 		$guru["password"] = $this->input->post("password");
 		$guru["no_telepon"] = $this->input->post("no_telepon");
+		$guru["nik"] = $this->input->post("nik");
     $this->db->insert("guru", $guru);
 	}
 
@@ -140,6 +141,7 @@ class Home extends CI_Controller {
 		$guru["nama"] = $this->input->post("nama");
 		$guru["password"] = $this->input->post("password");
 		$guru["no_telepon"] = $this->input->post("no_telepon");
+		$guru["nik"] = $this->input->post("nik");
 		$this->db->where("id", $guru["id"]);
     $this->db->update("guru", $guru);
 	}
@@ -168,6 +170,7 @@ class Home extends CI_Controller {
 					<th>Id</th>
 					<th>Nama</th>
 					<th>No Telepon</th>
+					<th>NIK</th>
 					<th>Action</th>
 				</tr>
 		";
@@ -178,6 +181,7 @@ class Home extends CI_Controller {
 					<td>$result->id</td>
 					<td>$result->nama</td>
 					<td>$result->no_telepon</td>
+					<td>$result->nik</td>
 					<td>
 						<button class='btn btn-primary' onclick=\"$chooseKelas\">Choose</button>
 					</td>
@@ -410,12 +414,14 @@ class Home extends CI_Controller {
 		$murid["nama_ayah"] = $this->input->post("nama_ayah");
 		$murid["nama_ibu"] = $this->input->post("nama_ibu");
 		$murid["no_telepon"] = $this->input->post("no_telepon");
+		$murid["no_induk"] = $this->input->post("no_induk");
     $this->db->insert("murid", $murid);
 	}
 	public function lihatDataMurid($id) {
-		$murid = $this->db->query('SELECT murid.id, murid.nama as nama, kelas.id as id_kelas, kelas.nama as nama_kelas, murid.password, murid.nama_ayah, murid.nama_ibu, murid.no_telepon FROM murid
-															join kelas on murid.id_kelas = kelas.id
-															where murid.id = ' . $id)->result();
+		$murid = $this->db->query('SELECT murid.id, murid.nama as nama, kelas.id as id_kelas, kelas.nama as nama_kelas, murid.password, murid.nama_ayah, murid.nama_ibu, murid.no_telepon, murid.no_induk
+									FROM murid
+									join kelas on murid.id_kelas = kelas.id
+									where murid.id = ' . $id)->result();
 		$data = array(
 	    "sidebar" => $this->load->view('sidebar', NULL, true),
 			"footer" => $this->load->view('footer', NULL, true),
@@ -424,9 +430,10 @@ class Home extends CI_Controller {
 		$this->load->view('lihat_data_murid', $data);
 	}
 	public function updateDataMurid($id) {
-		$murid = $this->db->query('SELECT murid.id, murid.nama as nama, kelas.id as id_kelas, kelas.nama as nama_kelas, murid.password, murid.nama_ayah, murid.nama_ibu, murid.no_telepon FROM murid
-															join kelas on murid.id_kelas = kelas.id
-															where murid.id = ' . $id)->result();
+		$murid = $this->db->query('SELECT murid.id, murid.nama as nama, kelas.id as id_kelas, kelas.nama as nama_kelas, murid.password, murid.nama_ayah, murid.nama_ibu, murid.no_telepon, murid.no_induk 
+									FROM murid
+									join kelas on murid.id_kelas = kelas.id
+									where murid.id = ' . $id)->result();
 		$data = array(
 	    "sidebar" => $this->load->view('sidebar', NULL, true),
 			"footer" => $this->load->view('footer', NULL, true),
@@ -443,6 +450,7 @@ class Home extends CI_Controller {
 		$murid["nama_ayah"] = $this->input->post("nama_ayah");
 		$murid["nama_ibu"] = $this->input->post("nama_ibu");
 		$murid["no_telepon"] = $this->input->post("no_telepon");
+		$murid["no_induk"] = $this->input->post("no_induk");
 		$this->db->where("id", $murid["id"]);
 		$this->db->update('murid', $murid);
 	}
@@ -468,6 +476,7 @@ class Home extends CI_Controller {
 					<th>Nama Ayah</th>
 					<th>Nama Ibu</th>
 					<th>No Telepon</th>
+					<th>No Induk</th>
 					<th>Action</th>
 				</tr>
 		";
@@ -481,6 +490,7 @@ class Home extends CI_Controller {
 					<td>$result->nama_ayah</td>
 					<td>$result->nama_ibu</td>
 					<td>$result->no_telepon</td>
+					<td>$result->no_induk</td>
 					<td>
 						<button class='btn btn-primary' onclick=\"$chooseMurid\">Choose</button>
 					</td>
@@ -718,16 +728,14 @@ class Home extends CI_Controller {
 
 	public function tambahDataMataPelajaranSimpan() {
 		$mata_pelajaran["nama"] = $this->input->post("nama");
-		$mata_pelajaran["id_kelas"] = $this->input->post("id_kelas");
-		$mata_pelajaran["id_guru"] = $this->input->post("id_guru");
+		$mata_pelajaran["id_tahun_ajaran"] = $this->input->post("id_tahun_ajaran");
     $this->db->insert("mata_pelajaran", $mata_pelajaran);
 	}
 
 	public function lihatDataMataPelajaran($id) {
-		$mataPelajaran = $this->db->query('Select mata_pelajaran.id, mata_pelajaran.nama, mata_pelajaran.id_kelas, kelas.nama as nama_kelas, mata_pelajaran.id_guru, guru.nama as nama_guru
+		$mataPelajaran = $this->db->query('Select mata_pelajaran.id, mata_pelajaran.nama, mata_pelajaran.id_tahun_ajaran, tahun_ajaran.tahun
 		 													from mata_pelajaran
-															join kelas on kelas.id = mata_pelajaran.id_kelas
-															join guru on guru.id = mata_pelajaran.id_guru
+															join tahun_ajaran on mata_pelajaran.id_tahun_ajaran = tahun_ajaran.id
 															where mata_pelajaran.id = ' . $id)->result();
 		$data = array(
 	    "sidebar" => $this->load->view('sidebar', NULL, true),
@@ -738,10 +746,9 @@ class Home extends CI_Controller {
 	}
 
 	public function updateDataMataPelajaran($id) {
-		$mataPelajaran = $this->db->query('Select mata_pelajaran.id, mata_pelajaran.nama, mata_pelajaran.id_kelas, kelas.nama as nama_kelas, mata_pelajaran.id_guru, guru.nama as nama_guru
+		$mataPelajaran = $this->db->query('Select mata_pelajaran.id, mata_pelajaran.nama, mata_pelajaran.id_tahun_ajaran, tahun_ajaran.tahun
 		 													from mata_pelajaran
-															join kelas on kelas.id = mata_pelajaran.id_kelas
-															join guru on guru.id = mata_pelajaran.id_guru
+															join tahun_ajaran on mata_pelajaran.id_tahun_ajaran = tahun_ajaran.id
 															where mata_pelajaran.id = ' . $id)->result();
 		$data = array(
 	    "sidebar" => $this->load->view('sidebar', NULL, true),
@@ -754,8 +761,7 @@ class Home extends CI_Controller {
 	public function updateDataMataPelajaranSimpan() {
 		$mata_pelajaran["id"] = $this->input->post("id");
 		$mata_pelajaran["nama"] = $this->input->post("nama");
-		$mata_pelajaran["id_kelas"] = $this->input->post("id_kelas");
-		$mata_pelajaran["id_guru"] = $this->input->post("id_guru");
+		$mata_pelajaran["id_tahun_ajaran"] = $this->input->post("id_tahun_ajaran");
     $this->db->where("id", $mata_pelajaran["id"]);
 		$this->db->update('mata_pelajaran', $mata_pelajaran);
 	}
@@ -775,10 +781,9 @@ class Home extends CI_Controller {
 	public function loadDataMataPelajaran($page, $record_per_page) {
 		$output = '';
 		$start_from = ($page - 1) * $record_per_page;
-		$this->db->select('mata_pelajaran.id, mata_pelajaran.nama, kelas.nama as nama_kelas, guru.nama as nama_guru');
+		$this->db->select('mata_pelajaran.id, mata_pelajaran.nama, mata_pelajaran.id_tahun_ajaran, tahun_ajaran.tahun');
 		$this->db->from('mata_pelajaran');
-		$this->db->join('kelas', 'mata_pelajaran.id_kelas = kelas.id');
-		$this->db->join('guru', 'mata_pelajaran.id_guru = guru.id');
+		$this->db->join('tahun_ajaran', 'mata_pelajaran.id_tahun_ajaran = tahun_ajaran.id');
 		$this->db->limit($record_per_page, $start_from);
 		$results = $this->db->get()->result();
 		$output .= "
@@ -786,8 +791,7 @@ class Home extends CI_Controller {
 				<tr>
 					<th>Id</th>
 					<th>Nama</th>
-					<th>Kelas</th>
-					<th>Guru</th>
+					<th>Tahun Ajaran</th>
 					<th>Action</th>
 				</tr>
 		";
@@ -797,10 +801,326 @@ class Home extends CI_Controller {
 				<tr>
 					<td>$result->id</td>
 					<td>$result->nama</td>
-					<td>$result->nama_kelas</td>
-					<td>$result->nama_guru</td>
+					<td>$result->tahun</td>
 					<td>
 						<button class='btn btn-primary' onclick=\"$chooseMataPelajaran\">Choose</button>
+					</td>
+				</tr>
+			";
+		}
+		$output .= "</table>";
+		echo $output;
+	}
+	public function dataJudulUjian()
+	{
+		// $data = array(
+	  //   "sidebar" => $this->load->view('sidebar', NULL, true),
+		// 	"content" => $this->load->view('data_guru', NULL, true)
+		// );
+		// load db and model
+		$this->load->model('JudulUjian');
+
+		// init params
+		$params = array();
+		$limit_per_page = 10;
+		$start_index = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+		$total_records = $this->JudulUjian->get_total();
+
+		if ($total_records > 0)
+		{
+				// get current page records
+				$params["results"] = $this->SoalUjian->get_current_page_records($limit_per_page, $start_index);
+
+				$config['base_url'] = base_url() . 'index.php/home/dataJudulUjian';
+				$config['total_rows'] = $total_records;
+				$config['per_page'] = $limit_per_page;
+				$config["uri_segment"] = 3;
+
+				$config['full_tag_open'] = '<div class="pagination">';
+				$config['full_tag_close'] = '</div>';
+
+				$config['first_link'] = 'First Page';
+				$config['first_tag_open'] = '<button type="button" class="btn btn-default">';
+				$config['first_tag_close'] = '</button>';
+
+				$config['last_link'] = 'Last Page';
+				$config['last_tag_open'] = '<button type="button" class="btn btn-default">';
+				$config['last_tag_close'] = '</button>';
+
+				$config['next_link'] = 'Next Page';
+				$config['next_tag_open'] = '<button type="button" class="btn btn-default">';
+				$config['next_tag_close'] = '</button>';
+
+				$config['prev_link'] = 'Prev Page';
+				$config['prev_tag_open'] = '<button type="button" class="btn btn-default">';
+				$config['prev_tag_close'] = '</button>';
+
+				$config['cur_tag_open'] = '<button type="button" class="btn btn-default">';
+				$config['cur_tag_close'] = '</button>';
+
+				$config['num_tag_open'] = '<button type="button" class="btn btn-default">';
+				$config['num_tag_close'] = '</button>';
+
+				$this->pagination->initialize($config);
+
+				// build paging links
+				$params["links"] = $this->pagination->create_links();
+		}
+
+		$params["sidebar"] = $this->load->view('sidebar', NULL, true);
+		$params["footer"] = $this->load->view('footer', NULL, true);
+
+		$this->load->view('data_judul_ujian', $params);
+	}
+
+	public function tambahDataJudulUjian() {
+		$data = array(
+	    "sidebar" => $this->load->view('sidebar', NULL, true),
+			"footer" => $this->load->view('footer', NULL, true)
+		);
+		$this->load->view('tambah_data_judul_ujian', $data);
+	}
+
+	public function tambahDataJudulUjianSimpan() {
+		$judul_ujian["id_mata_pelajaran"] = $this->input->post("id_mata_pelajaran");
+		$judul_ujian["id_guru"] = $this->input->post("id_guru");
+		$judul_ujian["id_kelas"] = $this->input->post("id_kelas");
+		$judul_ujian["nama"] = $this->input->post("nama");
+    $this->db->insert("judul_ujian", $judul_ujian);
+	}
+
+	public function lihatDataJudulUjian($id) {
+	$judul_ujian = $this->db->query('Select judul_ujian.id, judul_ujian.id_mata_pelajaran, mata_pelajaran.nama as nama_mata_pelajaran, judul_ujian.id_guru, guru.nama as nama_guru, judul_ujian.id_kelas, kelas.nama as nama_kelas, judul_ujian.nama
+		 													from judul_ujian
+															join mata_pelajaran on judul_ujian.id_mata_pelajaran = mata_pelajaran.id
+															join guru on judul_ujian.id_guru = guru.id
+															join kelas on judul_ujian.id_kelas = kelas.id 
+															where judul_ujian.id = ' . $id)->result();
+		$data = array(
+	    "sidebar" => $this->load->view('sidebar', NULL, true),
+			"footer" => $this->load->view('footer', NULL, true),
+			"judul_ujian" => $judul_ujian
+		);
+		$this->load->view('lihat_data_judul_ujian', $data);
+	}
+
+	public function updateDataJudulUjian($id) {
+		$judul_ujian = $this->db->query('Select judul_ujian.id, judul_ujian.id_mata_pelajaran, mata_pelajaran.nama as nama_mata_pelajaran, judul_ujian.id_guru, guru.nama as nama_guru, judul_ujian.id_kelas, kelas.nama as nama_kelas, judul_ujian.nama
+		 													from judul_ujian
+															join mata_pelajaran on judul_ujian.id_mata_pelajaran = mata_pelajaran.id
+															join guru on judul_ujian.id_guru = guru.id
+															join kelas on judul_ujian.id_kelas = kelas.id 
+															where judul_ujian.id = ' . $id)->result();
+		$data = array(
+	    "sidebar" => $this->load->view('sidebar', NULL, true),
+			"footer" => $this->load->view('footer', NULL, true),
+			"judul_ujian" => $judul_ujian
+		);
+		$this->load->view('update_data_judul_ujian', $data);
+	}
+
+	public function updateDataJudulUjianSimpan() {
+		$judul_ujian["id"] = $this->input->post("id");
+		$judul_ujian["id_mata_pelajaran"] = $this->input->post("id_mata_pelajaran");
+		$judul_ujian["id_guru"] = $this->input->post("id_guru");
+		$judul_ujian["id_kelas"] = $this->input->post("id_kelas");
+		$judul_ujian["nama"] = $this->input->post("nama");
+    $this->db->where("id", $judul_ujian["id"]);
+		$this->db->update('judul_ujian', $judul_ujian);
+	}
+
+	public function hapusDataJudulUjian($id) {
+		$this->db->where('id', $id);
+		$this->db->delete('judul_ujian');
+		redirect("/home/dataJudulUjian", 'location');
+	}
+
+	public function banyakDataJudulUjian($record_per_page) {
+		$result = $this->db->get('judul_ujian')->num_rows();
+		$result = ceil((float) $result / $record_per_page);
+		echo (int) $result;
+	}
+
+	public function loadDataJudulUjian($page, $record_per_page) {
+		$output = '';
+		$start_from = ($page - 1) * $record_per_page;
+		$this->db->select('judul_ujian.id, judul_ujian.id_mata_pelajaran, mata_pelajaran.nama as nama_mata_pelajaran, judul_ujian.id_guru, guru.nama as nama_guru, judul_ujian.id_kelas, kelas.nama as nama_kelas, judul_ujian.nama');
+		$this->db->from('judul_ujian');
+		$this->db->join('mata_pelajaran', 'mata_pelajaran.id = judul_ujian.id_mata_pelajaran');
+		$this->db->join('guru', 'guru.id = judul_ujian.id_guru');
+		$this->db->join('kelas', 'judul_ujian.id_kelas = kelas.id');
+		$this->db->limit($record_per_page, $start_from);
+		$results = $this->db->get()->result();
+		$output .= "
+			<table class='table table-bordered'>
+				<tr>
+					<th>Id</th>
+					<th>Mata Pelajaran</th>
+					<th>Guru</th>
+					<th>Kelas</th>
+					<th>Nama</th>
+					<th>Action</th>
+				</tr>
+		";
+		foreach($results as $result) {
+			$chooseSoalUjian = "chooseSoalUjian('" . $result->id . "' , '" . $result->nama . "')";
+			$output .= "
+				<tr>
+					<td>$result->id</td>
+					<td>$result->nama_mata_pelajaran</td>
+					<td>$result->nama_guru</td>
+					<td>$result->nama_kelas</td>
+					<td>$result->nama</td>
+					<td>
+						<button class='btn btn-primary' onclick=\"$chooseSoalUjian\">Choose</button>
+					</td>
+				</tr>
+			";
+		}
+		$output .= "</table>";
+		echo $output;
+	}
+	public function dataJenisSoalUjian()
+	{
+		// $data = array(
+	  //   "sidebar" => $this->load->view('sidebar', NULL, true),
+		// 	"content" => $this->load->view('data_guru', NULL, true)
+		// );
+		// load db and model
+		$this->load->model('JenisSoalUjian');
+
+		// init params
+		$params = array();
+		$limit_per_page = 10;
+		$start_index = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+		$total_records = $this->JenisSoalUjian->get_total();
+
+		if ($total_records > 0)
+		{
+				// get current page records
+				$params["results"] = $this->JenisSoalUjian->get_current_page_records($limit_per_page, $start_index);
+
+				$config['base_url'] = base_url() . 'index.php/home/dataJenisSoalUjian';
+				$config['total_rows'] = $total_records;
+				$config['per_page'] = $limit_per_page;
+				$config["uri_segment"] = 3;
+
+				$config['full_tag_open'] = '<div class="pagination">';
+				$config['full_tag_close'] = '</div>';
+
+				$config['first_link'] = 'First Page';
+				$config['first_tag_open'] = '<button type="button" class="btn btn-default">';
+				$config['first_tag_close'] = '</button>';
+
+				$config['last_link'] = 'Last Page';
+				$config['last_tag_open'] = '<button type="button" class="btn btn-default">';
+				$config['last_tag_close'] = '</button>';
+
+				$config['next_link'] = 'Next Page';
+				$config['next_tag_open'] = '<button type="button" class="btn btn-default">';
+				$config['next_tag_close'] = '</button>';
+
+				$config['prev_link'] = 'Prev Page';
+				$config['prev_tag_open'] = '<button type="button" class="btn btn-default">';
+				$config['prev_tag_close'] = '</button>';
+
+				$config['cur_tag_open'] = '<button type="button" class="btn btn-default">';
+				$config['cur_tag_close'] = '</button>';
+
+				$config['num_tag_open'] = '<button type="button" class="btn btn-default">';
+				$config['num_tag_close'] = '</button>';
+
+				$this->pagination->initialize($config);
+
+				// build paging links
+				$params["links"] = $this->pagination->create_links();
+		}
+
+		$params["sidebar"] = $this->load->view('sidebar', NULL, true);
+		$params["footer"] = $this->load->view('footer', NULL, true);
+
+		$this->load->view('data_jenis_soal_ujian', $params);
+	}
+
+	public function tambahDataJenisSoalUjian() {
+		$data = array(
+	    "sidebar" => $this->load->view('sidebar', NULL, true),
+			"footer" => $this->load->view('footer', NULL, true)
+		);
+		$this->load->view('tambah_data_jenis_soal_ujian', $data);
+	}
+
+	public function tambahDataJenisSoalUjianSimpan() {
+		$jenis_soal_ujian_detail["nama"] = $this->input->post("nama");
+    $this->db->insert("jenis_soal_ujian", $jenis_soal_ujian_detail);
+	}
+
+	public function lihatDataJenisSoalUjian($id) {
+		$jenis_soal_ujian = $this->db->query('Select *
+		 													from jenis_soal_ujian
+															where id = ' . $id)->result();
+		$data = array(
+	    "sidebar" => $this->load->view('sidebar', NULL, true),
+			"footer" => $this->load->view('footer', NULL, true),
+			"jenis_soal_ujian" => $jenis_soal_ujian
+		);
+		$this->load->view('lihat_data_jenis_soal_ujian', $data);
+	}
+
+	public function updateDataJenisSoalUjian($id) {
+		$jenis_soal_ujian = $this->db->query('Select *
+		 													from jenis_soal_ujian
+															where id = ' . $id)->result();
+		$data = array(
+	    "sidebar" => $this->load->view('sidebar', NULL, true),
+			"footer" => $this->load->view('footer', NULL, true),
+			"jenis_soal_ujian" => $jenis_soal_ujian
+		);
+		$this->load->view('update_data_jenis_soal_ujian', $data);
+	}
+
+	public function updateDataJenisSoalUjianSimpan() {
+		$jenis_soal_ujian["id"] = $this->input->post("id");
+		$jenis_soal_ujian["nama"] = $this->input->post("nama");
+    $this->db->where("id", $jenis_soal_ujian["id"]);
+		$this->db->update('jenis_soal_ujian', $jenis_soal_ujian);
+	}
+
+	public function hapusDataJenisSoalUjian($id) {
+		$this->db->where('id', $id);
+		$this->db->delete('jenis_soal_ujian');
+		redirect("/home/dataJenisSoalUjian", 'location');
+	}
+
+	public function banyakDataJenisSoalUjian($record_per_page) {
+		$result = $this->db->get('jenis_soal_ujian')->num_rows();
+		$result = ceil((float) $result / $record_per_page);
+		echo (int) $result;
+	}
+
+	public function loadDataJenisSoalUjian($page, $record_per_page) {
+		$output = '';
+		$start_from = ($page - 1) * $record_per_page;
+		$this->db->select('*');
+		$this->db->from('jenis_soal_ujian');
+		$this->db->limit($record_per_page, $start_from);
+		$results = $this->db->get()->result();
+		$output .= "
+			<table class='table table-bordered'>
+				<tr>
+					<th>Id</th>
+					<th>Nama</th>
+					<th>Action</th>
+				</tr>
+		";
+		foreach($results as $result) {
+			$chooseJenisSoalUjian = "chooseJenisSoalUjian('" . $result->id . "','" . $result->nama . "')";
+			$output .= "
+				<tr>
+					<td>$result->id</td>
+					<td>$result->nama</td>
+					<td>
+						<button class='btn btn-primary' onclick=\"$chooseJenisSoalUjian\">Choose</button>
 					</td>
 				</tr>
 			";
@@ -826,7 +1146,7 @@ class Home extends CI_Controller {
 		if ($total_records > 0)
 		{
 				// get current page records
-				$params["results"] = $this->SoalUjian->get_current_page_records($limit_per_page, $start_index);
+				$params["results"] = $this->SoalUjianDetail->get_current_page_records($limit_per_page, $start_index);
 
 				$config['base_url'] = base_url() . 'index.php/home/dataSoalUjian';
 				$config['total_rows'] = $total_records;
@@ -872,40 +1192,192 @@ class Home extends CI_Controller {
 
 	public function tambahDataSoalUjian() {
 		$data = array(
-	    "sidebar" => $this->load->view('sidebar', NULL, true),
+	    	"sidebar" => $this->load->view('sidebar', NULL, true),
 			"footer" => $this->load->view('footer', NULL, true)
 		);
 		$this->load->view('tambah_data_soal_ujian', $data);
 	}
 
 	public function tambahDataSoalUjianSimpan() {
-		$soal_ujian["id_mata_pelajaran"] = $this->input->post("id_mata_pelajaran");
-		// $soal_ujian["id_guru"] = $this->input->post("id_guru");
-		$soal_ujian["nama"] = $this->input->post("nama");
-    $this->db->insert("soal_ujian", $soal_ujian);
+		$soal_ujian["id_judul_ujian"] = $this->input->post("id_judul_ujian");
+		$soal_ujian["id_jenis_soal_ujian"] = $this->input->post("id_jenis_soal_ujian");
+		$soal_ujian["soal_tulisan"] = $this->input->post("soal_tulisan");
+		$soal_ujian["soal_gambar"] = array();
+		$filesCount = count($_FILES['soal_gambar']['name']);
+		for($i = 0; $i < $filesCount; $i++){
+			$_FILES['userFile']['name'] = $_FILES['soal_gambar']['name'][$i];
+			$_FILES['userFile']['type'] = $_FILES['soal_gambar']['type'][$i];
+			$_FILES['userFile']['tmp_name'] = $_FILES['soal_gambar']['tmp_name'][$i];
+			$_FILES['userFile']['error'] = $_FILES['soal_gambar']['error'][$i];
+			$_FILES['userFile']['size'] = $_FILES['soal_gambar']['size'][$i];
+
+			$uploadPath = './uploads/';
+			$config['upload_path'] = $uploadPath;
+			$config['allowed_types'] = 'gif|jpg|png';
+			$config['encrypt_name'] = TRUE;
+			
+			$this->load->library('upload', $config);
+			$this->upload->initialize($config);
+			if($this->upload->do_upload('userFile')){
+				$fileData = $this->upload->data();
+				array_push($soal_ujian["soal_gambar"], $fileData['file_name']);
+			}
+		}
+		$soal_ujian["soal_gambar"] = json_encode($soal_ujian["soal_gambar"]);
+
+		$soal_ujian["pilihan_jawaban_tulisan"] = array();
+		array_push($soal_ujian["pilihan_jawaban_tulisan"], $this->input->post("pilihan_jawaban_tulisan_a"));
+		array_push($soal_ujian["pilihan_jawaban_tulisan"], $this->input->post("pilihan_jawaban_tulisan_b"));
+		array_push($soal_ujian["pilihan_jawaban_tulisan"], $this->input->post("pilihan_jawaban_tulisan_c"));
+		array_push($soal_ujian["pilihan_jawaban_tulisan"], $this->input->post("pilihan_jawaban_tulisan_d"));
+		array_push($soal_ujian["pilihan_jawaban_tulisan"], $this->input->post("pilihan_jawaban_tulisan_e"));
+		$soal_ujian["pilihan_jawaban_tulisan"] = json_encode($soal_ujian["pilihan_jawaban_tulisan"]);
+
+		$soal_ujian["pilihan_jawaban_gambar"] = array();
+		$filesCount = count($_FILES['pilihan_jawaban_gambar_a']['name']);
+		$temp = array();
+		for($i = 0; $i < $filesCount; $i++){
+			$_FILES['userFile']['name'] = $_FILES['pilihan_jawaban_gambar_a']['name'][$i];
+			$_FILES['userFile']['type'] = $_FILES['pilihan_jawaban_gambar_a']['type'][$i];
+			$_FILES['userFile']['tmp_name'] = $_FILES['pilihan_jawaban_gambar_a']['tmp_name'][$i];
+			$_FILES['userFile']['error'] = $_FILES['pilihan_jawaban_gambar_a']['error'][$i];
+			$_FILES['userFile']['size'] = $_FILES['pilihan_jawaban_gambar_a']['size'][$i];
+
+			$uploadPath = './uploads/';
+			$config['upload_path'] = $uploadPath;
+			$config['allowed_types'] = 'gif|jpg|png';
+			$config['encrypt_name'] = TRUE;
+			
+			$this->load->library('upload', $config);
+			$this->upload->initialize($config);
+			if($this->upload->do_upload('userFile')){
+				$fileData = $this->upload->data();
+				array_push($temp, $fileData['file_name']);
+			}
+		}
+		array_push($soal_ujian["pilihan_jawaban_gambar"], $temp);
+
+		$filesCount = count($_FILES['pilihan_jawaban_gambar_b']['name']);
+		$temp = array();
+		for($i = 0; $i < $filesCount; $i++){
+			$_FILES['userFile']['name'] = $_FILES['pilihan_jawaban_gambar_b']['name'][$i];
+			$_FILES['userFile']['type'] = $_FILES['pilihan_jawaban_gambar_b']['type'][$i];
+			$_FILES['userFile']['tmp_name'] = $_FILES['pilihan_jawaban_gambar_b']['tmp_name'][$i];
+			$_FILES['userFile']['error'] = $_FILES['pilihan_jawaban_gambar_b']['error'][$i];
+			$_FILES['userFile']['size'] = $_FILES['pilihan_jawaban_gambar_b']['size'][$i];
+
+			$uploadPath = './uploads/';
+			$config['upload_path'] = $uploadPath;
+			$config['allowed_types'] = 'gif|jpg|png';
+			$config['encrypt_name'] = TRUE;
+			
+			$this->load->library('upload', $config);
+			$this->upload->initialize($config);
+			if($this->upload->do_upload('userFile')){
+				$fileData = $this->upload->data();
+				array_push($temp, $fileData['file_name']);
+			}
+		}
+		array_push($soal_ujian_detail["pilihan_jawaban_gambar"], $temp);
+
+		$filesCount = count($_FILES['pilihan_jawaban_gambar_c']['name']);
+		$temp = array();
+		for($i = 0; $i < $filesCount; $i++){
+			$_FILES['userFile']['name'] = $_FILES['pilihan_jawaban_gambar_c']['name'][$i];
+			$_FILES['userFile']['type'] = $_FILES['pilihan_jawaban_gambar_c']['type'][$i];
+			$_FILES['userFile']['tmp_name'] = $_FILES['pilihan_jawaban_gambar_c']['tmp_name'][$i];
+			$_FILES['userFile']['error'] = $_FILES['pilihan_jawaban_gambar_c']['error'][$i];
+			$_FILES['userFile']['size'] = $_FILES['pilihan_jawaban_gambar_c']['size'][$i];
+
+			$uploadPath = './uploads/';
+			$config['upload_path'] = $uploadPath;
+			$config['allowed_types'] = 'gif|jpg|png';
+			$config['encrypt_name'] = TRUE;
+			
+			$this->load->library('upload', $config);
+			$this->upload->initialize($config);
+			if($this->upload->do_upload('userFile')){
+				$fileData = $this->upload->data();
+				array_push($temp, $fileData['file_name']);
+			}
+		}
+		array_push($soal_ujian_detail["pilihan_jawaban_gambar"], $temp);
+
+		$filesCount = count($_FILES['pilihan_jawaban_gambar_d']['name']);
+		$temp = array();
+		for($i = 0; $i < $filesCount; $i++){
+			$_FILES['userFile']['name'] = $_FILES['pilihan_jawaban_gambar_d']['name'][$i];
+			$_FILES['userFile']['type'] = $_FILES['pilihan_jawaban_gambar_d']['type'][$i];
+			$_FILES['userFile']['tmp_name'] = $_FILES['pilihan_jawaban_gambar_d']['tmp_name'][$i];
+			$_FILES['userFile']['error'] = $_FILES['pilihan_jawaban_gambar_d']['error'][$i];
+			$_FILES['userFile']['size'] = $_FILES['pilihan_jawaban_gambar_d']['size'][$i];
+
+			$uploadPath = './uploads/';
+			$config['upload_path'] = $uploadPath;
+			$config['allowed_types'] = 'gif|jpg|png';
+			$config['encrypt_name'] = TRUE;
+			
+			$this->load->library('upload', $config);
+			$this->upload->initialize($config);
+			if($this->upload->do_upload('userFile')){
+				$fileData = $this->upload->data();
+				array_push($temp, $fileData['file_name']);
+			}
+		}
+		array_push($soal_ujian_detail["pilihan_jawaban_gambar"], $temp);
+
+		$filesCount = count($_FILES['pilihan_jawaban_gambar_e']['name']);
+		$temp = array();
+		for($i = 0; $i < $filesCount; $i++){
+			$_FILES['userFile']['name'] = $_FILES['pilihan_jawaban_gambar_e']['name'][$i];
+			$_FILES['userFile']['type'] = $_FILES['pilihan_jawaban_gambar_e']['type'][$i];
+			$_FILES['userFile']['tmp_name'] = $_FILES['pilihan_jawaban_gambar_e']['tmp_name'][$i];
+			$_FILES['userFile']['error'] = $_FILES['pilihan_jawaban_gambar_e']['error'][$i];
+			$_FILES['userFile']['size'] = $_FILES['pilihan_jawaban_gambar_e']['size'][$i];
+
+			$uploadPath = './uploads/';
+			$config['upload_path'] = $uploadPath;
+			$config['allowed_types'] = 'gif|jpg|png';
+			$config['encrypt_name'] = TRUE;
+			
+			$this->load->library('upload', $config);
+			$this->upload->initialize($config);
+			if($this->upload->do_upload('userFile')){
+				$fileData = $this->upload->data();
+				array_push($temp, $fileData['file_name']);
+			}
+		}
+		array_push($soal_ujian_detail["pilihan_jawaban_gambar"], $temp);
+		$soal_ujian_detail["pilihan_jawaban_gambar"] = json_encode($soal_ujian_detail["pilihan_jawaban_gambar"]);
+
+		$soal_ujian["kunci_jawaban"] = $this->input->post("kunci_jawaban");
+		print_r($soal_ujian);
+		$this->db->insert("soal_ujian", $soal_ujian);
+		redirect("/home/dataSoalUjian", "location");
 	}
 
 	public function lihatDataSoalUjian($id) {
-	$soal_ujian = $this->db->query('Select soal_ujian.id, soal_ujian.id_mata_pelajaran, mata_pelajaran.nama as nama_mata_pelajaran, soal_ujian.nama
-		 													from soal_ujian
-															join mata_pelajaran on soal_ujian.id_mata_pelajaran = mata_pelajaran.id
-															where soal_ujian.id = ' . $id)->result();
+		$soal_ujian = $this->db->query('Select soal_ujian.id, soal_ujian.id_judul_ujian, judul_ujian.nama as nama_judul_ujian, soal_ujian.id_jenis_soal_ujian, jenis_soal_ujian.nama as nama_jenis_soal_ujian, soal_ujian.soal_tulisan, soal_ujian.soal_gambar, soal_ujian.pilihan_jawaban_tulisan, soal_ujian.pilihan_jawaban_gambar, soal_ujian.kunci_jawaban
+												from soal_ujian
+												join judul_ujian on soal_ujian.id_soal_ujian = judul_ujian.id
+												join jenis_soal_ujian on soal_ujian.id_jenis_soal_ujian = jenis_soal_ujian.id
+												where soal_ujian.id = ' . $id)->result();
 		$data = array(
-	    "sidebar" => $this->load->view('sidebar', NULL, true),
+	    	"sidebar" => $this->load->view('sidebar', NULL, true),
 			"footer" => $this->load->view('footer', NULL, true),
 			"soal_ujian" => $soal_ujian
 		);
 		$this->load->view('lihat_data_soal_ujian', $data);
 	}
 
-	public function updateDataSoalUjian($id) {
-		$soal_ujian = $this->db->query('Select soal_ujian.id, soal_ujian.id_mata_pelajaran, mata_pelajaran.nama as nama_mata_pelajaran, soal_ujian.nama
-		 													from soal_ujian
-															join mata_pelajaran on soal_ujian.id_mata_pelajaran = mata_pelajaran.id
-															
-															where soal_ujian.id = ' . $id)->result();
+	public function updateDataSoalUjianDetail($id) {
+		$soal_ujian = $this->db->query('Select soal_ujian.id, soal_ujian.id_judul_ujian, judul_ujian.nama as nama_judul_ujian, soal_ujian.id_jenis_soal_ujian, jenis_soal_ujian.nama as nama_jenis_soal_ujian, soal_ujian.soal_tulisan, soal_ujian.soal_gambar, soal_ujian.pilihan_jawaban_tulisan, soal_ujian.pilihan_jawaban_gambar, soal_ujian.kunci_jawaban
+												from soal_ujian
+												join judul_ujian on soal_ujian.id_soal_ujian = judul_ujian.id
+												join jenis_soal_ujian on soal_ujian.id_jenis_soal_ujian = jenis_soal_ujian.id
+												where soal_ujian.id = ' . $id)->result();
 		$data = array(
-	    "sidebar" => $this->load->view('sidebar', NULL, true),
+	    	"sidebar" => $this->load->view('sidebar', NULL, true),
 			"footer" => $this->load->view('footer', NULL, true),
 			"soal_ujian" => $soal_ujian
 		);
@@ -914,11 +1386,162 @@ class Home extends CI_Controller {
 
 	public function updateDataSoalUjianSimpan() {
 		$soal_ujian["id"] = $this->input->post("id");
-		$soal_ujian["id_mata_pelajaran"] = $this->input->post("id_mata_pelajaran");
-		// $soal_ujian["id_guru"] = $this->input->post("id_guru");
-		$soal_ujian["nama"] = $this->input->post("nama");
-    $this->db->where("id", $soal_ujian["id"]);
+		$soal_ujian["id_judul_ujian"] = $this->input->post("id_judul_ujian");
+		$soal_ujian["id_jenis_soal_ujian"] = $this->input->post("id_jenis_soal_ujian");
+		$soal_ujian["soal_tulisan"] = $this->input->post("soal_tulisan");
+		$soal_ujian["soal_gambar"] = array();
+		$filesCount = count($_FILES['soal_gambar']['name']);
+		for($i = 0; $i < $filesCount; $i++){
+			$_FILES['userFile']['name'] = $_FILES['soal_gambar']['name'][$i];
+			$_FILES['userFile']['type'] = $_FILES['soal_gambar']['type'][$i];
+			$_FILES['userFile']['tmp_name'] = $_FILES['soal_gambar']['tmp_name'][$i];
+			$_FILES['userFile']['error'] = $_FILES['soal_gambar']['error'][$i];
+			$_FILES['userFile']['size'] = $_FILES['soal_gambar']['size'][$i];
+
+			$uploadPath = './uploads/';
+			$config['upload_path'] = $uploadPath;
+			$config['allowed_types'] = 'gif|jpg|png';
+			$config['encrypt_name'] = TRUE;
+			
+			$this->load->library('upload', $config);
+			$this->upload->initialize($config);
+			if($this->upload->do_upload('userFile')){
+				$fileData = $this->upload->data();
+				array_push($soal_ujian["soal_gambar"], $fileData['file_name']);
+			}
+		}
+		$soal_ujian["soal_gambar"] = json_encode($soal_ujian["soal_gambar"]);
+
+		$soal_ujian["pilihan_jawaban_tulisan"] = array();
+		array_push($soal_ujian["pilihan_jawaban_tulisan"], $this->input->post("pilihan_jawaban_tulisan_a"));
+		array_push($soal_ujian["pilihan_jawaban_tulisan"], $this->input->post("pilihan_jawaban_tulisan_b"));
+		array_push($soal_ujian["pilihan_jawaban_tulisan"], $this->input->post("pilihan_jawaban_tulisan_c"));
+		array_push($soal_ujian["pilihan_jawaban_tulisan"], $this->input->post("pilihan_jawaban_tulisan_d"));
+		array_push($soal_ujian["pilihan_jawaban_tulisan"], $this->input->post("pilihan_jawaban_tulisan_e"));
+		$soal_ujian["pilihan_jawaban_tulisan"] = json_encode($soal_ujian["pilihan_jawaban_tulisan"]);
+
+		$soal_ujian["pilihan_jawaban_gambar"] = array();
+		$filesCount = count($_FILES['pilihan_jawaban_gambar_a']['name']);
+		$temp = array();
+		for($i = 0; $i < $filesCount; $i++){
+			$_FILES['userFile']['name'] = $_FILES['pilihan_jawaban_gambar_a']['name'][$i];
+			$_FILES['userFile']['type'] = $_FILES['pilihan_jawaban_gambar_a']['type'][$i];
+			$_FILES['userFile']['tmp_name'] = $_FILES['pilihan_jawaban_gambar_a']['tmp_name'][$i];
+			$_FILES['userFile']['error'] = $_FILES['pilihan_jawaban_gambar_a']['error'][$i];
+			$_FILES['userFile']['size'] = $_FILES['pilihan_jawaban_gambar_a']['size'][$i];
+
+			$uploadPath = './uploads/';
+			$config['upload_path'] = $uploadPath;
+			$config['allowed_types'] = 'gif|jpg|png';
+			$config['encrypt_name'] = TRUE;
+			
+			$this->load->library('upload', $config);
+			$this->upload->initialize($config);
+			if($this->upload->do_upload('userFile')){
+				$fileData = $this->upload->data();
+				array_push($temp, $fileData['file_name']);
+			}
+		}
+		array_push($soal_ujian["pilihan_jawaban_gambar"], $temp);
+
+		$filesCount = count($_FILES['pilihan_jawaban_gambar_b']['name']);
+		$temp = array();
+		for($i = 0; $i < $filesCount; $i++){
+			$_FILES['userFile']['name'] = $_FILES['pilihan_jawaban_gambar_b']['name'][$i];
+			$_FILES['userFile']['type'] = $_FILES['pilihan_jawaban_gambar_b']['type'][$i];
+			$_FILES['userFile']['tmp_name'] = $_FILES['pilihan_jawaban_gambar_b']['tmp_name'][$i];
+			$_FILES['userFile']['error'] = $_FILES['pilihan_jawaban_gambar_b']['error'][$i];
+			$_FILES['userFile']['size'] = $_FILES['pilihan_jawaban_gambar_b']['size'][$i];
+
+			$uploadPath = './uploads/';
+			$config['upload_path'] = $uploadPath;
+			$config['allowed_types'] = 'gif|jpg|png';
+			$config['encrypt_name'] = TRUE;
+			
+			$this->load->library('upload', $config);
+			$this->upload->initialize($config);
+			if($this->upload->do_upload('userFile')){
+				$fileData = $this->upload->data();
+				array_push($temp, $fileData['file_name']);
+			}
+		}
+		array_push($soal_ujian["pilihan_jawaban_gambar"], $temp);
+
+		$filesCount = count($_FILES['pilihan_jawaban_gambar_c']['name']);
+		$temp = array();
+		for($i = 0; $i < $filesCount; $i++){
+			$_FILES['userFile']['name'] = $_FILES['pilihan_jawaban_gambar_c']['name'][$i];
+			$_FILES['userFile']['type'] = $_FILES['pilihan_jawaban_gambar_c']['type'][$i];
+			$_FILES['userFile']['tmp_name'] = $_FILES['pilihan_jawaban_gambar_c']['tmp_name'][$i];
+			$_FILES['userFile']['error'] = $_FILES['pilihan_jawaban_gambar_c']['error'][$i];
+			$_FILES['userFile']['size'] = $_FILES['pilihan_jawaban_gambar_c']['size'][$i];
+
+			$uploadPath = './uploads/';
+			$config['upload_path'] = $uploadPath;
+			$config['allowed_types'] = 'gif|jpg|png';
+			$config['encrypt_name'] = TRUE;
+			
+			$this->load->library('upload', $config);
+			$this->upload->initialize($config);
+			if($this->upload->do_upload('userFile')){
+				$fileData = $this->upload->data();
+				array_push($temp, $fileData['file_name']);
+			}
+		}
+		array_push($soal_ujian["pilihan_jawaban_gambar"], $temp);
+
+		$filesCount = count($_FILES['pilihan_jawaban_gambar_d']['name']);
+		$temp = array();
+		for($i = 0; $i < $filesCount; $i++){
+			$_FILES['userFile']['name'] = $_FILES['pilihan_jawaban_gambar_d']['name'][$i];
+			$_FILES['userFile']['type'] = $_FILES['pilihan_jawaban_gambar_d']['type'][$i];
+			$_FILES['userFile']['tmp_name'] = $_FILES['pilihan_jawaban_gambar_d']['tmp_name'][$i];
+			$_FILES['userFile']['error'] = $_FILES['pilihan_jawaban_gambar_d']['error'][$i];
+			$_FILES['userFile']['size'] = $_FILES['pilihan_jawaban_gambar_d']['size'][$i];
+
+			$uploadPath = './uploads/';
+			$config['upload_path'] = $uploadPath;
+			$config['allowed_types'] = 'gif|jpg|png';
+			$config['encrypt_name'] = TRUE;
+			
+			$this->load->library('upload', $config);
+			$this->upload->initialize($config);
+			if($this->upload->do_upload('userFile')){
+				$fileData = $this->upload->data();
+				array_push($temp, $fileData['file_name']);
+			}
+		}
+		array_push($soal_ujian["pilihan_jawaban_gambar"], $temp);
+
+		$filesCount = count($_FILES['pilihan_jawaban_gambar_e']['name']);
+		$temp = array();
+		for($i = 0; $i < $filesCount; $i++){
+			$_FILES['userFile']['name'] = $_FILES['pilihan_jawaban_gambar_e']['name'][$i];
+			$_FILES['userFile']['type'] = $_FILES['pilihan_jawaban_gambar_e']['type'][$i];
+			$_FILES['userFile']['tmp_name'] = $_FILES['pilihan_jawaban_gambar_e']['tmp_name'][$i];
+			$_FILES['userFile']['error'] = $_FILES['pilihan_jawaban_gambar_e']['error'][$i];
+			$_FILES['userFile']['size'] = $_FILES['pilihan_jawaban_gambar_e']['size'][$i];
+
+			$uploadPath = './uploads/';
+			$config['upload_path'] = $uploadPath;
+			$config['allowed_types'] = 'gif|jpg|png';
+			$config['encrypt_name'] = TRUE;
+			
+			$this->load->library('upload', $config);
+			$this->upload->initialize($config);
+			if($this->upload->do_upload('userFile')){
+				$fileData = $this->upload->data();
+				array_push($temp, $fileData['file_name']);
+			}
+		}
+		array_push($soal_ujian["pilihan_jawaban_gambar"], $temp);
+		$soal_ujian["pilihan_jawaban_gambar"] = json_encode($soal_ujian["pilihan_jawaban_gambar"]);
+
+		$soal_ujian["kunci_jawaban"] = $this->input->post("kunci_jawaban");
+		print_r($soal_ujian);
+    	$this->db->where("id", $soal_ujian["id"]);
 		$this->db->update('soal_ujian', $soal_ujian);
+		redirect("/home/dataSoalUjian", "location");
 	}
 
 	public function hapusDataSoalUjian($id) {
@@ -936,642 +1559,32 @@ class Home extends CI_Controller {
 	public function loadDataSoalUjian($page, $record_per_page) {
 		$output = '';
 		$start_from = ($page - 1) * $record_per_page;
-		$this->db->select('soal_ujian.id, mata_pelajaran.nama as nama_mata_pelajaran, soal_ujian.nama');
+		$this->db->select('soal_ujian.id, judul_ujian.nama as nama_judul_ujian, jenis_soal_ujian.nama as nama_jenis_soal_ujian, soal_ujian.soal_tulisan');
 		$this->db->from('soal_ujian');
-		$this->db->join('mata_pelajaran', 'mata_pelajaran.id = soal_ujian.id_mata_pelajaran');
-		// $this->db->join('guru', 'guru.id = soal_ujian.id_guru');
+		$this->db->join('judul_ujian', 'soal_ujian.id_judul_ujian = judul_ujian.id');
+		$this->db->join('jenis_soal_ujian', 'soal_ujian.id_jenis_soal_ujian = jenis_soal_ujian.id');
 		$this->db->limit($record_per_page, $start_from);
 		$results = $this->db->get()->result();
 		$output .= "
 			<table class='table table-bordered'>
 				<tr>
 					<th>Id</th>
-					<th>Mata Pelajaran</th>
-					<th>Nama</th>
-					<th>Action</th>
-				</tr>
-		";
-		foreach($results as $result) {
-			$chooseSoalUjian = "chooseSoalUjian('" . $result->id . "' , '" . $result->nama . "')";
-			$output .= "
-				<tr>
-					<td>$result->id</td>
-					<td>$result->nama_mata_pelajaran</td>
-					<td>$result->nama</td>
-					<td>
-						<button class='btn btn-primary' onclick=\"$chooseSoalUjian\">Choose</button>
-					</td>
-				</tr>
-			";
-		}
-		$output .= "</table>";
-		echo $output;
-	}
-	public function dataJenisSoalUjianDetail()
-	{
-		// $data = array(
-	  //   "sidebar" => $this->load->view('sidebar', NULL, true),
-		// 	"content" => $this->load->view('data_guru', NULL, true)
-		// );
-		// load db and model
-		$this->load->model('JenisSoalUjianDetail');
-
-		// init params
-		$params = array();
-		$limit_per_page = 10;
-		$start_index = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
-		$total_records = $this->JenisSoalUjianDetail->get_total();
-
-		if ($total_records > 0)
-		{
-				// get current page records
-				$params["results"] = $this->JenisSoalUjianDetail->get_current_page_records($limit_per_page, $start_index);
-
-				$config['base_url'] = base_url() . 'index.php/home/dataJenisSoalUjianDetail';
-				$config['total_rows'] = $total_records;
-				$config['per_page'] = $limit_per_page;
-				$config["uri_segment"] = 3;
-
-				$config['full_tag_open'] = '<div class="pagination">';
-				$config['full_tag_close'] = '</div>';
-
-				$config['first_link'] = 'First Page';
-				$config['first_tag_open'] = '<button type="button" class="btn btn-default">';
-				$config['first_tag_close'] = '</button>';
-
-				$config['last_link'] = 'Last Page';
-				$config['last_tag_open'] = '<button type="button" class="btn btn-default">';
-				$config['last_tag_close'] = '</button>';
-
-				$config['next_link'] = 'Next Page';
-				$config['next_tag_open'] = '<button type="button" class="btn btn-default">';
-				$config['next_tag_close'] = '</button>';
-
-				$config['prev_link'] = 'Prev Page';
-				$config['prev_tag_open'] = '<button type="button" class="btn btn-default">';
-				$config['prev_tag_close'] = '</button>';
-
-				$config['cur_tag_open'] = '<button type="button" class="btn btn-default">';
-				$config['cur_tag_close'] = '</button>';
-
-				$config['num_tag_open'] = '<button type="button" class="btn btn-default">';
-				$config['num_tag_close'] = '</button>';
-
-				$this->pagination->initialize($config);
-
-				// build paging links
-				$params["links"] = $this->pagination->create_links();
-		}
-
-		$params["sidebar"] = $this->load->view('sidebar', NULL, true);
-		$params["footer"] = $this->load->view('footer', NULL, true);
-
-		$this->load->view('data_jenis_soal_ujian_detail', $params);
-	}
-
-	public function tambahDataJenisSoalUjianDetail() {
-		$data = array(
-	    "sidebar" => $this->load->view('sidebar', NULL, true),
-			"footer" => $this->load->view('footer', NULL, true)
-		);
-		$this->load->view('tambah_data_jenis_soal_ujian_detail', $data);
-	}
-
-	public function tambahDataJenisSoalUjianDetailSimpan() {
-		$jenis_soal_ujian_detail["nama"] = $this->input->post("nama");
-    $this->db->insert("jenis_soal_ujian_detail", $jenis_soal_ujian_detail);
-	}
-
-	public function lihatDataJenisSoalUjianDetail($id) {
-		$jenis_soal_ujian_detail = $this->db->query('Select *
-		 													from jenis_soal_ujian_detail
-															where id = ' . $id)->result();
-		$data = array(
-	    "sidebar" => $this->load->view('sidebar', NULL, true),
-			"footer" => $this->load->view('footer', NULL, true),
-			"jenis_soal_ujian_detail" => $jenis_soal_ujian_detail
-		);
-		$this->load->view('lihat_data_jenis_soal_ujian_detail', $data);
-	}
-
-	public function updateDataJenisSoalUjianDetail($id) {
-		$jenis_soal_ujian_detail = $this->db->query('Select *
-		 													from jenis_soal_ujian_detail
-															where id = ' . $id)->result();
-		$data = array(
-	    "sidebar" => $this->load->view('sidebar', NULL, true),
-			"footer" => $this->load->view('footer', NULL, true),
-			"jenis_soal_ujian_detail" => $jenis_soal_ujian_detail
-		);
-		$this->load->view('update_data_jenis_soal_ujian_detail', $data);
-	}
-
-	public function updateDataJenisSoalUjianDetailSimpan() {
-		$jenis_soal_ujian_detail["id"] = $this->input->post("id");
-		$jenis_soal_ujian_detail["nama"] = $this->input->post("nama");
-    $this->db->where("id", $jenis_soal_ujian_detail["id"]);
-		$this->db->update('jenis_soal_ujian_detail', $jenis_soal_ujian_detail);
-	}
-
-	public function hapusDataJenisSoalUjianDetail($id) {
-		$this->db->where('id', $id);
-		$this->db->delete('jenis_soal_ujian_detail');
-		redirect("/home/dataJenisSoalUjianDetail", 'location');
-	}
-
-	public function banyakDataJenisSoalUjianDetail($record_per_page) {
-		$result = $this->db->get('jenis_soal_ujian_detail')->num_rows();
-		$result = ceil((float) $result / $record_per_page);
-		echo (int) $result;
-	}
-
-	public function loadDataJenisSoalUjianDetail($page, $record_per_page) {
-		$output = '';
-		$start_from = ($page - 1) * $record_per_page;
-		$this->db->select('*');
-		$this->db->from('jenis_soal_ujian_detail');
-		$this->db->limit($record_per_page, $start_from);
-		$results = $this->db->get()->result();
-		$output .= "
-			<table class='table table-bordered'>
-				<tr>
-					<th>Id</th>
-					<th>Nama</th>
-					<th>Action</th>
-				</tr>
-		";
-		foreach($results as $result) {
-			$chooseJenisSoalUjianDetail = "chooseJenisSoalUjianDetail('" . $result->id . "','" . $result->nama . "')";
-			$output .= "
-				<tr>
-					<td>$result->id</td>
-					<td>$result->nama</td>
-					<td>
-						<button class='btn btn-primary' onclick=\"$chooseJenisSoalUjianDetail\">Choose</button>
-					</td>
-				</tr>
-			";
-		}
-		$output .= "</table>";
-		echo $output;
-	}
-	public function dataSoalUjianDetail()
-	{
-		// $data = array(
-	  //   "sidebar" => $this->load->view('sidebar', NULL, true),
-		// 	"content" => $this->load->view('data_guru', NULL, true)
-		// );
-		// load db and model
-		$this->load->model('SoalUjianDetail');
-
-		// init params
-		$params = array();
-		$limit_per_page = 10;
-		$start_index = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
-		$total_records = $this->SoalUjianDetail->get_total();
-
-		if ($total_records > 0)
-		{
-				// get current page records
-				$params["results"] = $this->SoalUjianDetail->get_current_page_records($limit_per_page, $start_index);
-
-				$config['base_url'] = base_url() . 'index.php/home/dataSoalUjianDetail';
-				$config['total_rows'] = $total_records;
-				$config['per_page'] = $limit_per_page;
-				$config["uri_segment"] = 3;
-
-				$config['full_tag_open'] = '<div class="pagination">';
-				$config['full_tag_close'] = '</div>';
-
-				$config['first_link'] = 'First Page';
-				$config['first_tag_open'] = '<button type="button" class="btn btn-default">';
-				$config['first_tag_close'] = '</button>';
-
-				$config['last_link'] = 'Last Page';
-				$config['last_tag_open'] = '<button type="button" class="btn btn-default">';
-				$config['last_tag_close'] = '</button>';
-
-				$config['next_link'] = 'Next Page';
-				$config['next_tag_open'] = '<button type="button" class="btn btn-default">';
-				$config['next_tag_close'] = '</button>';
-
-				$config['prev_link'] = 'Prev Page';
-				$config['prev_tag_open'] = '<button type="button" class="btn btn-default">';
-				$config['prev_tag_close'] = '</button>';
-
-				$config['cur_tag_open'] = '<button type="button" class="btn btn-default">';
-				$config['cur_tag_close'] = '</button>';
-
-				$config['num_tag_open'] = '<button type="button" class="btn btn-default">';
-				$config['num_tag_close'] = '</button>';
-
-				$this->pagination->initialize($config);
-
-				// build paging links
-				$params["links"] = $this->pagination->create_links();
-		}
-
-		$params["sidebar"] = $this->load->view('sidebar', NULL, true);
-		$params["footer"] = $this->load->view('footer', NULL, true);
-
-		$this->load->view('data_soal_ujian_detail', $params);
-	}
-
-	public function tambahDataSoalUjianDetail() {
-		$data = array(
-	    	"sidebar" => $this->load->view('sidebar', NULL, true),
-			"footer" => $this->load->view('footer', NULL, true)
-		);
-		$this->load->view('tambah_data_soal_ujian_detail', $data);
-	}
-
-	public function tambahDataSoalUjianDetailSimpan() {
-		$soal_ujian_detail["id_soal_ujian"] = $this->input->post("id_soal_ujian");
-		$soal_ujian_detail["id_jenis_soal_ujian_detail"] = $this->input->post("id_jenis_soal_ujian_detail");
-		$soal_ujian_detail["soal_tulisan"] = $this->input->post("soal_tulisan");
-		$soal_ujian_detail["soal_gambar"] = array();
-		$filesCount = count($_FILES['soal_gambar']['name']);
-		for($i = 0; $i < $filesCount; $i++){
-			$_FILES['userFile']['name'] = $_FILES['soal_gambar']['name'][$i];
-			$_FILES['userFile']['type'] = $_FILES['soal_gambar']['type'][$i];
-			$_FILES['userFile']['tmp_name'] = $_FILES['soal_gambar']['tmp_name'][$i];
-			$_FILES['userFile']['error'] = $_FILES['soal_gambar']['error'][$i];
-			$_FILES['userFile']['size'] = $_FILES['soal_gambar']['size'][$i];
-
-			$uploadPath = './uploads/';
-			$config['upload_path'] = $uploadPath;
-			$config['allowed_types'] = 'gif|jpg|png';
-			$config['encrypt_name'] = TRUE;
-			
-			$this->load->library('upload', $config);
-			$this->upload->initialize($config);
-			if($this->upload->do_upload('userFile')){
-				$fileData = $this->upload->data();
-				array_push($soal_ujian_detail["soal_gambar"], $fileData['file_name']);
-			}
-		}
-		$soal_ujian_detail["soal_gambar"] = json_encode($soal_ujian_detail["soal_gambar"]);
-
-		$soal_ujian_detail["pilihan_jawaban_tulisan"] = array();
-		array_push($soal_ujian_detail["pilihan_jawaban_tulisan"], $this->input->post("pilihan_jawaban_tulisan_a"));
-		array_push($soal_ujian_detail["pilihan_jawaban_tulisan"], $this->input->post("pilihan_jawaban_tulisan_b"));
-		array_push($soal_ujian_detail["pilihan_jawaban_tulisan"], $this->input->post("pilihan_jawaban_tulisan_c"));
-		array_push($soal_ujian_detail["pilihan_jawaban_tulisan"], $this->input->post("pilihan_jawaban_tulisan_d"));
-		array_push($soal_ujian_detail["pilihan_jawaban_tulisan"], $this->input->post("pilihan_jawaban_tulisan_e"));
-		$soal_ujian_detail["pilihan_jawaban_tulisan"] = json_encode($soal_ujian_detail["pilihan_jawaban_tulisan"]);
-
-		$soal_ujian_detail["pilihan_jawaban_gambar"] = array();
-		$filesCount = count($_FILES['pilihan_jawaban_gambar_a']['name']);
-		$temp = array();
-		for($i = 0; $i < $filesCount; $i++){
-			$_FILES['userFile']['name'] = $_FILES['pilihan_jawaban_gambar_a']['name'][$i];
-			$_FILES['userFile']['type'] = $_FILES['pilihan_jawaban_gambar_a']['type'][$i];
-			$_FILES['userFile']['tmp_name'] = $_FILES['pilihan_jawaban_gambar_a']['tmp_name'][$i];
-			$_FILES['userFile']['error'] = $_FILES['pilihan_jawaban_gambar_a']['error'][$i];
-			$_FILES['userFile']['size'] = $_FILES['pilihan_jawaban_gambar_a']['size'][$i];
-
-			$uploadPath = './uploads/';
-			$config['upload_path'] = $uploadPath;
-			$config['allowed_types'] = 'gif|jpg|png';
-			$config['encrypt_name'] = TRUE;
-			
-			$this->load->library('upload', $config);
-			$this->upload->initialize($config);
-			if($this->upload->do_upload('userFile')){
-				$fileData = $this->upload->data();
-				array_push($temp, $fileData['file_name']);
-			}
-		}
-		array_push($soal_ujian_detail["pilihan_jawaban_gambar"], $temp);
-
-		$filesCount = count($_FILES['pilihan_jawaban_gambar_b']['name']);
-		$temp = array();
-		for($i = 0; $i < $filesCount; $i++){
-			$_FILES['userFile']['name'] = $_FILES['pilihan_jawaban_gambar_b']['name'][$i];
-			$_FILES['userFile']['type'] = $_FILES['pilihan_jawaban_gambar_b']['type'][$i];
-			$_FILES['userFile']['tmp_name'] = $_FILES['pilihan_jawaban_gambar_b']['tmp_name'][$i];
-			$_FILES['userFile']['error'] = $_FILES['pilihan_jawaban_gambar_b']['error'][$i];
-			$_FILES['userFile']['size'] = $_FILES['pilihan_jawaban_gambar_b']['size'][$i];
-
-			$uploadPath = './uploads/';
-			$config['upload_path'] = $uploadPath;
-			$config['allowed_types'] = 'gif|jpg|png';
-			$config['encrypt_name'] = TRUE;
-			
-			$this->load->library('upload', $config);
-			$this->upload->initialize($config);
-			if($this->upload->do_upload('userFile')){
-				$fileData = $this->upload->data();
-				array_push($temp, $fileData['file_name']);
-			}
-		}
-		array_push($soal_ujian_detail["pilihan_jawaban_gambar"], $temp);
-
-		$filesCount = count($_FILES['pilihan_jawaban_gambar_c']['name']);
-		$temp = array();
-		for($i = 0; $i < $filesCount; $i++){
-			$_FILES['userFile']['name'] = $_FILES['pilihan_jawaban_gambar_c']['name'][$i];
-			$_FILES['userFile']['type'] = $_FILES['pilihan_jawaban_gambar_c']['type'][$i];
-			$_FILES['userFile']['tmp_name'] = $_FILES['pilihan_jawaban_gambar_c']['tmp_name'][$i];
-			$_FILES['userFile']['error'] = $_FILES['pilihan_jawaban_gambar_c']['error'][$i];
-			$_FILES['userFile']['size'] = $_FILES['pilihan_jawaban_gambar_c']['size'][$i];
-
-			$uploadPath = './uploads/';
-			$config['upload_path'] = $uploadPath;
-			$config['allowed_types'] = 'gif|jpg|png';
-			$config['encrypt_name'] = TRUE;
-			
-			$this->load->library('upload', $config);
-			$this->upload->initialize($config);
-			if($this->upload->do_upload('userFile')){
-				$fileData = $this->upload->data();
-				array_push($temp, $fileData['file_name']);
-			}
-		}
-		array_push($soal_ujian_detail["pilihan_jawaban_gambar"], $temp);
-
-		$filesCount = count($_FILES['pilihan_jawaban_gambar_d']['name']);
-		$temp = array();
-		for($i = 0; $i < $filesCount; $i++){
-			$_FILES['userFile']['name'] = $_FILES['pilihan_jawaban_gambar_d']['name'][$i];
-			$_FILES['userFile']['type'] = $_FILES['pilihan_jawaban_gambar_d']['type'][$i];
-			$_FILES['userFile']['tmp_name'] = $_FILES['pilihan_jawaban_gambar_d']['tmp_name'][$i];
-			$_FILES['userFile']['error'] = $_FILES['pilihan_jawaban_gambar_d']['error'][$i];
-			$_FILES['userFile']['size'] = $_FILES['pilihan_jawaban_gambar_d']['size'][$i];
-
-			$uploadPath = './uploads/';
-			$config['upload_path'] = $uploadPath;
-			$config['allowed_types'] = 'gif|jpg|png';
-			$config['encrypt_name'] = TRUE;
-			
-			$this->load->library('upload', $config);
-			$this->upload->initialize($config);
-			if($this->upload->do_upload('userFile')){
-				$fileData = $this->upload->data();
-				array_push($temp, $fileData['file_name']);
-			}
-		}
-		array_push($soal_ujian_detail["pilihan_jawaban_gambar"], $temp);
-
-		$filesCount = count($_FILES['pilihan_jawaban_gambar_e']['name']);
-		$temp = array();
-		for($i = 0; $i < $filesCount; $i++){
-			$_FILES['userFile']['name'] = $_FILES['pilihan_jawaban_gambar_e']['name'][$i];
-			$_FILES['userFile']['type'] = $_FILES['pilihan_jawaban_gambar_e']['type'][$i];
-			$_FILES['userFile']['tmp_name'] = $_FILES['pilihan_jawaban_gambar_e']['tmp_name'][$i];
-			$_FILES['userFile']['error'] = $_FILES['pilihan_jawaban_gambar_e']['error'][$i];
-			$_FILES['userFile']['size'] = $_FILES['pilihan_jawaban_gambar_e']['size'][$i];
-
-			$uploadPath = './uploads/';
-			$config['upload_path'] = $uploadPath;
-			$config['allowed_types'] = 'gif|jpg|png';
-			$config['encrypt_name'] = TRUE;
-			
-			$this->load->library('upload', $config);
-			$this->upload->initialize($config);
-			if($this->upload->do_upload('userFile')){
-				$fileData = $this->upload->data();
-				array_push($temp, $fileData['file_name']);
-			}
-		}
-		array_push($soal_ujian_detail["pilihan_jawaban_gambar"], $temp);
-		$soal_ujian_detail["pilihan_jawaban_gambar"] = json_encode($soal_ujian_detail["pilihan_jawaban_gambar"]);
-
-		$soal_ujian_detail["kunci_jawaban"] = $this->input->post("kunci_jawaban");
-		print_r($soal_ujian_detail);
-		$this->db->insert("soal_ujian_detail", $soal_ujian_detail);
-		redirect("/home/dataSoalUjianDetail", "location");
-	}
-
-	public function lihatDataSoalUjianDetail($id) {
-		$soal_ujian_detail = $this->db->query('Select soal_ujian_detail.id, soal_ujian_detail.id_soal_ujian, soal_ujian.nama as nama_soal_ujian, soal_ujian_detail.id_jenis_soal_ujian_detail, jenis_soal_ujian_detail.nama as nama_jenis_soal_ujian_detail, soal_ujian_detail.soal_tulisan, soal_ujian_detail.soal_gambar, soal_ujian_detail.pilihan_jawaban_tulisan, soal_ujian_detail.pilihan_jawaban_gambar, soal_ujian_detail.kunci_jawaban
-												from soal_ujian_detail
-												join soal_ujian on soal_ujian_detail.id_soal_ujian = soal_ujian.id
-												join jenis_soal_ujian_detail on soal_ujian_detail.id_jenis_soal_ujian_detail = jenis_soal_ujian_detail.id
-												where soal_ujian_detail.id = ' . $id)->result();
-		$data = array(
-	    	"sidebar" => $this->load->view('sidebar', NULL, true),
-			"footer" => $this->load->view('footer', NULL, true),
-			"soal_ujian_detail" => $soal_ujian_detail
-		);
-		$this->load->view('lihat_data_soal_ujian_detail', $data);
-	}
-
-	public function updateDataSoalUjianDetail($id) {
-		$soal_ujian_detail = $this->db->query('Select soal_ujian_detail.id, soal_ujian_detail.id_soal_ujian, soal_ujian.nama as nama_soal_ujian, soal_ujian_detail.id_jenis_soal_ujian_detail, jenis_soal_ujian_detail.nama as nama_jenis_soal_ujian_detail, soal_ujian_detail.soal_tulisan, soal_ujian_detail.soal_gambar, soal_ujian_detail.pilihan_jawaban_tulisan, soal_ujian_detail.pilihan_jawaban_gambar, soal_ujian_detail.kunci_jawaban
-												from soal_ujian_detail
-												join soal_ujian on soal_ujian_detail.id_soal_ujian = soal_ujian.id
-												join jenis_soal_ujian_detail on soal_ujian_detail.id_jenis_soal_ujian_detail = jenis_soal_ujian_detail.id
-												where soal_ujian_detail.id = ' . $id)->result();
-		$data = array(
-	    	"sidebar" => $this->load->view('sidebar', NULL, true),
-			"footer" => $this->load->view('footer', NULL, true),
-			"soal_ujian_detail" => $soal_ujian_detail
-		);
-		$this->load->view('update_data_soal_ujian_detail', $data);
-	}
-
-	public function updateDataSoalUjianDetailSimpan() {
-		$soal_ujian_detail["id"] = $this->input->post("id");
-		$soal_ujian_detail["id_soal_ujian"] = $this->input->post("id_soal_ujian");
-		$soal_ujian_detail["id_jenis_soal_ujian_detail"] = $this->input->post("id_jenis_soal_ujian_detail");
-		$soal_ujian_detail["soal_tulisan"] = $this->input->post("soal_tulisan");
-		$soal_ujian_detail["soal_gambar"] = array();
-		$filesCount = count($_FILES['soal_gambar']['name']);
-		for($i = 0; $i < $filesCount; $i++){
-			$_FILES['userFile']['name'] = $_FILES['soal_gambar']['name'][$i];
-			$_FILES['userFile']['type'] = $_FILES['soal_gambar']['type'][$i];
-			$_FILES['userFile']['tmp_name'] = $_FILES['soal_gambar']['tmp_name'][$i];
-			$_FILES['userFile']['error'] = $_FILES['soal_gambar']['error'][$i];
-			$_FILES['userFile']['size'] = $_FILES['soal_gambar']['size'][$i];
-
-			$uploadPath = './uploads/';
-			$config['upload_path'] = $uploadPath;
-			$config['allowed_types'] = 'gif|jpg|png';
-			$config['encrypt_name'] = TRUE;
-			
-			$this->load->library('upload', $config);
-			$this->upload->initialize($config);
-			if($this->upload->do_upload('userFile')){
-				$fileData = $this->upload->data();
-				array_push($soal_ujian_detail["soal_gambar"], $fileData['file_name']);
-			}
-		}
-		$soal_ujian_detail["soal_gambar"] = json_encode($soal_ujian_detail["soal_gambar"]);
-
-		$soal_ujian_detail["pilihan_jawaban_tulisan"] = array();
-		array_push($soal_ujian_detail["pilihan_jawaban_tulisan"], $this->input->post("pilihan_jawaban_tulisan_a"));
-		array_push($soal_ujian_detail["pilihan_jawaban_tulisan"], $this->input->post("pilihan_jawaban_tulisan_b"));
-		array_push($soal_ujian_detail["pilihan_jawaban_tulisan"], $this->input->post("pilihan_jawaban_tulisan_c"));
-		array_push($soal_ujian_detail["pilihan_jawaban_tulisan"], $this->input->post("pilihan_jawaban_tulisan_d"));
-		array_push($soal_ujian_detail["pilihan_jawaban_tulisan"], $this->input->post("pilihan_jawaban_tulisan_e"));
-		$soal_ujian_detail["pilihan_jawaban_tulisan"] = json_encode($soal_ujian_detail["pilihan_jawaban_tulisan"]);
-
-		$soal_ujian_detail["pilihan_jawaban_gambar"] = array();
-		$filesCount = count($_FILES['pilihan_jawaban_gambar_a']['name']);
-		$temp = array();
-		for($i = 0; $i < $filesCount; $i++){
-			$_FILES['userFile']['name'] = $_FILES['pilihan_jawaban_gambar_a']['name'][$i];
-			$_FILES['userFile']['type'] = $_FILES['pilihan_jawaban_gambar_a']['type'][$i];
-			$_FILES['userFile']['tmp_name'] = $_FILES['pilihan_jawaban_gambar_a']['tmp_name'][$i];
-			$_FILES['userFile']['error'] = $_FILES['pilihan_jawaban_gambar_a']['error'][$i];
-			$_FILES['userFile']['size'] = $_FILES['pilihan_jawaban_gambar_a']['size'][$i];
-
-			$uploadPath = './uploads/';
-			$config['upload_path'] = $uploadPath;
-			$config['allowed_types'] = 'gif|jpg|png';
-			$config['encrypt_name'] = TRUE;
-			
-			$this->load->library('upload', $config);
-			$this->upload->initialize($config);
-			if($this->upload->do_upload('userFile')){
-				$fileData = $this->upload->data();
-				array_push($temp, $fileData['file_name']);
-			}
-		}
-		array_push($soal_ujian_detail["pilihan_jawaban_gambar"], $temp);
-
-		$filesCount = count($_FILES['pilihan_jawaban_gambar_b']['name']);
-		$temp = array();
-		for($i = 0; $i < $filesCount; $i++){
-			$_FILES['userFile']['name'] = $_FILES['pilihan_jawaban_gambar_b']['name'][$i];
-			$_FILES['userFile']['type'] = $_FILES['pilihan_jawaban_gambar_b']['type'][$i];
-			$_FILES['userFile']['tmp_name'] = $_FILES['pilihan_jawaban_gambar_b']['tmp_name'][$i];
-			$_FILES['userFile']['error'] = $_FILES['pilihan_jawaban_gambar_b']['error'][$i];
-			$_FILES['userFile']['size'] = $_FILES['pilihan_jawaban_gambar_b']['size'][$i];
-
-			$uploadPath = './uploads/';
-			$config['upload_path'] = $uploadPath;
-			$config['allowed_types'] = 'gif|jpg|png';
-			$config['encrypt_name'] = TRUE;
-			
-			$this->load->library('upload', $config);
-			$this->upload->initialize($config);
-			if($this->upload->do_upload('userFile')){
-				$fileData = $this->upload->data();
-				array_push($temp, $fileData['file_name']);
-			}
-		}
-		array_push($soal_ujian_detail["pilihan_jawaban_gambar"], $temp);
-
-		$filesCount = count($_FILES['pilihan_jawaban_gambar_c']['name']);
-		$temp = array();
-		for($i = 0; $i < $filesCount; $i++){
-			$_FILES['userFile']['name'] = $_FILES['pilihan_jawaban_gambar_c']['name'][$i];
-			$_FILES['userFile']['type'] = $_FILES['pilihan_jawaban_gambar_c']['type'][$i];
-			$_FILES['userFile']['tmp_name'] = $_FILES['pilihan_jawaban_gambar_c']['tmp_name'][$i];
-			$_FILES['userFile']['error'] = $_FILES['pilihan_jawaban_gambar_c']['error'][$i];
-			$_FILES['userFile']['size'] = $_FILES['pilihan_jawaban_gambar_c']['size'][$i];
-
-			$uploadPath = './uploads/';
-			$config['upload_path'] = $uploadPath;
-			$config['allowed_types'] = 'gif|jpg|png';
-			$config['encrypt_name'] = TRUE;
-			
-			$this->load->library('upload', $config);
-			$this->upload->initialize($config);
-			if($this->upload->do_upload('userFile')){
-				$fileData = $this->upload->data();
-				array_push($temp, $fileData['file_name']);
-			}
-		}
-		array_push($soal_ujian_detail["pilihan_jawaban_gambar"], $temp);
-
-		$filesCount = count($_FILES['pilihan_jawaban_gambar_d']['name']);
-		$temp = array();
-		for($i = 0; $i < $filesCount; $i++){
-			$_FILES['userFile']['name'] = $_FILES['pilihan_jawaban_gambar_d']['name'][$i];
-			$_FILES['userFile']['type'] = $_FILES['pilihan_jawaban_gambar_d']['type'][$i];
-			$_FILES['userFile']['tmp_name'] = $_FILES['pilihan_jawaban_gambar_d']['tmp_name'][$i];
-			$_FILES['userFile']['error'] = $_FILES['pilihan_jawaban_gambar_d']['error'][$i];
-			$_FILES['userFile']['size'] = $_FILES['pilihan_jawaban_gambar_d']['size'][$i];
-
-			$uploadPath = './uploads/';
-			$config['upload_path'] = $uploadPath;
-			$config['allowed_types'] = 'gif|jpg|png';
-			$config['encrypt_name'] = TRUE;
-			
-			$this->load->library('upload', $config);
-			$this->upload->initialize($config);
-			if($this->upload->do_upload('userFile')){
-				$fileData = $this->upload->data();
-				array_push($temp, $fileData['file_name']);
-			}
-		}
-		array_push($soal_ujian_detail["pilihan_jawaban_gambar"], $temp);
-
-		$filesCount = count($_FILES['pilihan_jawaban_gambar_e']['name']);
-		$temp = array();
-		for($i = 0; $i < $filesCount; $i++){
-			$_FILES['userFile']['name'] = $_FILES['pilihan_jawaban_gambar_e']['name'][$i];
-			$_FILES['userFile']['type'] = $_FILES['pilihan_jawaban_gambar_e']['type'][$i];
-			$_FILES['userFile']['tmp_name'] = $_FILES['pilihan_jawaban_gambar_e']['tmp_name'][$i];
-			$_FILES['userFile']['error'] = $_FILES['pilihan_jawaban_gambar_e']['error'][$i];
-			$_FILES['userFile']['size'] = $_FILES['pilihan_jawaban_gambar_e']['size'][$i];
-
-			$uploadPath = './uploads/';
-			$config['upload_path'] = $uploadPath;
-			$config['allowed_types'] = 'gif|jpg|png';
-			$config['encrypt_name'] = TRUE;
-			
-			$this->load->library('upload', $config);
-			$this->upload->initialize($config);
-			if($this->upload->do_upload('userFile')){
-				$fileData = $this->upload->data();
-				array_push($temp, $fileData['file_name']);
-			}
-		}
-		array_push($soal_ujian_detail["pilihan_jawaban_gambar"], $temp);
-		$soal_ujian_detail["pilihan_jawaban_gambar"] = json_encode($soal_ujian_detail["pilihan_jawaban_gambar"]);
-
-		$soal_ujian_detail["kunci_jawaban"] = $this->input->post("kunci_jawaban");
-		print_r($soal_ujian_detail);
-    	$this->db->where("id", $soal_ujian_detail["id"]);
-		$this->db->update('soal_ujian_detail', $soal_ujian_detail);
-		redirect("/home/dataSoalUjianDetail", "location");
-	}
-
-	public function hapusDataSoalUjianDetail($id) {
-		$this->db->where('id', $id);
-		$this->db->delete('soal_ujian_detail');
-		redirect("/home/dataSoalUjianDetail", 'location');
-	}
-
-	public function banyakDataSoalUjianDetail($record_per_page) {
-		$result = $this->db->get('soal_ujian_detail')->num_rows();
-		$result = ceil((float) $result / $record_per_page);
-		echo (int) $result;
-	}
-
-	public function loadDataSoalUjianDetail($page, $record_per_page) {
-		$output = '';
-		$start_from = ($page - 1) * $record_per_page;
-		$this->db->select('soal_ujian_detail.id, soal_ujian.nama as nama_soal_ujian, jenis_soal_ujian_detail.nama as nama_jenis_soal_ujian_detail, soal_ujian_detail.soal_tulisan');
-		$this->db->from('soal_ujian_detail');
-		$this->db->join('soal_ujian', 'soal_ujian_detail.id_soal_ujian = soal_ujian.id');
-		$this->db->join('jenis_soal_ujian_detail', 'soal_ujian_detail.id_jenis_soal_ujian_detail = jenis_soal_ujian_detail.id');
-		$this->db->limit($record_per_page, $start_from);
-		$results = $this->db->get()->result();
-		$output .= "
-			<table class='table table-bordered'>
-				<tr>
-					<th>Id</th>
-					<th>Soal Ujian</th>
-					<th>Jenis Soal Ujian Detail</th>
+					<th>Judul Ujian</th>
+					<th>Jenis Soal Ujian</th>
 					<th>Soal</th>
 					<th>Action</th>
 				</tr>
 		";
 		foreach($results as $result) {
-			$chooseSoalUjianDetail = "chooseSoalUjianDetail('" . $result->id . "','" . $result->nama . "')";
+			$chooseSoalUjian = "chooseSoalUjian('" . $result->id . "','" . $result->nama . "')";
 			$output .= "
 				<tr>
 					<td>$result->id</td>
-					<td>$result->nama_soal_ujian</td>
-					<td>$result->nama_jenis_soal_ujian_detail</td>
+					<td>$result->nama_judul_ujian</td>
+					<td>$result->nama_jenis_soal_ujian</td>
 					<td>$result->soal_tulisan</td>
 					<td>
-						<button class='btn btn-primary' onclick=\"$chooseSoalUjianDetail\">Choose</button>
+						<button class='btn btn-primary' onclick=\"$chooseSoalUjian\">Choose</button>
 					</td>
 				</tr>
 			";
@@ -1651,6 +1664,8 @@ class Home extends CI_Controller {
 
 	public function tambahDataPRSimpan() {
 		$pr["id_mata_pelajaran"] = $this->input->post("id_mata_pelajaran");
+		$pr["id_guru"] = $this->input->post("id_guru");
+		$pr["id_kelas"] = $this->input->post("id_kelas");
 		$pr["deskripsi"] = $this->input->post("deskripsi");
 		$pr["gambar"] = array();
 		$filesCount = count($_FILES['gambar']['name']);
@@ -1682,9 +1697,11 @@ class Home extends CI_Controller {
 	}
 
 	public function lihatDataPR($id) {
-		$pr = $this->db->query('Select pr.id, pr.id_mata_pelajaran, mata_pelajaran.nama as nama_mata_pelajaran, pr.deskripsi, pr.gambar, pr.nama
+		$pr = $this->db->query('Select pr.id, pr.id_mata_pelajaran, mata_pelajaran.nama as nama_mata_pelajaran, pr.id_guru, guru.nama as nama_guru, pr.id_kelas, kelas.nama as nama_kelas, pr.deskripsi, pr.gambar, pr.nama
 								from pr
 								join mata_pelajaran on pr.id_mata_pelajaran = mata_pelajaran.id
+								join guru on pr.id_guru = guru.id
+								join kelas on pr.id_kelas = kelas.id
 								where pr.id = ' . $id)->result();
 		$data = array(
 	    	"sidebar" => $this->load->view('sidebar', NULL, true),
@@ -1695,9 +1712,11 @@ class Home extends CI_Controller {
 	}
 
 	public function updateDataPR($id) {
-		$pr = $this->db->query('Select pr.id, pr.id_mata_pelajaran, mata_pelajaran.nama as nama_mata_pelajaran, pr.deskripsi, pr.gambar, pr.nama
+		$pr = $this->db->query('Select pr.id, pr.id_mata_pelajaran, mata_pelajaran.nama as nama_mata_pelajaran, pr.id_guru, guru.nama as nama_guru, pr.id_kelas, kelas.nama as nama_kelas, pr.deskripsi, pr.gambar, pr.nama
 								from pr
 								join mata_pelajaran on pr.id_mata_pelajaran = mata_pelajaran.id
+								join guru on pr.id_guru = guru.id
+								join kelas on pr.id_kelas = kelas.id
 								where pr.id = ' . $id)->result();
 		$data = array(
 	    	"sidebar" => $this->load->view('sidebar', NULL, true),
@@ -1710,6 +1729,8 @@ class Home extends CI_Controller {
 	public function updateDataPRSimpan() {
 		$pr["id"] = $this->input->post("id");
 		$pr["id_mata_pelajaran"] = $this->input->post("id_mata_pelajaran");
+		$pr["id_guru"] = $this->input->post("id_guru");
+		$pr["id_kelas"] = $this->input->post("id_kelas");
 		$pr["deskripsi"] = $this->input->post("deskripsi");
 		$pr["gambar"] = array();
 		$filesCount = count($_FILES['gambar']['name']);
@@ -1756,9 +1777,11 @@ class Home extends CI_Controller {
 	public function loadDataPR($page, $record_per_page) {
 		$output = '';
 		$start_from = ($page - 1) * $record_per_page;
-		$this->db->select('pr.id, pr.id_mata_pelajaran, mata_pelajaran.nama as nama_mata_pelajaran, pr.deskripsi, pr.gambar, pr.nama');
+		$this->db->select('pr.id, pr.id_mata_pelajaran, mata_pelajaran.nama as nama_mata_pelajaran, pr.id_guru, guru.nama as nama_guru, pr.id_kelas, kelas.nama as nama_kelas, pr.deskripsi, pr.gambar, pr.nama');
 		$this->db->from('pr');
 		$this->db->join('mata_pelajaran', 'pr.id_mata_pelajaran = mata_pelajaran.id');
+		$this->db->join('guru', 'pr.id_guru = guru.id');
+		$this->db->join('kelas', 'pr.id_kelas = kelas.id');
 		$this->db->limit($record_per_page, $start_from);
 		$results = $this->db->get()->result();
 		$output .= "
@@ -1766,6 +1789,8 @@ class Home extends CI_Controller {
 				<tr>
 					<th>Id</th>
 					<th>Mata Pelajaran</th>
+					<th>Guru</th>
+					<th>Kelas</th>
 					<th>Deskripsi</th>
 					<th>Nama</th>
 					<th>Action</th>
@@ -1777,6 +1802,8 @@ class Home extends CI_Controller {
 				<tr>
 					<td>$result->id</td>
 					<td>$result->nama_mata_pelajaran</td>
+					<td>$result->nama_guru</td>
+					<td>$result->nama_kelas</td>
 					<td>$result->deskripsi</td>
 					<td>$result->nama</td>
 					<td>
@@ -1860,6 +1887,8 @@ class Home extends CI_Controller {
 
 	public function tambahDataMateriPelajaranSimpan() {
 		$materi_pelajaran["id_mata_pelajaran"] = $this->input->post("id_mata_pelajaran");
+		$materi_pelajaran["id_kelas"] = $this->input->post("id_kelas");
+		$materi_pelajaran["id_guru"] = $this->input->post("id_guru");
 		$materi_pelajaran["deskripsi"] = $this->input->post("deskripsi");
 		$materi_pelajaran["gambar"] = array();
 		$filesCount = count($_FILES['gambar']['name']);
@@ -1891,9 +1920,11 @@ class Home extends CI_Controller {
 	}
 
 	public function lihatDataMateriPelajaran($id) {
-		$materi_pelajaran = $this->db->query('Select materi_pelajaran.id, materi_pelajaran.id_mata_pelajaran, mata_pelajaran.nama as nama_mata_pelajaran, materi_pelajaran.deskripsi, materi_pelajaran.gambar, materi_pelajaran.nama
+		$materi_pelajaran = $this->db->query('Select materi_pelajaran.id, materi_pelajaran.id_mata_pelajaran, mata_pelajaran.nama as nama_mata_pelajaran, materi_pelajaran.id_kelas, kelas.nama as nama_kelas, materi_pelajaran.id_guru, guru.nama as nama_guru, materi_pelajaran.deskripsi, materi_pelajaran.gambar, materi_pelajaran.nama
 								from materi_pelajaran
 								join mata_pelajaran on materi_pelajaran.id_mata_pelajaran = mata_pelajaran.id
+								join kelas on materi_pelajaran.id_kelas = kelas.id
+								join guru on materi_pelajaran.id_guru = guru.id
 								where materi_pelajaran.id = ' . $id)->result();
 		$data = array(
 	    	"sidebar" => $this->load->view('sidebar', NULL, true),
@@ -1904,9 +1935,11 @@ class Home extends CI_Controller {
 	}
 
 	public function updateDataMateriPelajaran($id) {
-		$materi_pelajaran = $this->db->query('Select materi_pelajaran.id, materi_pelajaran.id_mata_pelajaran, mata_pelajaran.nama as nama_mata_pelajaran, materi_pelajaran.deskripsi, materi_pelajaran.gambar, materi_pelajaran.nama
+		$materi_pelajaran = $this->db->query('Select materi_pelajaran.id, materi_pelajaran.id_mata_pelajaran, mata_pelajaran.nama as nama_mata_pelajaran, materi_pelajaran.id_kelas, kelas.nama as nama_kelas, materi_pelajaran.id_guru, guru.nama as nama_guru, materi_pelajaran.deskripsi, materi_pelajaran.gambar, materi_pelajaran.nama
 								from materi_pelajaran
 								join mata_pelajaran on materi_pelajaran.id_mata_pelajaran = mata_pelajaran.id
+								join kelas on materi_pelajaran.id_kelas = kelas.id
+								join guru on materi_pelajaran.id_guru = guru.id
 								where materi_pelajaran.id = ' . $id)->result();
 		$data = array(
 	    	"sidebar" => $this->load->view('sidebar', NULL, true),
@@ -1919,6 +1952,8 @@ class Home extends CI_Controller {
 	public function updateDataMateriPelajaranSimpan() {
 		$materi_pelajaran["id"] = $this->input->post("id");
 		$materi_pelajaran["id_mata_pelajaran"] = $this->input->post("id_mata_pelajaran");
+		$materi_pelajaran["id_kelas"] = $this->input->post("id_kelas");
+		$materi_pelajaran["id_guru"] = $this->input->post("id_guru");
 		$materi_pelajaran["deskripsi"] = $this->input->post("deskripsi");
 		$materi_pelajaran["gambar"] = array();
 		$filesCount = count($_FILES['gambar']['name']);
@@ -1965,9 +2000,11 @@ class Home extends CI_Controller {
 	public function loadDataMateriPelajaran($page, $record_per_page) {
 		$output = '';
 		$start_from = ($page - 1) * $record_per_page;
-		$this->db->select('materi_pelajaran.id, materi_pelajaran.id_mata_pelajaran, mata_pelajaran.nama as nama_mata_pelajaran, materi_pelajaran.deskripsi, materi_pelajaran.gambar, materi_pelajaran.nama');
+		$this->db->select('materi_pelajaran.id, materi_pelajaran.id_mata_pelajaran, mata_pelajaran.nama as nama_mata_pelajaran, materi_pelajaran.id_kelas, kelas.nama as nama_kelas, materi_pelajaran.id_guru, guru.nama as nama_guru, materi_pelajaran.deskripsi, materi_pelajaran.gambar, materi_pelajaran.nama');
 		$this->db->from('materi_pelajaran');
 		$this->db->join('mata_pelajaran', 'materi_pelajaran.id_mata_pelajaran = mata_pelajaran.id');
+		$this->db->join('kelas', 'materi_pelajaran.id_kelas = kelas.id');
+		$this->db->join('guru', 'materi_pelajaran.id_guru = guru.id');
 		$this->db->limit($record_per_page, $start_from);
 		$results = $this->db->get()->result();
 		$output .= "
@@ -1975,6 +2012,8 @@ class Home extends CI_Controller {
 				<tr>
 					<th>Id</th>
 					<th>Mata Pelajaran</th>
+					<th>Kelas</th>
+					<th>Guru</th>
 					<th>Deskripsi</th>
 					<th>Nama</th>
 					<th>Action</th>
@@ -1986,6 +2025,8 @@ class Home extends CI_Controller {
 				<tr>
 					<td>$result->id</td>
 					<td>$result->nama_mata_pelajaran</td>
+					<td>$result->nama_kelas</td>
+					<td>$result->nama_guru</td>
 					<td>$result->deskripsi</td>
 					<td>$result->nama</td>
 					<td>
@@ -2068,7 +2109,7 @@ class Home extends CI_Controller {
 	}
 
 	public function tambahDataJadwalUjianSimpan() {
-		$jadwal_ujian["id_soal_ujian"] = $this->input->post("id_soal_ujian");
+		$jadwal_ujian["id_judul_ujian"] = $this->input->post("id_judul_ujian");
 		$jadwal_ujian["tanggal"] = $this->input->post("tanggal");
 		$jadwal_ujian["nama"] = $this->input->post("nama");
 		$jadwal_ujian["durasi"] = $this->input->post("durasi");
@@ -2078,9 +2119,9 @@ class Home extends CI_Controller {
 	}
 
 	public function lihatDataJadwalUjian($id) {
-		$jadwal_ujian = $this->db->query('Select jadwal_ujian.id, jadwal_ujian.id_soal_ujian, soal_ujian.nama as nama_soal_ujian, jadwal_ujian.tanggal, jadwal_ujian.nama, jadwal_ujian.durasi
+		$jadwal_ujian = $this->db->query('Select jadwal_ujian.id, jadwal_ujian.id_judul_ujian, judul_ujian.nama as nama_judul_ujian, jadwal_ujian.tanggal, jadwal_ujian.nama, jadwal_ujian.durasi
 								from jadwal_ujian
-								join soal_ujian on jadwal_ujian.id_soal_ujian = soal_ujian.id
+								join judul_ujian on jadwal_ujian.id_judul_ujian = judul_ujian.id
 								where jadwal_ujian.id = ' . $id)->result();
 		$data = array(
 	    	"sidebar" => $this->load->view('sidebar', NULL, true),
@@ -2091,9 +2132,9 @@ class Home extends CI_Controller {
 	}
 
 	public function updateDataJadwalUjian($id) {
-		$jadwal_ujian = $this->db->query('Select jadwal_ujian.id, jadwal_ujian.id_soal_ujian, soal_ujian.nama as nama_soal_ujian, jadwal_ujian.tanggal, jadwal_ujian.nama, jadwal_ujian.durasi
+		$jadwal_ujian = $this->db->query('Select jadwal_ujian.id, jadwal_ujian.id_judul_ujian, judul_ujian.nama as nama_judul_ujian, jadwal_ujian.tanggal, jadwal_ujian.nama, jadwal_ujian.durasi
 								from jadwal_ujian
-								join soal_ujian on jadwal_ujian.id_soal_ujian = soal_ujian.id
+								join judul_ujian on jadwal_ujian.id_judul_ujian = judul_ujian.id
 								where jadwal_ujian.id = ' . $id)->result();
 		$data = array(
 	    	"sidebar" => $this->load->view('sidebar', NULL, true),
@@ -2105,7 +2146,7 @@ class Home extends CI_Controller {
 
 	public function updateDataJadwalUjianSimpan() {
 		$jadwal_ujian["id"] = $this->input->post("id");
-		$jadwal_ujian["id_soal_ujian"] = $this->input->post("id_soal_ujian");
+		$jadwal_ujian["id_judul_ujian"] = $this->input->post("id_judul_ujian");
 		$jadwal_ujian["tanggal"] = $this->input->post("tanggal");
 		$jadwal_ujian["nama"] = $this->input->post("nama");
 		$jadwal_ujian["durasi"] = $this->input->post("durasi");
@@ -2130,16 +2171,16 @@ class Home extends CI_Controller {
 	public function loadDataJadwalUjian($page, $record_per_page) {
 		$output = '';
 		$start_from = ($page - 1) * $record_per_page;
-		$this->db->select('jadwal_ujian.id, jadwal_ujian.id_soal_ujian, soal_ujian.nama as nama_soal_ujian, jadwal_ujian.tanggal, jadwal_ujian.nama, jadwal_ujian.durasi');
+		$this->db->select('jadwal_ujian.id, jadwal_ujian.id_judul_ujian, judul_ujian.nama as nama_judul_ujian, jadwal_ujian.tanggal, jadwal_ujian.nama, jadwal_ujian.durasi');
 		$this->db->from('jadwal_ujian');
-		$this->db->join('soal_ujian', 'jadwal_ujian.id_soal_ujian = soal_ujian.id');
+		$this->db->join('judul_ujian', 'jadwal_ujian.id_judul_ujian = judul_ujian.id');
 		$this->db->limit($record_per_page, $start_from);
 		$results = $this->db->get()->result();
 		$output .= "
 			<table class='table table-bordered'>
 				<tr>
 					<th>Id</th>
-					<th>Soal Ujian</th>
+					<th>Judul Ujian</th>
 					<th>Tanggal</th>
 					<th>Nama</th>
 					<th>Durasi</th>
@@ -2151,7 +2192,7 @@ class Home extends CI_Controller {
 			$output .= "
 				<tr>
 					<td>$result->id</td>
-					<td>$result->nama_soal_ujian</td>
+					<td>$result->nama_judul_ujian</td>
 					<td>$result->tanggal</td>
 					<td>$result->nama</td>
 					<td>$result->durasi</td>

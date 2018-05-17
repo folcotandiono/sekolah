@@ -108,6 +108,34 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
                   <div class="col-md-12">
                     <div class="form-group">
+                      <label for="kelasChoose">Kelas:</label>
+                      <button type="button" id="kelasChoose" data-toggle="modal" data-target="#kelasModal">Choose</button>
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="kelasNama">Kelas:</label>
+                      <input type="text" class="form-control" id="kelasId" name="id_kelas" style="display:none">
+                      <input type="text" class="form-control" id="kelasNama" readonly>
+                    </div>
+                  </div>
+
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="guruChoose">Guru:</label>
+                      <button type="button" id="guruChoose" data-toggle="modal" data-target="#guruModal">Choose</button>
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="guruNama">Guru:</label>
+                      <input type="text" class="form-control" id="guruId" name="id_guru" style="display:none">
+                      <input type="text" class="form-control" id="guruNama" readonly>
+                    </div>
+                  </div>
+
+                  <div class="col-md-12">
+                    <div class="form-group">
                       <label for="deskripsi">Deskripsi:</label>
                       <textarea class="form-control" id="deskripsi" name="deskripsi" rows="3"></textarea>
                     </div>
@@ -179,6 +207,58 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     </div>
   </div>
 
+  <div id="kelasModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Data kelas</h4>
+        </div>
+        <div class="modal-body">
+          <div id="dataKelas">
+
+          </div>
+          <div class="row">
+            <button id="dataKelasPrev" onclick="loadDataKelasPrev()">prev</button>
+            <button id="dataKelasNext" onclick="loadDataKelasNext()">next</button>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div id="guruModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Data guru</h4>
+        </div>
+        <div class="modal-body">
+          <div id="dataGuru">
+
+          </div>
+          <div class="row">
+            <button id="dataGuruPrev" onclick="loadDataGuruPrev()">prev</button>
+            <button id="dataGuruNext" onclick="loadDataGuruNext()">next</button>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
   <!-- /.content-wrapper -->
   <?=$footer ?>
 
@@ -236,11 +316,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <script type="text/javascript">
   var pageMataPelajaran = 1;
   var pageMataPelajaranTotal;
+  var pageKelas = 1;
+  var pageKelasTotal;
+  var pageGuru = 1;
+  var pageGuruTotal;
   var recordPerPage = 3;
   $(document).ready(function() {
 
   });
   banyakDataMataPelajaran(recordPerPage);
+  banyakDataKelas(recordPerPage);
+  banyakDataGuru(recordPerPage);
   function banyakDataMataPelajaran(recordPerPage) {
     $.ajax({
       url:"<?php echo base_url() ?>index.php/home/banyakDataMataPelajaran/" + recordPerPage,
@@ -251,7 +337,29 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       }
     });
   }
+  function banyakDataKelas(recordPerPage) {
+    $.ajax({
+      url:"<?php echo base_url() ?>index.php/home/banyakDataKelas/" + recordPerPage,
+      type:"get",
+      success:function(data) {
+        // console.log(data);
+        pageKelasTotal = data;
+      }
+    });
+  }
+  function banyakDataGuru(recordPerPage) {
+    $.ajax({
+      url:"<?php echo base_url() ?>index.php/home/banyakDataGuru/" + recordPerPage,
+      type:"get",
+      success:function(data) {
+        // console.log(data);
+        pageGuruTotal = data;
+      }
+    });
+  }
   loadDataMataPelajaran(pageMataPelajaran);
+  loadDataKelas(pageKelas);
+  loadDataGuru(pageGuru);
   function loadDataMataPelajaran(page) {
     $.ajax({
       url:"<?php echo base_url() ?>index.php/home/loadDataMataPelajaran/" + page + "/" + recordPerPage,
@@ -262,11 +370,45 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       }
     });
   }
+  function loadDataKelas(page) {
+    $.ajax({
+      url:"<?php echo base_url() ?>index.php/home/loadDataKelas/" + page + "/" + recordPerPage,
+      type:"get",
+      success:function(data) {
+        console.log(data);
+        $("#dataKelas").html(data);
+      }
+    });
+  }
+  function loadDataGuru(page) {
+    $.ajax({
+      url:"<?php echo base_url() ?>index.php/home/loadDataGuru/" + page + "/" + recordPerPage,
+      type:"get",
+      success:function(data) {
+        console.log(data);
+        $("#dataGuru").html(data);
+      }
+    });
+  }
   function loadDataMataPelajaranPrev() {
     if (pageMataPelajaran - 1 >= 1) {
       pageMataPelajaran--;
         console.log(pageMataPelajaran);
       loadDataMataPelajaran(pageMataPelajaran);
+    }
+  }
+  function loadDataKelasPrev() {
+    if (pageKelas - 1 >= 1) {
+      pageKelas--;
+        console.log(pageKelas);
+      loadDataKelas(pageKelas);
+    }
+  }
+  function loadDataGuruPrev() {
+    if (pageGuru - 1 >= 1) {
+      pageGuru--;
+        console.log(pageGuru);
+      loadDataGuru(pageGuru);
     }
   }
   function loadDataMataPelajaranNext() {
@@ -276,10 +418,34 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       loadDataMataPelajaran(pageMataPelajaran);
     }
   }
+  function loadDataKelasNext() {
+    if (pageKelas < pageKelasTotal) {
+      pageKelas++;
+      console.log(pageKelas);
+      loadDataKelas(pageKelas);
+    }
+  }
+  function loadDataGuruNext() {
+    if (pageGuru < pageGuruTotal) {
+      pageGuru++;
+      console.log(pageGuru);
+      loadDataGuru(pageGuru);
+    }
+  }
   function chooseMataPelajaran(mataPelajaranId, mataPelajaranNama) {
     console.log("haha");
     $("#mataPelajaranId").val(mataPelajaranId);
     $("#mataPelajaranNama").val(mataPelajaranNama);
+  }
+  function chooseKelas(kelasId, kelasNama) {
+    console.log("haha");
+    $("#kelasId").val(kelasId);
+    $("#kelasNama").val(kelasNama);
+  }
+  function chooseGuru(guruId, guruNama) {
+    console.log("haha");
+    $("#guruId").val(guruId);
+    $("#guruNama").val(guruNama);
   }
 //   $("#form").submit(function() {
 //     var pilihan_jawaban_tulisan = [];

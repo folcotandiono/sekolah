@@ -11,9 +11,9 @@ class JadwalUjian extends CI_Model
 
     public function get_current_page_records($limit, $start)
     {
-        $this->db->select('jadwal_ujian.id, jadwal_ujian.id_soal_ujian, soal_ujian.nama as nama_soal_ujian, jadwal_ujian.tanggal, jadwal_ujian.nama, jadwal_ujian.durasi');
+        $this->db->select('jadwal_ujian.id, jadwal_ujian.id_judul_ujian, judul_ujian.nama as nama_judul_ujian, jadwal_ujian.tanggal, jadwal_ujian.nama, jadwal_ujian.durasi');
         $this->db->from('jadwal_ujian');
-        $this->db->join('soal_ujian', 'jadwal_ujian.id_soal_ujian = soal_ujian.id');
+        $this->db->join('judul_ujian', 'jadwal_ujian.id_judul_ujian = judul_ujian.id');
         $this->db->limit($limit, $start);
         $query = $this->db->get();
 

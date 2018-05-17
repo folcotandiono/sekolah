@@ -70,7 +70,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Data Materi Pelajaran
+        Data Judul Ujian
       </h1>
     </section>
 
@@ -80,7 +80,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <div class="col-md-12">
           <div class="box">
             <div class="box-header with-border">
-              <h3 class="box-title">Data Materi Pelajaran</h3>
+              <h3 class="box-title">Tambah Data Judul Ujian</h3>
 
               <div class="box-tools pull-right">
                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -91,70 +91,74 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <div class="box-body" style="">
               <div class="row">
                 <!-- /.col -->
-                <form action="<?php echo base_url() ?>index.php/home/updateDataMateriPelajaranSimpan" id="form" method="post" enctype='multipart/form-data'>
-                  <input type="text" id="id" name="id" value="<?php echo $materi_pelajaran[0]->id ?>" style="display:none">
-                  <!-- <div class="col-md-12">
+
+                  
+                  <div class="col-md-12">
                     <div class="form-group">
                       <label for="mataPelajaranChoose">Mata Pelajaran:</label>
                       <button type="button" id="mataPelajaranChoose" data-toggle="modal" data-target="#mataPelajaranModal">Choose</button>
                     </div>
-                  </div> -->
+                  </div>
                   <div class="col-md-12">
                     <div class="form-group">
                       <label for="mataPelajaranNama">Mata Pelajaran:</label>
-                      <input type="text" class="form-control" id="mataPelajaranId" value="<?php echo $materi_pelajaran[0]->id_mata_pelajaran ?>" name="id_mata_pelajaran" style="display:none">
-                      <input type="text" class="form-control" id="mataPelajaranNama" value="<?php echo $materi_pelajaran[0]->nama_mata_pelajaran ?>" readonly>
+                      <input type="text" class="form-control" id="mataPelajaranId" style="display:none">
+                      <input type="text" class="form-control" id="mataPelajaranNama" readonly>
                     </div>
                   </div>
 
                   <div class="col-md-12">
                     <div class="form-group">
-                      <label for="kelasNama">Kelas:</label>
-                      <input type="text" class="form-control" id="kelasId" value="<?php echo $materi_pelajaran[0]->id_kelas ?>" name="id_kelas" style="display:none">
-                      <input type="text" class="form-control" id="kelasNama" value="<?php echo $materi_pelajaran[0]->nama_kelas ?>" readonly>
+                      <label for="guruChoose">Guru:</label>
+                      <button type="button" id="guruChoose" data-toggle="modal" data-target="#guruModal">Choose</button>
                     </div>
                   </div>
-
                   <div class="col-md-12">
                     <div class="form-group">
                       <label for="guruNama">Guru:</label>
-                      <input type="text" class="form-control" id="guruId" value="<?php echo $materi_pelajaran[0]->id_guru ?>" name="id_guru" style="display:none">
-                      <input type="text" class="form-control" id="guruNama" value="<?php echo $materi_pelajaran[0]->nama_guru ?>" readonly>
+                      <input type="text" class="form-control" id="guruId" style="display:none">
+                      <input type="text" class="form-control" id="guruNama" readonly>
                     </div>
                   </div>
 
                   <div class="col-md-12">
                     <div class="form-group">
-                      <label for="deskripsi">Deskripsi:</label>
-                      <textarea class="form-control" id="deskripsi" name="deskripsi" rows="3" readonly><?php echo $materi_pelajaran[0]->deskripsi ?></textarea>
+                      <label for="kelasChoose">Kelas:</label>
+                      <button type="button" id="kelasChoose" data-toggle="modal" data-target="#kelasModal">Choose</button>
                     </div>
                   </div>
-
-                  <!-- <div class="col-md-12">
-                    <div class="form-group">
-                      <label for="gambar">Gambar:</label>
-                      <input type="file" class="form-control-file" id="gambar" name="gambar[]" onchange="updateGambar(this);" multiple>
-                    </div>
-                  </div> -->
-
                   <div class="col-md-12">
-                    <div id="gambarLihat">
-
+                    <div class="form-group">
+                      <label for="kelasNama">Kelas:</label>
+                      <input type="text" class="form-control" id="kelasId" style="display:none">
+                      <input type="text" class="form-control" id="kelasNama" readonly>
                     </div>
                   </div>
-
                   <div class="col-md-12">
                     <div class="form-group">
                       <label for="nama">Nama:</label>
-                      <input type="text" class="form-control" id="nama" name="nama" value="<?php echo $materi_pelajaran[0]->nama ?>" readonly>
+                      <input type="text" class="form-control" name="nama" id="nama">
                     </div>
                   </div>
-
                   <!-- <div class="col-md-12">
-                      <input type="submit" class="btn btn-default" name="button" id="update">
+                    <div class="form-group">
+                      <label for="guruChoose">Guru:</label>
+                      <button type="button" id="guruChoose" data-toggle="modal" data-target="#guruModal">Choose</button>
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="guruNama">Guru:</label>
+                      <input type="text" class="form-control" id="guruId" style="display:none">
+                      <input type="text" class="form-control" id="guruNama" readonly>
+                    </div>
                   </div> -->
 
-                </form>
+                  <div class="col-md-12">
+                      <input type="submit" class="btn btn-default" name="button" id="simpan">
+                  </div>
+
+
                 <!-- /.col -->
               </div>
               <!-- /.row -->
@@ -168,6 +172,82 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
     </section>
     <!-- /.content -->
+  </div>
+
+  <div id="mataPelajaranModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Data mata pelajaran</h4>
+        </div>
+        <div class="modal-body">
+          <div id="dataMataPelajaran">
+
+          </div>
+          <div class="row">
+            <button id="dataMataPelajaranPrev" onclick="loadDataMataPelajaranPrev()">prev</button>
+            <button id="dataMataPelajaranNext" onclick="loadDataMataPelajaranNext()">next</button>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div id="guruModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Data guru</h4>
+        </div>
+        <div class="modal-body">
+          <div id="dataGuru">
+
+          </div>
+          <div class="row">
+            <button id="dataGuruPrev" onclick="loadDataGuruPrev()">prev</button>
+            <button id="dataGuruNext" onclick="loadDataGuruNext()">next</button>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div id="kelasModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Data kelas</h4>
+        </div>
+        <div class="modal-body">
+          <div id="dataKelas">
+
+          </div>
+          <div class="row">
+            <button id="dataKelasPrev" onclick="loadDataKelasPrev()">prev</button>
+            <button id="dataKelasNext" onclick="loadDataKelasNext()">next</button>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+
+    </div>
   </div>
 
   <!-- /.content-wrapper -->
@@ -225,40 +305,160 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 </script>
 
 <script type="text/javascript">
-  
+  var pageMataPelajaran = 1;
+  var pageGuru = 1;
+  var pageKelas = 1;
+  var pageMataPelajaranTotal;
+  var pageGuruTotal;
+  var pageKelasTotal;
+  var recordPerPage = 3;
   $(document).ready(function() {
-    var gambar = <?php echo $materi_pelajaran[0]->gambar ?>;
-    console.log(gambar);
-    for (var i = 0; i < gambar.length; i++) {
-      var temp = '';
-      temp += "<div class='col-md-3'>";
-      temp += "<img src = '" +  "<?php echo base_url() ?>" + "./uploads/" + gambar[i] + "' class='img-thumbnail'>";
-      temp += "</div>";
-      $("#gambarLihat").append(temp);
-    }
+
   });
-  
-function updateGambar(input) {
-  if (input.files) {
-    $("#gambarLihat").html("");
-    var filesAmount = input.files.length;
-
-    for (i = 0; i < filesAmount; i++) {
-        var reader = new FileReader();
-
-        reader.onload = function(event) {
-          var gambar='';
-          gambar += "<div class='col-md-3'>";
-          gambar += "<img src = '" +  event.target.result + "' class='img-thumbnail'>";
-          gambar += "</div>";
-          $("#gambarLihat").append(gambar);
-
-        }
-
-        reader.readAsDataURL(input.files[i]);
+  banyakDataMataPelajaran(recordPerPage);
+  banyakDataGuru(recordPerPage);
+  banyakDataKelas(recordPerPage);
+  function banyakDataMataPelajaran(recordPerPage) {
+    $.ajax({
+      url:"<?php echo base_url() ?>index.php/home/banyakDataMataPelajaran/" + recordPerPage,
+      type:"get",
+      success:function(data) {
+        // console.log(data);
+        pageMataPelajaranTotal = data;
+      }
+    });
+  }
+  function banyakDataGuru(recordPerPage) {
+    $.ajax({
+      url:"<?php echo base_url() ?>index.php/home/banyakDataGuru/" + recordPerPage,
+      type:"get",
+      success:function(data) {
+        // console.log(data);
+        pageGuruTotal = data;
+      }
+    });
+  }
+  function banyakDataKelas(recordPerPage) {
+    $.ajax({
+      url:"<?php echo base_url() ?>index.php/home/banyakDataKelas/" + recordPerPage,
+      type:"get",
+      success:function(data) {
+        // console.log(data);
+        pageKelasTotal = data;
+      }
+    });
+  }
+  loadDataMataPelajaran(pageMataPelajaran);
+  loadDataGuru(pageGuru);
+  loadDataKelas(pageKelas);
+  function loadDataMataPelajaran(page) {
+    $.ajax({
+      url:"<?php echo base_url() ?>index.php/home/loadDataMataPelajaran/" + page + "/" + recordPerPage,
+      type:"get",
+      success:function(data) {
+        // console.log(data);
+        $("#dataMataPelajaran").html(data);
+      }
+    });
+  }
+  function loadDataGuru(page) {
+    $.ajax({
+      url:"<?php echo base_url() ?>index.php/home/loadDataGuru/" + page + "/" + recordPerPage,
+      type:"get",
+      success:function(data) {
+        // console.log(data);
+        $("#dataGuru").html(data);
+      }
+    });
+  }
+  function loadDataKelas(page) {
+    $.ajax({
+      url:"<?php echo base_url() ?>index.php/home/loadDataKelas/" + page + "/" + recordPerPage,
+      type:"get",
+      success:function(data) {
+        // console.log(data);
+        $("#dataKelas").html(data);
+      }
+    });
+  }
+  function loadDataMataPelajaranPrev() {
+    if (pageMataPelajaran - 1 >= 1) {
+      pageMataPelajaran--;
+        console.log(pageMataPelajaran);
+      loadDataMataPelajaran(pageMataPelajaran);
     }
   }
-}
+  function loadDataGuruPrev() {
+    if (pageGuru - 1 >= 1) {
+      pageGuru--;
+        console.log(pageGuru);
+      loadDataGuru(pageGuru);
+    }
+  }
+  function loadDataKelasPrev() {
+    if (pageKelas - 1 >= 1) {
+      pageKelas--;
+        console.log(pageKelas);
+      loadDataKelas(pageKelas);
+    }
+  }
+  function loadDataMataPelajaranNext() {
+    if (pageMataPelajaran < pageMataPelajaranTotal) {
+      pageMataPelajaran++;
+      console.log(pageMataPelajaran);
+      loadDataMataPelajaran(pageMataPelajaran);
+    }
+  }
+  function loadDataGuruNext() {
+    if (pageGuru < pageGuruTotal) {
+      pageGuru++;
+      console.log(pageGuru);
+      loadDataGuru(pageGuru);
+    }
+  }
+  function loadDataKelasNext() {
+    if (pageKelas < pageKelasTotal) {
+      pageKelas++;
+      console.log(pageKelas);
+      loadDataKelas(pageKelas);
+    }
+  }
+  function chooseMataPelajaran(mataPelajaranId, mataPelajaranNama) {
+    $("#mataPelajaranId").val(mataPelajaranId);
+    $("#mataPelajaranNama").val(mataPelajaranNama);
+  }
+  function chooseGuru(guruId, guruNama) {
+    $("#guruId").val(guruId);
+    $("#guruNama").val(guruNama);
+  }
+  function chooseKelas(kelasId, kelasNama) {
+    $("#kelasId").val(kelasId);
+    $("#kelasNama").val(kelasNama);
+  }
+  $("#simpan").click(function() {
+    $.ajax({
+      type: "POST",
+      url: "<?php echo base_url() ?>index.php/home/tambahDataSoalUjianSimpan",
+      data: {
+        nama : $("#nama").val(),
+        id_mata_pelajaran : $("#mataPelajaranId").val(),
+        id_guru : $("#guruId").val(),
+        id_kelas : $("#kelasId").val()
+      },
+      dataType: "json",
+      complete: function(result){
+        console.log("haha");
+        toastr.success('Data soal ujian berhasil ditambah');
+        $("#nama").val("");
+        $("#mataPelajaranId").val("");
+        $("#mataPelajaranNama").val("");
+        $("#guruId").val("");
+        $("#guruNama").val("");
+        $("#kelasId").val("");
+        $("#kelasNama").val("");
+      }
+  });
+});
 </script>
 </body>
 </html>

@@ -109,6 +109,22 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
                   <div class="col-md-12">
                     <div class="form-group">
+                      <label for="guruNama">Guru:</label>
+                      <input type="text" class="form-control" id="guruId" value="<?php echo $pr[0]->id_guru ?>" name="id_guru" style="display:none">
+                      <input type="text" class="form-control" id="guruNama" value="<?php echo $pr[0]->nama_guru ?>" readonly>
+                    </div>
+                  </div>
+
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="kelasNama">Kelas:</label>
+                      <input type="text" class="form-control" id="kelasId" value="<?php echo $pr[0]->id_kelas ?>" name="id_kelas" style="display:none">
+                      <input type="text" class="form-control" id="kelasNama" value="<?php echo $pr[0]->nama_kelas ?>" readonly>
+                    </div>
+                  </div>
+
+                  <div class="col-md-12">
+                    <div class="form-group">
                       <label for="deskripsi">Deskripsi:</label>
                       <textarea class="form-control" id="deskripsi" name="deskripsi" rows="3" readonly><?php echo $pr[0]->deskripsi ?></textarea>
                     </div>
@@ -154,31 +170,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <!-- /.content -->
   </div>
 
-  <div id="mataPelajaranModal" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Data mata pelajaran</h4>
-        </div>
-        <div class="modal-body">
-          <div id="dataMataPelajaran">
-
-          </div>
-          <div class="row">
-            <button id="dataMataPelajaranPrev" onclick="loadDataMataPelajaranPrev()">prev</button>
-            <button id="dataMataPelajaranNext" onclick="loadDataMataPelajaranNext()">next</button>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-
-    </div>
-  </div>
+  
 
   <!-- /.content-wrapper -->
   <?=$footer ?>
@@ -235,9 +227,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 </script>
 
 <script type="text/javascript">
-  var pageMataPelajaran = 1;
-  var pageMataPelajaranTotal;
-  var recordPerPage = 3;
+  
   $(document).ready(function() {
     var gambar = <?php echo $pr[0]->gambar ?>;
     console.log(gambar);
@@ -249,98 +239,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       $("#gambarLihat").append(temp);
     }
   });
-  banyakDataMataPelajaran(recordPerPage);
-  function banyakDataMataPelajaran(recordPerPage) {
-    $.ajax({
-      url:"<?php echo base_url() ?>index.php/home/banyakDataMataPelajaran/" + recordPerPage,
-      type:"get",
-      success:function(data) {
-        // console.log(data);
-        pageMataPelajaranTotal = data;
-      }
-    });
-  }
-  loadDataMataPelajaran(pageMataPelajaran);
-  function loadDataMataPelajaran(page) {
-    $.ajax({
-      url:"<?php echo base_url() ?>index.php/home/loadDataMataPelajaran/" + page + "/" + recordPerPage,
-      type:"get",
-      success:function(data) {
-        console.log(data);
-        $("#dataMataPelajaran").html(data);
-      }
-    });
-  }
-  function loadDataMataPelajaranPrev() {
-    if (pageMataPelajaran - 1 >= 1) {
-      pageMataPelajaran--;
-        console.log(pageMataPelajaran);
-      loadDataMataPelajaran(pageMataPelajaran);
-    }
-  }
-  function loadDataMataPelajaranNext() {
-    if (pageMataPelajaran < pageMataPelajaranTotal) {
-      pageMataPelajaran++;
-      console.log(pageMataPelajaran);
-      loadDataMataPelajaran(pageMataPelajaran);
-    }
-  }
-  function chooseMataPelajaran(mataPelajaranId, mataPelajaranNama) {
-    console.log("haha");
-    $("#mataPelajaranId").val(mataPelajaranId);
-    $("#mataPelajaranNama").val(mataPelajaranNama);
-  }
-//   $("#form").submit(function() {
-//     var pilihan_jawaban_tulisan = [];
-//     pilihan_jawaban_tulisan.push($("#pilihanJawabanTulisanA").val());
-//     pilihan_jawaban_tulisan.push($("#pilihanJawabanTulisanB").val());
-//     pilihan_jawaban_tulisan.push($("#pilihanJawabanTulisanC").val());
-//     pilihan_jawaban_tulisan.push($("#pilihanJawabanTulisanD").val());
-//     pilihan_jawaban_tulisan.push($("#pilihanJawabanTulisanE").val());
-
-//     var pilihan_jawaban_gambar = [];
-//     pilihan_jawaban_gambar.push($("#pilihanJawabanGambarA")[0].files);
-//     pilihan_jawaban_gambar.push($("#pilihanJawabanGambarB")[0].files);
-//     pilihan_jawaban_gambar.push($("#pilihanJawabanGambarC")[0].files);
-//     pilihan_jawaban_gambar.push($("#pilihanJawabanGambarD")[0].files);
-//     pilihan_jawaban_gambar.push($("#pilihanJawabanGambarE")[0].files);
-
-//     console.log(pilihan_jawaban_gambar);
-//     $.ajax({
-//       type: "POST",
-//       url: "<?php echo base_url() ?>index.php/home/tambahDataSoalUjianDetailSimpan",
-//       // data: {
-//       //   // soal_ujian : $("#soalUjianNama").val(),
-//       //   // jenis_soal_ujian_detail : $("#jenisSoalUjianDetailNama").val(),
-//       //   // soal_tulisan : $("#soalTulisan").val(),
-//       //   soal_gambar : $("#soalGambar")[0].files[0].name
-//       //   // pilihan_jawaban_tulisan : pilihan_jawaban_tulisan,
-//       //   // pilihan_jawaban_gambar : pilihan_jawaban_gambar,
-//       //   // kunci_jawaban : $("#kunciJawaban").val()
-//       // },
-//       data : new FormData(this),
-//       dataType: "json",
-//       complete: function(result){
-//         console.log("blabla");
-//         toastr.success('Data soal ujian berhasil ditambah');
-//         $("#soalUjianNama").val("");
-//         $("#jenisSoalUjianDetailNama").val("");
-//         $("#soalTulisan").val("");
-//         $("#soalGambar").val("");
-//         $("#pilihanJawabanTulisanA").val("");
-//         $("#pilihanJawabanTulisanB").val("");
-//         $("#pilihanJawabanTulisanC").val("");
-//         $("#pilihanJawabanTulisanD").val("");
-//         $("#pilihanJawabanTulisanE").val("");
-//         $("#pilihanJawabanGambarA").val("");
-//         $("#pilihanJawabanGambarB").val("");
-//         $("#pilihanJawabanGambarC").val("");
-//         $("#pilihanJawabanGambarD").val("");
-//         $("#pilihanJawabanGambarE").val("");
-//         $("#kunciJawaban").val("");
-//       }
-//   });
-// });
+  
 function updateGambar(input) {
   if (input.files) {
     $("#gambarLihat").html("");

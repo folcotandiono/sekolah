@@ -106,9 +106,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                   </div> -->
                   <div class="col-md-12">
                     <div class="form-group">
-                      <label for="kelasNama">Kelas:</label>
-                      <input type="text" class="form-control" id="kelasId" value="<?php echo $mata_pelajaran[0]->id_kelas ?>" style="display:none">
-                      <input type="text" class="form-control" id="kelasNama" value="<?php echo $mata_pelajaran[0]->nama_kelas ?>" readonly>
+                      <label for="tahunAjaranTahun">Tahun Ajaran:</label>
+                      <input type="text" class="form-control" id="tahunAjaranId" value="<?php echo $mata_pelajaran[0]->id_tahun_ajaran ?>" style="display:none">
+                      <input type="text" class="form-control" id="tahunAjaranTahun" value="<?php echo $mata_pelajaran[0]->tahun ?>" readonly>
                     </div>
                   </div>
                   <!-- <div class="col-md-12">
@@ -117,13 +117,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                       <button type="button" id="guruChoose" data-toggle="modal" data-target="#guruModal">Choose</button>
                     </div>
                   </div> -->
-                  <div class="col-md-12">
-                    <div class="form-group">
-                      <label for="guruNama">Guru:</label>
-                      <input type="text" class="form-control" id="guruId" value="<?php echo $mata_pelajaran[0]->id_guru ?>" style="display:none">
-                      <input type="text" class="form-control" id="guruNama" value="<?php echo $mata_pelajaran[0]->nama_guru ?>" readonly>
-                    </div>
-                  </div>
 
                   <!-- <div class="col-md-12">
                       <input type="submit" class="btn btn-default" name="button" id="update">
@@ -145,57 +138,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <!-- /.content -->
   </div>
 
-  <div id="kelasModal" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Data kelas</h4>
-        </div>
-        <div class="modal-body">
-          <div id="dataKelas">
-
-          </div>
-          <div class="row">
-            <button id="dataKelasPrev" onclick="loadDataKelasPrev()">prev</button>
-            <button id="dataKelasNext" onclick="loadDataKelasNext()">next</button>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-
-    </div>
-  </div>
-
-  <div id="guruModal" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Data guru</h4>
-        </div>
-        <div class="modal-body">
-          <div id="dataGuru">
-
-          </div>
-          <div class="row">
-            <button id="dataGuruPrev" onclick="loadDataGuruPrev()">prev</button>
-            <button id="dataGuruNext" onclick="loadDataGuruNext()">next</button>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-
-    </div>
-  </div>
+  
 
   <!-- /.content-wrapper -->
   <?= $footer ?>
@@ -252,111 +195,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 </script>
 
 <script type="text/javascript">
-  var pageKelas = 1;
-  var pageGuru = 1;
-  var pageKelasTotal;
-  var pageGuruTotal;
-  var recordPerPage = 3;
-  $(document).ready(function() {
-
-  });
-  banyakDataKelas(recordPerPage);
-  banyakDataGuru(recordPerPage);
-  function banyakDataKelas(recordPerPage) {
-    $.ajax({
-      url:"<?php echo base_url() ?>index.php/home/banyakDataKelas/" + recordPerPage,
-      type:"get",
-      success:function(data) {
-        // console.log(data);
-        pageKelasTotal = data;
-      }
-    });
-  }
-  function banyakDataGuru(recordPerPage) {
-    $.ajax({
-      url:"<?php echo base_url() ?>index.php/home/banyakDataGuru/" + recordPerPage,
-      type:"get",
-      success:function(data) {
-        // console.log(data);
-        pageGuruTotal = data;
-      }
-    });
-  }
-  loadDataKelas(pageKelas);
-  loadDataGuru(pageGuru);
-  function loadDataKelas(page) {
-    $.ajax({
-      url:"<?php echo base_url() ?>index.php/home/loadDataKelas/" + page + "/" + recordPerPage,
-      type:"get",
-      success:function(data) {
-        // console.log(data);
-        $("#dataKelas").html(data);
-      }
-    });
-  }
-  function loadDataGuru(page) {
-    $.ajax({
-      url:"<?php echo base_url() ?>index.php/home/loadDataGuru/" + page + "/" + recordPerPage,
-      type:"get",
-      success:function(data) {
-        // console.log(data);
-        $("#dataGuru").html(data);
-      }
-    });
-  }
-  function loadDataKelasPrev() {
-    if (pageKelas - 1 >= 1) {
-      pageKelas--;
-        console.log(pageKelas);
-      loadDataKelas(pageKelas);
-    }
-  }
-  function loadDataGuruPrev() {
-    if (pageGuru - 1 >= 1) {
-      pageGuru--;
-        console.log(pageGuru);
-      loadDataGuru(pageGuru);
-    }
-  }
-  function loadDataKelasNext() {
-    if (pageKelas < pageKelasTotal) {
-      pageKelas++;
-      console.log(pageKelas);
-      loadDataKelas(pageKelas);
-    }
-  }
-  function loadDataGuruNext() {
-    if (pageGuru < pageGuruTotal) {
-      pageGuru++;
-      console.log(pageGuru);
-      loadDataGuru(pageGuru);
-    }
-  }
-  function chooseKelas(kelasId, kelasNama) {
-    $("#kelasId").val(kelasId);
-    $("#kelasNama").val(kelasNama);
-  }
-  function chooseGuru(guruId, guruNama) {
-    $("#guruId").val(guruId);
-    $("#guruNama").val(guruNama);
-  }
-  $("#update").click(function() {
-    $.ajax({
-      type: "POST",
-      url: "<?php echo base_url() ?>index.php/home/updateDataMataPelajaranSimpan",
-      data: {
-        id : $("#id").val(),
-        nama : $("#nama").val(),
-        id_kelas : $("#kelasId").val(),
-        id_guru : $("#guruId").val()
-      },
-      dataType: "json",
-      complete: function(result){
-        console.log("haha");
-        toastr.success('Data mata pelajaran berhasil diupdate');
-      }
-  });
-});
+  
 </script>
 </body>
 </html>

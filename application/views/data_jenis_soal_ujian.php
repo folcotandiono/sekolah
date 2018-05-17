@@ -69,7 +69,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Data Jenis Soal Ujian Detail
+        Data Jenis Soal Ujian
       </h1>
     </section>
 
@@ -79,7 +79,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <div class="col-md-12">
           <div class="box">
             <div class="box-header with-border">
-              <h3 class="box-title">Data Jenis Soal Ujian Detail</h3>
+              <h3 class="box-title">Data Jenis Soal Ujian</h3>
 
               <div class="box-tools pull-right">
                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -90,7 +90,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <div class="box-body" style="">
               <div class="row">
                 <div class="col-md-12">
-                  <a href="<?php echo base_url() ?>index.php/home/tambahDataJenisSoalUjianDetail" class="btn btn-primary">add</a>
+                  <a href="<?php echo base_url() ?>index.php/home/tambahDataJenisSoalUjian" class="btn btn-primary">add</a>
                 </div>
               </div>
               <div class="row">
@@ -109,9 +109,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                           <td><?php echo $data->id ?></td>
                           <td><?php echo $data->nama ?></td>
                           <td>
-                            <a href="<?php echo base_url() . "index.php/home/lihatDataJenisSoalUjianDetail/".$data->id ?>" class="btn btn-primary">Lihat</a>
-                            <a href="<?php echo base_url() . "index.php/home/updateDataJenisSoalUjianDetail/".$data->id ?>" class="btn btn-warning">Update</a>
-                            <a href="<?php echo base_url() . "index.php/home/hapusDataJenisSoalUjianDetail/".$data->id ?>" class="btn btn-danger">Hapus</a> </td>
+                            <a href="<?php echo base_url() . "index.php/home/lihatDataJenisSoalUjian/".$data->id ?>" class="btn btn-primary">Lihat</a>
+                            <a href="<?php echo base_url() . "index.php/home/updateDataJenisSoalUjian/".$data->id ?>" class="btn btn-warning">Update</a>
+                            <a href="<?php echo base_url() . "index.php/home/hapusDataJenisSoalUjian/".$data->id ?>" class="btn btn-danger">Hapus</a> </td>
                         </tr>
                       <?php } ?>
                     </table>

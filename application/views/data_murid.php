@@ -105,6 +105,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <th>Nama Ayah</th>
                         <th>Nama Ibu</th>
                         <th>No Telepon</th>
+                        <th>No Induk</th>
                         <th>Action</th>
                       </tr>
 
@@ -116,6 +117,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                           <td><?php echo $data->nama_ayah ?></td>
                           <td><?php echo $data->nama_ibu ?></td>
                           <td><?php echo $data->no_telepon ?></td>
+                          <td><?php echo $data->no_induk ?></td>
                           <td>
                           <a class="btn btn-primary" href="<?php echo base_url() . 'index.php/home/lihatDataMurid/' . $data->id ?>">Lihat</a> 
                             <a class="btn btn-warning" href="<?php echo base_url() . 'index.php/home/updateDataMurid/' . $data->id ?>">Update</a>

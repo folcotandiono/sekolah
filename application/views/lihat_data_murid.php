@@ -139,6 +139,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     </div>
                   </div>
 
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="noInduk">No Induk:</label>
+                      <input type="text" class="form-control" name="noInduk" id="noInduk" value="<?php echo $murid[0]->no_induk ?>" readonly>
+                    </div>
+                  </div>
+
                   <!-- <div class="col-md-12">
                       <input type="submit" class="btn btn-default" name="button" id="update">
                   </div> -->
@@ -159,31 +166,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <!-- /.content -->
   </div>
 
-  <div id="kelasModal" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Data kelas</h4>
-        </div>
-        <div class="modal-body">
-          <div id="dataKelas">
-
-          </div>
-          <div class="row">
-            <button id="dataKelasPrev">prev</button>
-            <button id="dataKelasNext">next</button>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-
-    </div>
-  </div>
+  
 
   <!-- /.content-wrapper -->
   <?=$footer ?>
@@ -243,71 +226,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   $(document).ready(function() {
 
   });
-  var pageKelas = 1;
-  var pageKelasTotal;
-  var recordPerPage = 3;
-  banyakDataKelas(recordPerPage);
-  function banyakDataKelas(recordPerPage) {
-    $.ajax({
-      url:"<?php echo base_url() ?>index.php/home/banyakDataKelas/" + recordPerPage,
-      type:"get",
-      success:function(data) {
-        console.log(data);
-        pageKelasTotal = data;
-      }
-    });
-  }
-  loadDataKelas(pageKelas);
-  function loadDataKelas(page) {
-    $.ajax({
-      url:"<?php echo base_url() ?>index.php/home/loadDataKelas/" + page + "/" + recordPerPage,
-      type:"get",
-      success:function(data) {
-        console.log(data);
-        $("#dataKelas").html(data);
-        $( "#dataKelasPrev" ).click(function() {
-          loadDataKelasPrev();
-        });
-        $( "#dataKelasNext" ).click(function() {
-          loadDataKelasNext();
-        });
-      }
-    });
-  }
-  function loadDataKelasPrev() {
-    if (pageKelas - 1 >= 1) {
-      pageKelas--;
-      loadDataKelas(pageKelas);
-    }
-  }
-  function loadDataKelasNext() {
-    if (pageKelas < pageKelasTotal) {
-      console.log("hahahahahaha");
-      pageKelas++;
-      loadDataKelas(pageKelas);
-    }
-  }
-  function chooseTahunAjaran(tahunAjaranId, tahunAjaranTahun) {
-    $("#kelasId").val(kelasId);
-    $("#kelasNama").val(kelasNama);
-  }
-  $("#update").click(function() {
-    $.ajax({
-      type: "POST",
-      url: "<?php echo base_url() ?>index.php/home/updateDataMuridSimpan",
-      data: {
-        id : $("#id").val(),
-        nama : $("#nama").val(),
-        password : $("#password").val(),
-        id_kelas : $("#kelasId").val()
-      },
-      dataType: "json",
-      complete: function(result){
-        console.log("haha");
-        toastr.success('Data murid berhasil diupdate');
-      }
-  });
-});
+  
 </script>
 </body>
 </html>

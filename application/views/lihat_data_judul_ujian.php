@@ -70,7 +70,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Data Jenis Soal Ujian Detail
+        Data Judul Ujian
       </h1>
     </section>
 
@@ -80,7 +80,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <div class="col-md-12">
           <div class="box">
             <div class="box-header with-border">
-              <h3 class="box-title">Update Data Jenis Soal Ujian Detail</h3>
+              <h3 class="box-title">Data Judul Ujian</h3>
 
               <div class="box-tools pull-right">
                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -91,17 +91,51 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <div class="box-body" style="">
               <div class="row">
                 <!-- /.col -->
-                  <input type="text" class="form-control" name="id" id="id" style="display:none" value="<?php echo $jenis_soal_ujian_detail[0]->id ?>">
+                <input type="text" id="id" name="id" style="display:none" value="<?php echo $judul_ujian[0]->id ?>" readonly>
+                  
+                  <!-- <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="mataPelajaranChoose">Mata Pelajaran:</label>
+                      <button type="button" id="mataPelajaranChoose" data-toggle="modal" data-target="#mataPelajaranModal">Choose</button>
+                    </div>
+                  </div> -->
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="mataPelajaranNama">Mata Pelajaran:</label>
+                      <input type="text" class="form-control" id="mataPelajaranId" value="<?php echo $judul_ujian[0]->id_mata_pelajaran ?>" style="display:none">
+                      <input type="text" class="form-control" id="mataPelajaranNama" value="<?php echo $judul_ujian[0]->nama_mata_pelajaran ?>" readonly>
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="guruNama">Guru:</label>
+                      <input type="text" class="form-control" id="guruId" value="<?php echo $judul_ujian[0]->id_guru ?>" style="display:none">
+                      <input type="text" class="form-control" id="guruNama" value="<?php echo $judul_ujian[0]->nama_guru ?>" readonly>
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="kelasNama">Kelas:</label>
+                      <input type="text" class="form-control" id="kelasId" value="<?php echo $judul_ujian[0]->id_kelas ?>" style="display:none">
+                      <input type="text" class="form-control" id="kelasNama" value="<?php echo $judul_ujian[0]->nama_kelas ?>" readonly>
+                    </div>
+                  </div>
                   <div class="col-md-12">
                     <div class="form-group">
                       <label for="nama">Nama:</label>
-                      <input type="text" class="form-control" name="nama" id="nama" value="<?php echo $jenis_soal_ujian_detail[0]->nama ?>">
+                      <input type="text" class="form-control" name="nama" id="nama" value="<?php echo $judul_ujian[0]->nama ?>" readonly>
                     </div>
                   </div>
+                  <!-- <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="guruChoose">Guru:</label>
+                      <button type="button" id="guruChoose" data-toggle="modal" data-target="#guruModal">Choose</button>
+                    </div>
+                  </div> -->
 
-                  <div class="col-md-12">
+                  <!-- <div class="col-md-12">
                       <input type="submit" class="btn btn-default" name="button" id="update">
-                  </div>
+                  </div> -->
 
 
                 <!-- /.col -->
@@ -118,6 +152,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     </section>
     <!-- /.content -->
   </div>
+
+  
 
   <!-- /.content-wrapper -->
   <?=$footer ?>
@@ -174,24 +210,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 </script>
 
 <script type="text/javascript">
-  $(document).ready(function() {
-
-  });
-  $("#update").click(function() {
-    $.ajax({
-      type: "POST",
-      url: "<?php echo base_url() ?>index.php/home/updateDataJenisSoalUjianDetailSimpan",
-      data: {
-        id : $("#id").val(),
-        nama : $("#nama").val()
-      },
-      dataType: "json",
-      complete: function(result){
-        console.log("haha");
-        toastr.success('Data jenis soal ujian detail berhasil diupdate');
-      }
-  });
-});
+  
 </script>
 </body>
 </html>

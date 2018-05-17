@@ -123,9 +123,11 @@ class Guru extends Rest_Controller {
     public function data_pr_get()
     {
 
-        $this->db->select('pr.id, pr.deskripsi, pr.gambar, pr.id_mata_pelajaran, mata_pelajaran.nama as nama_mata_pelajaran, pr.nama');
+        $this->db->select('pr.id, pr.deskripsi, pr.gambar, pr.id_mata_pelajaran, mata_pelajaran.nama as nama_mata_pelajaran, pr.id_guru, guru.nama as nama_guru, pr.id_kelas, kelas.nama as nama_kelas, pr.nama');
         $this->db->from('pr');
         $this->db->join('mata_pelajaran', 'pr.id_mata_pelajaran = mata_pelajaran.id');
+        $this->db->join('guru', 'pr.id_guru = guru.id');
+        $this->db->join('kelas', 'pr.id_kelas = kelas.id');
         $result = $this->db->get()->result();
 
         $message = array("list_pr"=> $result);
@@ -135,30 +137,34 @@ class Guru extends Rest_Controller {
     public function data_materi_pelajaran_get()
     {
 
-        $this->db->select('materi_pelajaran.id, materi_pelajaran.deskripsi, materi_pelajaran.gambar, materi_pelajaran.id_mata_pelajaran, mata_pelajaran.nama as nama_mata_pelajaran, materi_pelajaran.nama');
+        $this->db->select('materi_pelajaran.id, materi_pelajaran.deskripsi, materi_pelajaran.gambar, materi_pelajaran.id_mata_pelajaran, mata_pelajaran.nama as nama_mata_pelajaran, materi_pelajaran.id_kelas, kelas.nama as nama_kelas, materi_pelajaran.id_guru, guru.nama, materi_pelajaran.nama');
         $this->db->from('materi_pelajaran');
         $this->db->join('mata_pelajaran', 'materi_pelajaran.id_mata_pelajaran = mata_pelajaran.id');
+        $this->db->join('kelas', 'materi_pelajaran.id_kelas = kelas.id');
+        $this->db->join('guru', 'materi_pelajaran.id_guru = guru.id');
         $result = $this->db->get()->result();
 
         $message = array("list_materi_pelajaran"=> $result);
 
         $this->response($message, 200);
     }
-    public function tambah_soal_ujian_post()
+    public function tambah_judul_ujian_post()
     {
-        $soal_ujian["id_mata_pelajaran"] = $this->post("id_mata_pelajaran");
+        $judul_ujian["id_mata_pelajaran"] = $this->post("id_mata_pelajaran");
+        $judul_ujian["id_guru"] = $this->post("id_guru");
+        $judul_ujian["id_kelas"] = $this->post("id_kelas");
         $soal_ujian["nama"] = $this->post("nama");
         
-        $this->db->insert('soal_ujian', $soal_ujian);
+        $this->db->insert('judul_ujian', $judul_ujian);
 
         $message = array("message"=> "success");
 
         $this->response($message, 200);
     }
-    public function tambah_soal_ujian_detail_post()
+    public function tambah_soal_ujian_post()
     {
-        $soal_ujian_detail["id_soal_ujian"] = $this->post("id_soal_ujian");
-        $soal_ujian_detail["id_jenis_soal_ujian_detail"] = $this->post("id_jenis_soal_ujian_detail");
+        $soal_ujian_detail["id_judul_ujian"] = $this->post("id_judul_ujian");
+        $soal_ujian_detail["id_jenis_soal_ujian"] = $this->post("id_jenis_soal_ujian");
         $soal_ujian_detail["soal_tulisan"] = $this->post("soal_tulisan");
 
         $soal_ujian_detail["soal_gambar"] = $this->post("soal_gambar");
@@ -228,7 +234,7 @@ class Guru extends Rest_Controller {
     }
     public function tambah_jadwal_ujian_post()
     {
-        $jadwal_ujian["id_soal_ujian"] = $this->post("id_soal_ujian");
+        $jadwal_ujian["id_judul_ujian"] = $this->post("id_judul_ujian");
         $jadwal_ujian["tanggal"] = $this->post("tanggal");
         $jadwal_ujian["nama"] = $this->post("nama");
         $jadwal_ujian["durasi"] = $this->post("durasi");
@@ -242,6 +248,8 @@ class Guru extends Rest_Controller {
     public function tambah_pr_post()
     {
         $pr["id_mata_pelajaran"] = $this->post("id_mata_pelajaran");
+        $pr["id_guru"] = $this->post("id_guru");
+        $pr["id_kelas"] = $this->post("id_kelas");
         $pr["nama"] = $this->post("nama");
         $pr["deskripsi"] = $this->post("deskripsi");
         $pr["gambar"] = $this->post("gambar");
@@ -267,6 +275,8 @@ class Guru extends Rest_Controller {
     public function tambah_materi_pelajaran_post()
     {
         $materi_pelajaran["id_mata_pelajaran"] = $this->post("id_mata_pelajaran");
+        $materi_pelajaran["id_kelas"] = $this->post("id_kelas");
+        $materi_pelajaran["id_guru"] = $this->post("id_guru");
         $materi_pelajaran["nama"] = $this->post("nama");
         $materi_pelajaran["deskripsi"] = $this->post("deskripsi");
         $materi_pelajaran["gambar"] = $this->post("gambar");

@@ -2,7 +2,7 @@
 // models/Users.php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class JenisSoalUjianDetail extends CI_Model
+class JenisSoalUjian extends CI_Model
 {
     function __construct()
     {
@@ -12,7 +12,7 @@ class JenisSoalUjianDetail extends CI_Model
     public function get_current_page_records($limit, $start)
     {
         $this->db->limit($limit, $start);
-        $query = $this->db->get("jenis_soal_ujian_detail");
+        $query = $this->db->get("jenis_soal_ujian");
 
         if ($query->num_rows() > 0)
         {
@@ -29,6 +29,6 @@ class JenisSoalUjianDetail extends CI_Model
 
     public function get_total()
     {
-        return $this->db->count_all("jenis_soal_ujian_detail");
+        return $this->db->count_all("jenis_soal_ujian");
     }
 }

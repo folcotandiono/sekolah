@@ -11,9 +11,10 @@ class SoalUjian extends CI_Model
 
     public function get_current_page_records($limit, $start)
     {
-        $this->db->select('soal_ujian.id, mata_pelajaran.nama as mata_pelajaran, soal_ujian.nama');
+        $this->db->select('soal_ujian.id, judul_ujian.nama as nama_judul_ujian, jenis_soal_ujian.nama as nama_jenis_soal_ujian, soal_ujian.soal_tulisan');
         $this->db->from('soal_ujian');
-        $this->db->join('mata_pelajaran', 'soal_ujian.id_mata_pelajaran = mata_pelajaran.id');
+        $this->db->join('judul_ujian', 'soal_ujian.id_judul_ujian = judul_ujian.id');
+        $this->db->join('jenis_soal_ujian', 'soal_ujian.id_jenis_soal_ujian = jenis_soal_ujian.id');
         $this->db->limit($limit, $start);
         $query = $this->db->get();
 

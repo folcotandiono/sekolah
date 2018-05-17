@@ -100,7 +100,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <table class="table table-hover">
                       <tr>
                         <th>Id</th>
-                        <th>Soal Ujian</th>
+                        <th>Judul Ujian</th>
                         <th>Tanggal</th>
                         <th>Nama</th>
                         <th>Durasi</th>
@@ -110,7 +110,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                       <?php foreach ($results as $data) { ?>
                         <tr>
                           <td><?php echo $data->id ?></td>
-                          <td><?php echo $data->nama_soal_ujian ?></td>
+                          <td><?php echo $data->nama_judul_ujian ?></td>
                           <td><?php echo $data->tanggal ?></td>
                           <td><?php echo $data->nama ?></td>
                           <td><?php echo $data->durasi ?></td>

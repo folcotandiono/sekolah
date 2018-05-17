@@ -94,15 +94,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
                   <div class="col-md-12">
                     <div class="form-group">
-                      <label for="soalUjianChoose">Soal Ujian:</label>
-                      <button type="button" id="soalUjianChoose" data-toggle="modal" data-target="#soalUjianModal">Choose</button>
+                      <label for="judulUjianChoose">Judul Ujian:</label>
+                      <button type="button" id="judulUjianChoose" data-toggle="modal" data-target="#judulUjianModal">Choose</button>
                     </div>
                   </div>
                   <div class="col-md-12">
                     <div class="form-group">
-                      <label for="soalUjianNama">Soal Ujian:</label>
-                      <input type="text" class="form-control" id="soalUjianId" style="display:none">
-                      <input type="text" class="form-control" id="soalUjianNama" readonly>
+                      <label for="judulUjianNama">Judul Ujian:</label>
+                      <input type="text" class="form-control" id="judulUjianId" style="display:none">
+                      <input type="text" class="form-control" id="judulUjianNama" readonly>
                     </div>
                   </div>
                   <div class="col-md-12">
@@ -144,22 +144,22 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <!-- /.content -->
   </div>
 
-  <div id="soalUjianModal" class="modal fade" role="dialog">
+  <div id="judulUjianModal" class="modal fade" role="dialog">
     <div class="modal-dialog">
 
       <!-- Modal content-->
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Data soal ujian</h4>
+          <h4 class="modal-title">Data judul ujian</h4>
         </div>
         <div class="modal-body">
-          <div id="dataSoalUjian">
+          <div id="dataJudulUjian">
 
           </div>
           <div class="row">
-            <button id="dataSoalUjianPrev" onclick="loadDataSoalUjianPrev()">prev</button>
-            <button id="dataSoalUjianNext" onclick="loadDataSoalUjianNext()">next</button>
+            <button id="dataJudulUjianPrev" onclick="loadDataJudulUjianPrev()">prev</button>
+            <button id="dataJudulUjianNext" onclick="loadDataJudulUjianNext()">next</button>
           </div>
         </div>
         <div class="modal-footer">
@@ -227,50 +227,50 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 </script>
 
 <script type="text/javascript">
-  var pageSoalUjian = 1;
-  var pageSoalUjianTotal;
+  var pageJudulUjian = 1;
+  var pageJudulUjianTotal;
   var recordPerPage = 3;
   $(document).ready(function() {
 
   });
-  banyakDataSoalUjian(recordPerPage);
-  function banyakDataSoalUjian(recordPerPage) {
+  banyakDataJudulUjian(recordPerPage);
+  function banyakDataJudulUjian(recordPerPage) {
     $.ajax({
-      url:"<?php echo base_url() ?>index.php/home/banyakDataSoalUjian/" + recordPerPage,
+      url:"<?php echo base_url() ?>index.php/home/banyakDataJudulUjian/" + recordPerPage,
       type:"get",
       success:function(data) {
         console.log(data);
-        pageSoalUjianTotal = data;
+        pageJudulUjianTotal = data;
       }
     });
   }
-  loadDataSoalUjian(pageSoalUjian);
-  function loadDataSoalUjian(page) {
+  loadDataJudulUjian(pageJudulUjian);
+  function loadDataJudulUjian(page) {
     $.ajax({
-      url:"<?php echo base_url() ?>index.php/home/loadDataSoalUjian/" + page + "/" + recordPerPage,
+      url:"<?php echo base_url() ?>index.php/home/loadDataJudulUjian/" + page + "/" + recordPerPage,
       type:"get",
       success:function(data) {
         console.log(data);
-        $("#dataSoalUjian").html(data);
+        $("#dataJudulUjian").html(data);
       }
     });
   }
-  function loadDataSoalUjianPrev() {
-    if (pageSoalUjian - 1 >= 1) {
-      pageSoalUjian--;
-      loadDataSoalUjian(pageSoalUjian);
+  function loadDataJudulUjianPrev() {
+    if (pageJudulUjian - 1 >= 1) {
+      pageJudulUjian--;
+      loadDataJudulUjian(pageJudulUjian);
     }
   }
-  function loadDataSoalUjianNext() {
-    if (pageSoalUjian < pageSoalUjianTotal) {
+  function loadDataJudulUjianNext() {
+    if (pageJudulUjian < pageJudulUjianTotal) {
       console.log("hahahahahaha");
-      pageSoalUjian++;
-      loadDataSoalUjian(pageSoalUjian);
+      pageJudulUjian++;
+      loadDataJudulUjian(pageJudulUjian);
     }
   }
-  function chooseSoalUjian(soalUjianId, soalUjianNama) {
-    $("#soalUjianId").val(soalUjianId);
-    $("#soalUjianNama").val(soalUjianNama);
+  function chooseJudulUjian(judulUjianId, judulUjianNama) {
+    $("#judulUjianId").val(judulUjianId);
+    $("#judulUjianNama").val(judulUjianNama);
   }
   $("#simpan").click(function() {
     // alert($("#tanggal").val());
@@ -280,7 +280,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       url: "<?php echo base_url() ?>index.php/home/tambahDataJadwalUjianSimpan",
       data: {
         nama : $("#nama").val(),
-        id_soal_ujian : $("#soalUjianId").val(),
+        id_judul_ujian : $("#judulUjianId").val(),
         tanggal : tanggal,
         nama : $("#nama").val(),
         durasi : $("#durasi").val()
@@ -290,8 +290,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         console.log(result);
         toastr.success('Data jadwal ujian berhasil ditambah');
         $("#nama").val('');
-        $("#soalUjianId").val('');
-        $("#soalUjianNama").val('');
+        $("#judulUjianId").val('');
+        $("#judulUjianNama").val('');
         $("#tanggal").val('');
         $("#nama").val('');
         $("#durasi").val('');

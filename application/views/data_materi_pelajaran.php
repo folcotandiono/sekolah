@@ -101,6 +101,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                       <tr>
                         <th>Id</th>
                         <th>Mata Pelajaran</th>
+                        <th>Kelas</th>
+                        <th>Guru</th>
                         <th>Deskripsi</th>
                         <th>Nama</th>
                         <th>Action</th>
@@ -110,6 +112,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <tr>
                           <td><?php echo $data->id ?></td>
                           <td><?php echo $data->nama_mata_pelajaran ?></td>
+                          <td><?php echo $data->nama_kelas ?></td>
+                          <td><?php echo $data->nama_guru ?></td>
                           <td><?php echo $data->deskripsi ?></td>
                           <td><?php echo $data->nama ?></td>
                           <td>

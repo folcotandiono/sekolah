@@ -91,46 +91,174 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <div class="box-body" style="">
               <div class="row">
                 <!-- /.col -->
+                <form action="<?php echo base_url() ?>index.php/home/tambahDataSoalUjianSimpan" id="form" method="post" enctype='multipart/form-data'>
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="judulUjianChoose">Judul Ujian:</label>
+                      <button type="button" id="judulUjianChoose" data-toggle="modal" data-target="#judulUjianModal">Choose</button>
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="judulUjianNama">Judul Ujian:</label>
+                      <input type="text" class="form-control" id="judulUjianId" name="id_judul_ujian" style="display:none">
+                      <input type="text" class="form-control" id="judulUjianNama" readonly>
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="jenisSoalUjianChoose">Jenis Soal Ujian :</label>
+                      <button type="button" id="jenisSoalUjianChoose" data-toggle="modal" data-target="#jenisSoalUjianModal">Choose</button>
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="jenisSoalUjianNama">Jenis Soal Ujian :</label>
+                      <input type="text" class="form-control" id="jenisSoalUjianId" name="id_jenis_soal_ujian" style="display:none">
+                      <input type="text" class="form-control" id="jenisSoalUjianNama" readonly>
+                    </div>
+                  </div>
 
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="soalTulisan">Soal:</label>
+                      <textarea class="form-control" id="soalTulisan" name="soal_tulisan" rows="3"></textarea>
+                    </div>
+                  </div>
+
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="soalGambar">Soal:</label>
+                      <input type="file" class="form-control-file" id="soalGambar" name="soal_gambar[]" onchange="updateSoalGambar(this);" multiple>
+                    </div>
+                  </div>
+
+                  <div class="col-md-12">
+                    <div id="soalGambarLihat">
+
+                    </div>
+                  </div>
+
+                  <div class="col-md-12">
+                    <p>*Untuk uraian, kosongkan semua data untuk pilihan jawaban</p>
+                  </div>
+
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="pilihanJawabanTulisanA">Pilihan Jawaban A:</label>
+                      <input type="text" class="form-control" id="pilihanJawabanTulisanA" name="pilihan_jawaban_tulisan_a">
+                    </div>
+                  </div>
+
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="pilihanJawabanGambarA">Pilihan Jawaban A:</label>
+                      <input type="file" class="form-control-file" id="pilihanJawabanGambarA" name="pilihan_jawaban_gambar_a[]" onchange="updatePilihanJawabanGambarA(this);" multiple>
+                    </div>
+                  </div>
+
+                  <div class="col-md-12">
+                    <div id="pilihanJawabanGambarALihat">
+                      
+                    </div>
+                  </div>
+
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="pilihanJawabanTulisanB">Pilihan Jawaban B:</label>
+                      <input type="text" class="form-control" id="pilihanJawabanTulisanB" name="pilihan_jawaban_tulisan_b">
+                    </div>
+                  </div>
+
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="pilihanJawabanGambarB">Pilihan Jawaban B:</label>
+                      <input type="file" class="form-control-file" id="pilihanJawabanGambarB" name="pilihan_jawaban_gambar_b[]" onchange="updatePilihanJawabanGambarB(this);" multiple>
+                    </div>
+                  </div>
+
+                  <div class="col-md-12">
+                    <div id="pilihanJawabanGambarBLihat">
+                      
+                    </div>
+                  </div>
+
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="pilihanJawabanTulisanC">Pilihan Jawaban C:</label>
+                      <input type="text" class="form-control" id="pilihanJawabanTulisanC" name="pilihan_jawaban_tulisan_c">
+                    </div>
+                  </div>
+
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="pilihanJawabanGambarC">Pilihan Jawaban C:</label>
+                      <input type="file" class="form-control-file" id="pilihanJawabanGambarC" name="pilihan_jawaban_gambar_c[]" onchange="updatePilihanJawabanGambarC(this);" multiple>
+                    </div>
+                  </div>
+
+                  <div class="col-md-12">
+                    <div id="pilihanJawabanGambarCLihat">
+                      
+                    </div>
+                  </div>
+
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="pilihanJawabanTulisanD">Pilihan Jawaban D:</label>
+                      <input type="text" class="form-control" id="pilihanJawabanTulisanD" name="pilihan_jawaban_tulisan_d">
+                    </div>
+                  </div>
+
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="pilihanJawabanGambarD">Pilihan Jawaban D:</label>
+                      <input type="file" class="form-control-file" id="pilihanJawabanGambarD" name="pilihan_jawaban_gambar_d[]" onchange="updatePilihanJawabanGambarD(this);" multiple>
+                    </div>
+                  </div>
+
+                  <div class="col-md-12">
+                    <div id="pilihanJawabanGambarDLihat">
+                      
+                    </div>
+                  </div>
                   
                   <div class="col-md-12">
                     <div class="form-group">
-                      <label for="mataPelajaranChoose">Mata Pelajaran:</label>
-                      <button type="button" id="mataPelajaranChoose" data-toggle="modal" data-target="#mataPelajaranModal">Choose</button>
+                      <label for="pilihanJawabanTulisanE">Pilihan Jawaban E:</label>
+                      <input type="text" class="form-control" id="pilihanJawabanTulisanE" name="pilihan_jawaban_tulisan_e" >
                     </div>
                   </div>
+
                   <div class="col-md-12">
                     <div class="form-group">
-                      <label for="mataPelajaranNama">Mata Pelajaran:</label>
-                      <input type="text" class="form-control" id="mataPelajaranId" style="display:none">
-                      <input type="text" class="form-control" id="mataPelajaranNama" readonly>
+                      <label for="pilihanJawabanGambarE">Pilihan Jawaban E:</label>
+                      <input type="file" class="form-control-file" id="pilihanJawabanGambarE" name="pilihan_jawaban_gambar_e[]" onchange="updatePilihanJawabanGambarE(this);" multiple>
                     </div>
                   </div>
+
+                  <div class="col-md-12">
+                    <div id="pilihanJawabanGambarELihat">
+                      
+                    </div>
+                  </div>
+
+                  <div class="col-md-12">
+                    <p>*Untuk kunci jawaban pilihan ganda, input karakter a atau b atau c atau d atau e</p>
+                  </div>
+
                   <div class="col-md-12">
                     <div class="form-group">
-                      <label for="nama">Nama:</label>
-                      <input type="text" class="form-control" name="nama" id="nama">
+                      <label for="kunciJawaban">Kunci Jawaban:</label>
+                      <input type="text" class="form-control" id="kunciJawaban" name="kunci_jawaban">
                     </div>
                   </div>
-                  <!-- <div class="col-md-12">
-                    <div class="form-group">
-                      <label for="guruChoose">Guru:</label>
-                      <button type="button" id="guruChoose" data-toggle="modal" data-target="#guruModal">Choose</button>
-                    </div>
-                  </div>
-                  <div class="col-md-12">
-                    <div class="form-group">
-                      <label for="guruNama">Guru:</label>
-                      <input type="text" class="form-control" id="guruId" style="display:none">
-                      <input type="text" class="form-control" id="guruNama" readonly>
-                    </div>
-                  </div> -->
 
                   <div class="col-md-12">
                       <input type="submit" class="btn btn-default" name="button" id="simpan">
                   </div>
 
-
+                </form>
                 <!-- /.col -->
               </div>
               <!-- /.row -->
@@ -146,22 +274,22 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <!-- /.content -->
   </div>
 
-  <div id="mataPelajaranModal" class="modal fade" role="dialog">
+  <div id="judulUjianModal" class="modal fade" role="dialog">
     <div class="modal-dialog">
 
       <!-- Modal content-->
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Data mata pelajaran</h4>
+          <h4 class="modal-title">Data judul ujian</h4>
         </div>
         <div class="modal-body">
-          <div id="dataMataPelajaran">
+          <div id="dataJudulUjian">
 
           </div>
           <div class="row">
-            <button id="dataMataPelajaranPrev" onclick="loadDataMataPelajaranPrev()">prev</button>
-            <button id="dataMataPelajaranNext" onclick="loadDataMataPelajaranNext()">next</button>
+            <button id="dataJudulUjianPrev" onclick="loadDataJudulUjianPrev()">prev</button>
+            <button id="dataJudulUjianNext" onclick="loadDataJudulUjianNext()">next</button>
           </div>
         </div>
         <div class="modal-footer">
@@ -172,21 +300,22 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     </div>
   </div>
 
-  <!-- <div id="guruModal" class="modal fade" role="dialog">
+  <div id="jenisSoalUjianModal" class="modal fade" role="dialog">
     <div class="modal-dialog">
 
+      <!-- Modal content-->
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Data guru</h4>
+          <h4 class="modal-title">Data jenis soal ujian</h4>
         </div>
         <div class="modal-body">
-          <div id="dataGuru">
+          <div id="dataJenisSoalUjian">
 
           </div>
           <div class="row">
-            <button id="dataGuruPrev" onclick="loadDataGuruPrev()">prev</button>
-            <button id="dataGuruNext" onclick="loadDataGuruNext()">next</button>
+            <button id="dataJenisSoalUjianPrev" onclick="loadDataJenisSoalUjianPrev()">prev</button>
+            <button id="dataJenisSoalUjianNext" onclick="loadDataJenisSoalUjianNext()">next</button>
           </div>
         </div>
         <div class="modal-footer">
@@ -195,7 +324,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       </div>
 
     </div>
-  </div> -->
+  </div>
 
   <!-- /.content-wrapper -->
   <?=$footer ?>
@@ -252,115 +381,272 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 </script>
 
 <script type="text/javascript">
-  var pageMataPelajaran = 1;
-  // var pageGuru = 1;
-  var pageMataPelajaranTotal;
-  // var pageGuruTotal;
+  var pageJudulUjian = 1;
+  var pageJenisSoalUjian = 1;
+  var pageJudulUjianTotal;
+  var pageJenisSoalUjianTotal;
   var recordPerPage = 3;
   $(document).ready(function() {
 
   });
-  banyakDataMataPelajaran(recordPerPage);
-  // banyakDataGuru(recordPerPage);
-  function banyakDataMataPelajaran(recordPerPage) {
+  banyakDataJudulUjian(recordPerPage);
+  banyakDataJenisSoalUjian(recordPerPage);
+  function banyakDataJudulUjian(recordPerPage) {
     $.ajax({
-      url:"<?php echo base_url() ?>index.php/home/banyakDataMataPelajaran/" + recordPerPage,
+      url:"<?php echo base_url() ?>index.php/home/banyakDataJudulUjian/" + recordPerPage,
       type:"get",
       success:function(data) {
         // console.log(data);
-        pageMataPelajaranTotal = data;
+        pageJudulUjianTotal = data;
       }
     });
   }
-  // function banyakDataGuru(recordPerPage) {
-  //   $.ajax({
-  //     url:"<?php echo base_url() ?>index.php/home/banyakDataGuru/" + recordPerPage,
-  //     type:"get",
-  //     success:function(data) {
-  //       // console.log(data);
-  //       pageGuruTotal = data;
-  //     }
-  //   });
-  // }
-  loadDataMataPelajaran(pageMataPelajaran);
-  // loadDataGuru(pageGuru);
-  function loadDataMataPelajaran(page) {
+  function banyakDataJenisSoalUjian(recordPerPage) {
     $.ajax({
-      url:"<?php echo base_url() ?>index.php/home/loadDataMataPelajaran/" + page + "/" + recordPerPage,
+      url:"<?php echo base_url() ?>index.php/home/banyakDataJenisSoalUjian/" + recordPerPage,
       type:"get",
       success:function(data) {
         // console.log(data);
-        $("#dataMataPelajaran").html(data);
+        pageJenisSoalUjianTotal = data;
       }
     });
   }
-  // function loadDataGuru(page) {
-  //   $.ajax({
-  //     url:"<?php echo base_url() ?>index.php/home/loadDataGuru/" + page + "/" + recordPerPage,
-  //     type:"get",
-  //     success:function(data) {
-  //       // console.log(data);
-  //       $("#dataGuru").html(data);
-  //     }
-  //   });
-  // }
-  function loadDataMataPelajaranPrev() {
-    if (pageMataPelajaran - 1 >= 1) {
-      pageMataPelajaran--;
-        console.log(pageMataPelajaran);
-      loadDataMataPelajaran(pageMataPelajaran);
-    }
-  }
-  // function loadDataGuruPrev() {
-  //   if (pageGuru - 1 >= 1) {
-  //     pageGuru--;
-  //       console.log(pageGuru);
-  //     loadDataGuru(pageGuru);
-  //   }
-  // }
-  function loadDataMataPelajaranNext() {
-    if (pageMataPelajaran < pageMataPelajaranTotal) {
-      pageMataPelajaran++;
-      console.log(pageMataPelajaran);
-      loadDataMataPelajaran(pageMataPelajaran);
-    }
-  }
-  // function loadDataGuruNext() {
-  //   if (pageGuru < pageGuruTotal) {
-  //     pageGuru++;
-  //     console.log(pageGuru);
-  //     loadDataGuru(pageGuru);
-  //   }
-  // }
-  function chooseMataPelajaran(mataPelajaranId, mataPelajaranNama) {
-    $("#mataPelajaranId").val(mataPelajaranId);
-    $("#mataPelajaranNama").val(mataPelajaranNama);
-  }
-  // function chooseGuru(guruId, guruNama) {
-  //   $("#guruId").val(guruId);
-  //   $("#guruNama").val(guruNama);
-  // }
-  $("#simpan").click(function() {
+  loadDataJudulUjian(pageJudulUjian);
+  loadDataJenisSoalUjian(pageJenisSoalUjian);
+  function loadDataJudulUjian(page) {
     $.ajax({
-      type: "POST",
-      url: "<?php echo base_url() ?>index.php/home/tambahDataSoalUjianSimpan",
-      data: {
-        nama : $("#nama").val(),
-        id_mata_pelajaran : $("#mataPelajaranId").val(),
-        // id_guru : $("#guruId").val()
-      },
-      dataType: "json",
-      complete: function(result){
-        console.log("haha");
-        toastr.success('Data soal ujian berhasil ditambah');
-        $("#nama").val("");
-        $("#mataPelajaranId").val("");
-        $("#mataPelajaranNama").val("");
-        // $("#guruId").val("");
-        // $("#guruNama").val("");
+      url:"<?php echo base_url() ?>index.php/home/loadDataJudulUjian/" + page + "/" + recordPerPage,
+      type:"get",
+      success:function(data) {
+        console.log(data);
+        $("#dataJudulUjian").html(data);
       }
-  });
-});
+    });
+  }
+  function loadDataJenisSoalUjian(page) {
+    $.ajax({
+      url:"<?php echo base_url() ?>index.php/home/loadDataJenisSoalUjian/" + page + "/" + recordPerPage,
+      type:"get",
+      success:function(data) {
+        // console.log(data);
+        $("#dataJenisSoalUjian").html(data);
+      }
+    });
+  }
+  function loadDataJudulUjianPrev() {
+    if (pageJudulUjian - 1 >= 1) {
+      pageJudulUjian--;
+        console.log(pageJudulUjian);
+      loadDataJudulUjian(pageJudulUjian);
+    }
+  }
+  function loadDataJenisSoalUjianPrev() {
+    if (pageJenisSoalUjian - 1 >= 1) {
+      pageJenisSoalUjian--;
+        console.log(pageJenisSoalUjian);
+      loadDataJenisSoalUjian(pageJenisSoalUjian);
+    }
+  }
+  function loadDataJudulUjianNext() {
+    if (pageJudulUjian < pageJudulUjianTotal) {
+      pageJudulUjian++;
+      console.log(pageJudulUjian);
+      loadDataJudulUjian(pageJudulUjian);
+    }
+  }
+  function loadDataJenisSoalUjianNext() {
+    if (pageJenisSoalUjian < pageJenisSoalUjianTotal) {
+      pageJenisSoalUjian++;
+      console.log(pageJenisSoalUjian);
+      loadDataJenisSoalUjian(pageJenisSoalUjian);
+    }
+  }
+  function chooseJudulUjian(judulUjianId, judulUjianNama) {
+    console.log("haha");
+    $("#judulUjianId").val(judulUjianId);
+    $("#judulUjianNama").val(judulUjianNama);
+  }
+  function chooseJenisSoalUjian(jenisSoalUjianId, jenisSoalUjianNama) {
+    $("#jenisSoalUjianId").val(jenisSoalUjianId);
+    $("#jenisSoalUjianNama").val(jenisSoalUjianNama);
+  }
+//   $("#form").submit(function() {
+//     var pilihan_jawaban_tulisan = [];
+//     pilihan_jawaban_tulisan.push($("#pilihanJawabanTulisanA").val());
+//     pilihan_jawaban_tulisan.push($("#pilihanJawabanTulisanB").val());
+//     pilihan_jawaban_tulisan.push($("#pilihanJawabanTulisanC").val());
+//     pilihan_jawaban_tulisan.push($("#pilihanJawabanTulisanD").val());
+//     pilihan_jawaban_tulisan.push($("#pilihanJawabanTulisanE").val());
+
+//     var pilihan_jawaban_gambar = [];
+//     pilihan_jawaban_gambar.push($("#pilihanJawabanGambarA")[0].files);
+//     pilihan_jawaban_gambar.push($("#pilihanJawabanGambarB")[0].files);
+//     pilihan_jawaban_gambar.push($("#pilihanJawabanGambarC")[0].files);
+//     pilihan_jawaban_gambar.push($("#pilihanJawabanGambarD")[0].files);
+//     pilihan_jawaban_gambar.push($("#pilihanJawabanGambarE")[0].files);
+
+//     console.log(pilihan_jawaban_gambar);
+//     $.ajax({
+//       type: "POST",
+//       url: "<?php echo base_url() ?>index.php/home/tambahDataSoalUjianSimpan",
+//       // data: {
+//       //   // soal_ujian : $("#soalUjianNama").val(),
+//       //   // jenis_soal_ujian_detail : $("#jenisSoalUjianNama").val(),
+//       //   // soal_tulisan : $("#soalTulisan").val(),
+//       //   soal_gambar : $("#soalGambar")[0].files[0].name
+//       //   // pilihan_jawaban_tulisan : pilihan_jawaban_tulisan,
+//       //   // pilihan_jawaban_gambar : pilihan_jawaban_gambar,
+//       //   // kunci_jawaban : $("#kunciJawaban").val()
+//       // },
+//       data : new FormData(this),
+//       dataType: "json",
+//       complete: function(result){
+//         console.log("blabla");
+//         toastr.success('Data soal ujian berhasil ditambah');
+//         $("#soalUjianNama").val("");
+//         $("#jenisSoalUjianNama").val("");
+//         $("#soalTulisan").val("");
+//         $("#soalGambar").val("");
+//         $("#pilihanJawabanTulisanA").val("");
+//         $("#pilihanJawabanTulisanB").val("");
+//         $("#pilihanJawabanTulisanC").val("");
+//         $("#pilihanJawabanTulisanD").val("");
+//         $("#pilihanJawabanTulisanE").val("");
+//         $("#pilihanJawabanGambarA").val("");
+//         $("#pilihanJawabanGambarB").val("");
+//         $("#pilihanJawabanGambarC").val("");
+//         $("#pilihanJawabanGambarD").val("");
+//         $("#pilihanJawabanGambarE").val("");
+//         $("#kunciJawaban").val("");
+//       }
+//   });
+// });
+function updateSoalGambar(input) {
+  if (input.files) {
+    $("#soalGambarLihat").html("");
+    var filesAmount = input.files.length;
+
+    for (i = 0; i < filesAmount; i++) {
+        var reader = new FileReader();
+
+        reader.onload = function(event) {
+          var gambar='';
+          gambar += "<div class='col-md-3'>";
+          gambar += "<img src = '" +  event.target.result + "' class='img-thumbnail'>";
+          gambar += "</div>";
+          $("#soalGambarLihat").append(gambar);
+
+        }
+
+        reader.readAsDataURL(input.files[i]);
+    }
+  }
+}
+function updatePilihanJawabanGambarA(input) {
+  if (input.files) {
+    $("#pilihanJawabanGambarALihat").html("");
+    var filesAmount = input.files.length;
+
+    for (i = 0; i < filesAmount; i++) {
+        var reader = new FileReader();
+
+        reader.onload = function(event) {
+          var gambar='';
+          gambar += "<div class='col-md-3'>";
+          gambar += "<img src = '" +  event.target.result + "' class='img-thumbnail'>";
+          gambar += "</div>";
+          $("#pilihanJawabanGambarALihat").append(gambar);
+
+        }
+
+        reader.readAsDataURL(input.files[i]);
+    }
+  }
+}
+function updatePilihanJawabanGambarB(input) {
+  if (input.files) {
+    $("#pilihanJawabanGambarBLihat").html("");
+    var filesAmount = input.files.length;
+
+    for (i = 0; i < filesAmount; i++) {
+        var reader = new FileReader();
+
+        reader.onload = function(event) {
+          var gambar='';
+          gambar += "<div class='col-md-3'>";
+          gambar += "<img src = '" +  event.target.result + "' class='img-thumbnail'>";
+          gambar += "</div>";
+          $("#pilihanJawabanGambarBLihat").append(gambar);
+
+        }
+
+        reader.readAsDataURL(input.files[i]);
+    }
+  }
+}
+function updatePilihanJawabanGambarC(input) {
+  if (input.files) {
+    $("#pilihanJawabanGambarCLihat").html("");
+    var filesAmount = input.files.length;
+
+    for (i = 0; i < filesAmount; i++) {
+        var reader = new FileReader();
+
+        reader.onload = function(event) {
+          var gambar='';
+          gambar += "<div class='col-md-3'>";
+          gambar += "<img src = '" +  event.target.result + "' class='img-thumbnail'>";
+          gambar += "</div>";
+          $("#pilihanJawabanGambarCLihat").append(gambar);
+
+        }
+
+        reader.readAsDataURL(input.files[i]);
+    }
+  }
+}
+function updatePilihanJawabanGambarD(input) {
+  if (input.files) {
+    $("#pilihanJawabanGambarDLihat").html("");
+    var filesAmount = input.files.length;
+
+    for (i = 0; i < filesAmount; i++) {
+        var reader = new FileReader();
+
+        reader.onload = function(event) {
+          var gambar='';
+          gambar += "<div class='col-md-3'>";
+          gambar += "<img src = '" +  event.target.result + "' class='img-thumbnail'>";
+          gambar += "</div>";
+          $("#pilihanJawabanGambarDLihat").append(gambar);
+
+        }
+
+        reader.readAsDataURL(input.files[i]);
+    }
+  }
+}
+function updatePilihanJawabanGambarE(input) {
+  if (input.files) {
+    $("#pilihanJawabanGambarELihat").html("");
+    var filesAmount = input.files.length;
+
+    for (i = 0; i < filesAmount; i++) {
+        var reader = new FileReader();
+
+        reader.onload = function(event) {
+          var gambar='';
+          gambar += "<div class='col-md-3'>";
+          gambar += "<img src = '" +  event.target.result + "' class='img-thumbnail'>";
+          gambar += "</div>";
+          $("#pilihanJawabanGambarELihat").append(gambar);
+
+        }
+
+        reader.readAsDataURL(input.files[i]);
+    }
+  }
+}
 </script>
 </body>
 </html>

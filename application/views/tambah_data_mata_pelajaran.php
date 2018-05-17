@@ -100,28 +100,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                   </div>
                   <div class="col-md-12">
                     <div class="form-group">
-                      <label for="kelasChoose">Kelas:</label>
-                      <button type="button" id="kelasChoose" data-toggle="modal" data-target="#kelasModal">Choose</button>
+                      <label for="tahunAjaranChoose">Tahun Ajaran:</label>
+                      <button type="button" id="tahunAjaranChoose" data-toggle="modal" data-target="#tahunAjaranModal">Choose</button>
                     </div>
                   </div>
                   <div class="col-md-12">
                     <div class="form-group">
-                      <label for="kelasNama">Kelas:</label>
-                      <input type="text" class="form-control" id="kelasId" style="display:none">
-                      <input type="text" class="form-control" id="kelasNama" readonly>
-                    </div>
-                  </div>
-                  <div class="col-md-12">
-                    <div class="form-group">
-                      <label for="guruChoose">Guru:</label>
-                      <button type="button" id="guruChoose" data-toggle="modal" data-target="#guruModal">Choose</button>
-                    </div>
-                  </div>
-                  <div class="col-md-12">
-                    <div class="form-group">
-                      <label for="guruNama">Guru:</label>
-                      <input type="text" class="form-control" id="guruId" style="display:none">
-                      <input type="text" class="form-control" id="guruNama" readonly>
+                      <label for="tahunAjaranNama">Tahun Ajaran:</label>
+                      <input type="text" class="form-control" id="tahunAjaranId" style="display:none">
+                      <input type="text" class="form-control" id="tahunAjaranNama" readonly>
                     </div>
                   </div>
 
@@ -145,48 +132,22 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <!-- /.content -->
   </div>
 
-  <div id="kelasModal" class="modal fade" role="dialog">
+  <div id="tahunAjaranModal" class="modal fade" role="dialog">
     <div class="modal-dialog">
 
       <!-- Modal content-->
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Data kelas</h4>
+          <h4 class="modal-title">Data tahun ajaran</h4>
         </div>
         <div class="modal-body">
-          <div id="dataKelas">
+          <div id="dataTahunAjaran">
 
           </div>
           <div class="row">
-            <button id="dataKelasPrev" onclick="loadDataKelasPrev()">prev</button>
-            <button id="dataKelasNext" onclick="loadDataKelasNext()">next</button>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-
-    </div>
-  </div>
-
-  <div id="guruModal" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Data guru</h4>
-        </div>
-        <div class="modal-body">
-          <div id="dataGuru">
-
-          </div>
-          <div class="row">
-            <button id="dataGuruPrev" onclick="loadDataGuruPrev()">prev</button>
-            <button id="dataGuruNext" onclick="loadDataGuruNext()">next</button>
+            <button id="dataTahunAjaranPrev" onclick="loadDataTahunAjaranPrev()">prev</button>
+            <button id="dataTahunAjaranNext" onclick="loadDataTahunAjaranNext()">next</button>
           </div>
         </div>
         <div class="modal-footer">
@@ -252,93 +213,51 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 </script>
 
 <script type="text/javascript">
-  var pageKelas = 1;
-  var pageGuru = 1;
-  var pageKelasTotal;
-  var pageGuruTotal;
+  var pageTahunAjaran = 1;
+  var pageTahunAjaranTotal;
   var recordPerPage = 3;
   $(document).ready(function() {
 
   });
-  banyakDataKelas(recordPerPage);
-  banyakDataGuru(recordPerPage);
-  function banyakDataKelas(recordPerPage) {
+  banyakDataTahunAjaran(recordPerPage);
+  function banyakDataTahunAjaran(recordPerPage) {
     $.ajax({
-      url:"<?php echo base_url() ?>index.php/home/banyakDataKelas/" + recordPerPage,
+      url:"<?php echo base_url() ?>index.php/home/banyakDataTahunAjaran/" + recordPerPage,
       type:"get",
       success:function(data) {
         // console.log(data);
-        pageKelasTotal = data;
+        pageTahunAjaranTotal = data;
       }
     });
   }
-  function banyakDataGuru(recordPerPage) {
+  loadDataTahunAjaran(pageTahunAjaran);
+  function loadDataTahunAjaran(page) {
     $.ajax({
-      url:"<?php echo base_url() ?>index.php/home/banyakDataGuru/" + recordPerPage,
+      url:"<?php echo base_url() ?>index.php/home/loadDataTahunAjaran/" + page + "/" + recordPerPage,
       type:"get",
       success:function(data) {
         // console.log(data);
-        pageGuruTotal = data;
+        $("#dataTahunAjaran").html(data);
       }
     });
   }
-  loadDataKelas(pageKelas);
-  loadDataGuru(pageGuru);
-  function loadDataKelas(page) {
-    $.ajax({
-      url:"<?php echo base_url() ?>index.php/home/loadDataKelas/" + page + "/" + recordPerPage,
-      type:"get",
-      success:function(data) {
-        // console.log(data);
-        $("#dataKelas").html(data);
-      }
-    });
-  }
-  function loadDataGuru(page) {
-    $.ajax({
-      url:"<?php echo base_url() ?>index.php/home/loadDataGuru/" + page + "/" + recordPerPage,
-      type:"get",
-      success:function(data) {
-        // console.log(data);
-        $("#dataGuru").html(data);
-      }
-    });
-  }
-  function loadDataKelasPrev() {
-    if (pageKelas - 1 >= 1) {
-      pageKelas--;
-        console.log(pageKelas);
-      loadDataKelas(pageKelas);
+  function loadDataTahunAjaranPrev() {
+    if (pageTahunAjaran - 1 >= 1) {
+      pageTahunAjaran--;
+        console.log(pageTahunAjaran);
+      loadDataTahunAjaran(pageTahunAjaran);
     }
   }
-  function loadDataGuruPrev() {
-    if (pageGuru - 1 >= 1) {
-      pageGuru--;
-        console.log(pageGuru);
-      loadDataGuru(pageGuru);
+  function loadDataTahunAjaranNext() {
+    if (pageTahunAjaran < pageTahunAjaranTotal) {
+      pageTahunAjaran++;
+      console.log(pageTahunAjaran);
+      loadDataTahunAjaran(pageTahunAjaran);
     }
   }
-  function loadDataKelasNext() {
-    if (pageKelas < pageKelasTotal) {
-      pageKelas++;
-      console.log(pageKelas);
-      loadDataKelas(pageKelas);
-    }
-  }
-  function loadDataGuruNext() {
-    if (pageGuru < pageGuruTotal) {
-      pageGuru++;
-      console.log(pageGuru);
-      loadDataGuru(pageGuru);
-    }
-  }
-  function chooseKelas(kelasId, kelasNama) {
-    $("#kelasId").val(kelasId);
-    $("#kelasNama").val(kelasNama);
-  }
-  function chooseGuru(guruId, guruNama) {
-    $("#guruId").val(guruId);
-    $("#guruNama").val(guruNama);
+  function chooseTahunAjaran(tahunAjaranId, tahunAjaranNama) {
+    $("#tahunAjaranId").val(tahunAjaranId);
+    $("#tahunAjaranNama").val(tahunAjaranNama);
   }
   $("#simpan").click(function() {
     $.ajax({
@@ -346,18 +265,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       url: "<?php echo base_url() ?>index.php/home/tambahDataMataPelajaranSimpan",
       data: {
         nama : $("#nama").val(),
-        id_kelas : $("#kelasId").val(),
-        id_guru : $("#guruId").val()
+        id_tahun_ajaran : $("#tahunAjaranId").val()
       },
       dataType: "json",
       complete: function(result){
         console.log("haha");
         toastr.success('Data mata pelajaran berhasil ditambah');
         $("#nama").val("");
-        $("#kelasId").val("");
-        $("#guruId").val("");
-        $("#kelasNama").val("");
-        $("#guruNama").val("");
+        $("#tahunAjaranId").val("");
+        $("#tahunAjaranNama").val("");
       }
   });
 });
